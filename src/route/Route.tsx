@@ -1,6 +1,7 @@
 import { RouteObject, createBrowserRouter } from "react-router-dom";
-import LandingLayout from "../base/components/layout/LandingLayout";
+import LandingLayout from "../base/layout/LandingLayout";
 import appRoutes from "@/base/app/route";
+import MainLayout from "../base/layout/MainLayout";
 
 const routes: RouteObject[] = [
   {
@@ -10,6 +11,16 @@ const routes: RouteObject[] = [
       appRoutes,
       {
         path: "/contact",
+        element: <h1>Click below to contact</h1>,
+      },
+    ],
+  },
+  {
+    path: "/demo",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
         element: <h1>Click below to contact</h1>,
       },
     ],
