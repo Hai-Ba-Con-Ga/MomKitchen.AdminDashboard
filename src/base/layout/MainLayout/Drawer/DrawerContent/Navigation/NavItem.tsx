@@ -12,6 +12,8 @@ import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography } 
 // types
 import { LinkTarget, NavItemType } from '@/types/menu';
 import { RootStateProps } from '@/types/root';
+import { menuWithDrawerOpen, menuWithOpenItem } from '@/base/store/selectors/app';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
 
@@ -24,13 +26,10 @@ const NavItem = ({ item, level }: Props) => {
   const theme = useTheme();
   // const dispatch = useDispatch();
   // const menu = useSelector((state: RootStateProps) => state.menu);
-  const { drawerOpen, openItem,openComponent,componentDrawerOpen } = {
-    openItem: ['dashboard'],
-    openComponent: 'buttons',
-    drawerOpen: false,
-    componentDrawerOpen: true
-  };
-
+  const [drawerOpen, setDrawerOpen] = useRecoilState(menuWithDrawerOpen);
+  const [openItem, setOpenItem] = useRecoilState(menuWithOpenItem);
+  console.log("NavItem => ", item);
+  
   let itemTarget: LinkTarget = '_self';
   if (item.target) {
     itemTarget = '_blank';
@@ -57,11 +56,13 @@ const NavItem = ({ item, level }: Props) => {
     if (pathname && pathname.includes('product-details')) {
       if (item.url && item.url.includes('product-details')) {
         // dispatch(activeItem({ openItem: [item.id] }));
+        setOpenItem([item.id!])
       }
     }
 
     if (pathname === item.url) {
       // dispatch(activeItem({ openItem: [item.id] }));
+      setOpenItem([item.id!])
     }
     // eslint-disable-next-line
   }, [pathname]);

@@ -3,7 +3,7 @@ import { useTheme } from "@mui/material/styles";
 
 // project import
 import DrawerHeaderStyled from "./DrawerHeaderStyled";
-// import Logo from 'components/logo';
+import Logo from '@/base/components/common/logo';
 
 // ==============================|| DRAWER HEADER ||============================== //
 
@@ -16,8 +16,7 @@ const DrawerHeader = ({ open }: Props) => {
 
   return (
     <DrawerHeaderStyled theme={theme} open={open}>
-      {/* <Logo isIcon={!open} sx={{ width: open ? 'auto' : 35, height: 35 }} /> */}
-      <h1>Component Logo</h1>
+      <Logo isIcon={!open} sx={{ width: open ? 'auto' : 35, height: 35 }} />
     </DrawerHeaderStyled>
   );
 };

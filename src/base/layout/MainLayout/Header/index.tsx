@@ -7,7 +7,7 @@ import { AppBar, Toolbar, useMediaQuery, AppBarProps } from "@mui/material";
 // project import
 import AppBarStyled from "./AppBarStyled";
 import HeaderContent from "./HeaderContent";
-// import IconButton from 'components/@extended/IconButton';
+import IconButton from '@/base/components/@extended/IconButton';
 
 // assets
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
@@ -34,7 +34,7 @@ const Header = ({ open, handleDrawerToggle }: Props) => {
   // common header
   const mainHeader: ReactNode = (
     <Toolbar>
-      {/* <IconButton
+      <IconButton
         aria-label="open drawer"
         onClick={handleDrawerToggle}
         edge="start"
@@ -46,7 +46,7 @@ const Header = ({ open, handleDrawerToggle }: Props) => {
           ml: { xs: 0, lg: -2 },
         }}>
         {!open ? <MenuUnfoldOutlined rev={{}} /> : <MenuFoldOutlined />}
-      </IconButton> */}
+      </IconButton>
       {headerContent}
     </Toolbar>
   );
@@ -58,7 +58,7 @@ const Header = ({ open, handleDrawerToggle }: Props) => {
     elevation: 0,
     sx: {
       borderBottom: `1px solid ${theme.palette.divider}`,
-      // boxShadow: theme.customShadows.z1
+      boxShadow: theme.customShadows.z1
     },
   };
 

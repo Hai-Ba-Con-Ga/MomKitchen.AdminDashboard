@@ -13,8 +13,8 @@ import MainCard from '../MainCard';
 import { ApartmentOutlined, HomeOutlined, HomeFilled } from '@ant-design/icons';
 
 // types
-import { OverrideIcon } from 'types/root';
-import { NavItemType } from 'types/menu';
+import { OverrideIcon } from '@/types/root';
+import { NavItemType } from '@/types/menu';
 
 // ==============================|| BREADCRUMBS ||============================== //
 
@@ -154,8 +154,8 @@ const Breadcrumbs = ({
             <Grid item>
               <MuiBreadcrumbs aria-label="breadcrumb" maxItems={maxItems || 8} separator={separatorIcon}>
                 <Typography component={Link} to="/" color="textSecondary" variant="h6" sx={{ textDecoration: 'none' }}>
-                  {icons && <HomeOutlined style={iconSX} />}
-                  {icon && !icons && <HomeFilled style={{ ...iconSX, marginRight: 0 }} />}
+                  {icons && <HomeOutlined rev={{}} style={iconSX} />}
+                  {icon && !icons && <HomeFilled rev={{}} style={{ ...iconSX, marginRight: 0 }} />}
                   {(!icon || icons) && 'Home'}
                 </Typography>
                 {mainContent}

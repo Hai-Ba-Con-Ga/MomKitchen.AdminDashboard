@@ -4,18 +4,22 @@
 import { Box, Typography } from "@mui/material";
 
 // types
-// import { RootStateProps } from 'types/root';
+import { RootStateProps } from '@/types/root';
 
 // project import
 import NavGroup from "./NavGroup";
 import menuItem from "../../../../../menu-items";
+import { menuWithDrawerOpen } from "@/base/store/selectors/app";
+import { useRecoilValue } from "recoil";
 
 // ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 
 const Navigation = () => {
   // const menu = useSelector((state: RootStateProps) => state.menu);
   // const { drawerOpen } = menu;
-
+  const drawerOpen = useRecoilValue(menuWithDrawerOpen);
+  console.log("menuItem => ", menuItem);
+  
   const navGroups = menuItem.items.map((item) => {
     switch (item.type) {
       case "group":
@@ -31,7 +35,7 @@ const Navigation = () => {
 
   return (
     // TODO
-    <Box sx={{ pt: menuItem ? 2 : 0, "& > ul:first-of-type": { mt: 0 } }}>
+    <Box sx={{ pt: drawerOpen ? 2 : 0, "& > ul:first-of-type": { mt: 0 }}}>
       {navGroups}
     </Box>
   );

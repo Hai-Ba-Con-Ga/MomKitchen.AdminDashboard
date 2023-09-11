@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { DashboardOutlined, GoldOutlined, HomeOutlined } from '@ant-design/icons';
 
 // type
-import { NavItemType } from 'types/menu';
+import { NavItemType } from '@/types/menu';
 
 // icons
 const icons = {
@@ -44,7 +44,7 @@ const dashboard: NavItemType = {
 
     {
       id: 'components',
-      title: <FormattedMessage id="components" />,
+      title: <FormattedMessage id="default" />,
       type: 'item',
       url: '/components-overview/buttons',
       icon: icons.GoldOutlined,

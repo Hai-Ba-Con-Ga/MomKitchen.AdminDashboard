@@ -9,10 +9,13 @@ import {
   ReactQueryDevtoolsPanel,
 } from "react-query/devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { RecoilRoot } from "recoil";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={new QueryClient()}>
+      <RecoilRoot>
       <App />
+      </RecoilRoot>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 // material-ui
 import { useMediaQuery, useTheme } from "@mui/material";
@@ -7,6 +7,8 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import NavCard from "./NavCard";
 import Navigation from "./Navigation";
 import SimpleBar from "../../../../components/third-party/SimpleBar";
+import { menuWithDrawerOpen } from "@/base/store/selectors/app";
+import { useRecoilValue } from "recoil";
 
 // types
 // import { RootStateProps } from 'types/root';
@@ -19,6 +21,7 @@ const DrawerContent = () => {
 
   // const menu = useSelector((state: RootStateProps) => state.menu);
   // const { drawerOpen } = menu;
+  const drawerOpen = useRecoilValue(menuWithDrawerOpen);
 
   return (
     <SimpleBar
@@ -29,7 +32,7 @@ const DrawerContent = () => {
         },
       }}>
       <Navigation />
-      {true && !matchDownMD && <NavCard />}
+      {drawerOpen && !matchDownMD && <NavCard />}
     </SimpleBar>
   );
 };

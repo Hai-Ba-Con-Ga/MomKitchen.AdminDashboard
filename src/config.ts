@@ -39,7 +39,7 @@ const config = {
   fontFamily: `'Public Sans', sans-serif`,
   i18n: "en",
   miniDrawer: false,
-  container: true,
+  container: false,
   mode: "light",
   presetColor: "default",
   themeDirection: "ltr",

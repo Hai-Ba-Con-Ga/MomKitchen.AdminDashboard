@@ -126,5 +126,11 @@
   "user-list": "User List",
   "user-profile": "User Profile",
   "utils": "Utils",
-  "widgets": "Widgets"
+  "widgets": "Widgets",
+  "promotion": "Promotion",
+  "kitchen" : "Kitchen",
+  "shipment": "Shipment",
+  "order": "Order",
+  "admin" : "Admin"
+  
 }

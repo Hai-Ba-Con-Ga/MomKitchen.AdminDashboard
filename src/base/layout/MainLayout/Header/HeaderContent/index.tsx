@@ -21,8 +21,7 @@ const HeaderContent = () => {
   // const { i18n } = useConfig();
 
   const matchesXs = useMediaQuery((theme: Theme) =>
-    // theme.breakpoints.down("md")
-    "md"
+    theme.breakpoints.down("md")
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

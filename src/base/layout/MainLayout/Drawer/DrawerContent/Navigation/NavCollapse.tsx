@@ -27,6 +27,8 @@ import { BorderOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 // types
 import { NavItemType } from "../../../../../../types/menu";
 import { RootStateProps } from "../../../../../../types/root";
+import { menuWithDrawerOpen } from "@/base/store/selectors/app";
+import { useRecoilValue } from "recoil";
 
 type VirtualElement = {
   getBoundingClientRect: () => ClientRect | DOMRect;
@@ -64,9 +66,7 @@ interface Props {
 const NavCollapse = ({ menu, level }: Props) => {
   const theme = useTheme();
 
-  // const menuState = useSelector((state: RootStateProps) => state.menu);
-  // const { drawerOpen } = menuState;
-  const drawerOpen = true;
+  const drawerOpen = useRecoilValue(menuWithDrawerOpen)
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string | null | undefined>(null);
 
@@ -81,8 +81,8 @@ const NavCollapse = ({ menu, level }: Props) => {
       | undefined
   ) => {
     setAnchorEl(null);
-    // TODO:
-    if (open) {
+    setAnchorEl(null);
+    if (drawerOpen) {
       setOpen(!open);
       setSelected(!selected ? menu.id : null);
     } else {

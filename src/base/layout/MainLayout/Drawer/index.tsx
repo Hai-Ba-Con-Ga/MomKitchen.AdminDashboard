@@ -20,8 +20,9 @@ interface Props {
 
 const MainDrawer = ({ open, handleDrawerToggle, window }: Props) => {
   const theme = useTheme();
+  console.log(theme.breakpoints.down("lg"));
+  
   const matchDownMD = useMediaQuery(theme.breakpoints.down("lg"));
-
   // responsive drawer container
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -29,6 +30,7 @@ const MainDrawer = ({ open, handleDrawerToggle, window }: Props) => {
   // header content
   const drawerContent = useMemo(() => <DrawerContent />, []);
   const drawerHeader = useMemo(() => <DrawerHeader open={open} />, [open]);
+console.log(matchDownMD);
 
   return (
     <Box
@@ -48,19 +50,20 @@ const MainDrawer = ({ open, handleDrawerToggle, window }: Props) => {
           onClose={handleDrawerToggle}
           ModalProps={{ keepMounted: true }}
           sx={{
-            display: { xs: "block", lg: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
+            display: { xs: 'block', lg: 'none' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
               width: drawerWidth,
               borderRight: `1px solid ${theme.palette.divider}`,
-              backgroundImage: "none",
-              boxShadow: "inherit",
-            },
-          }}>
+              backgroundImage: 'none',
+              boxShadow: 'inherit'
+            }
+          }}
+          >
           {drawerHeader}
           {drawerContent}
         </Drawer>
-      )}
+      )} 
     </Box>
   );
 };
