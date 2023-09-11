@@ -3,22 +3,23 @@ import { useTheme } from '@mui/material/styles';
 import { CardMedia, FormControlLabel, Grid, Radio, RadioGroup, Stack, Typography } from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
-import useConfig from 'hooks/useConfig';
+import MainCard from '../../../../../components/MainCard';
+// import useConfig from 'hooks/useConfig';
 
 // assets
-import defaultLayout from 'assets/images/customization/default.svg';
-import containerLayout from 'assets/images/customization/container.svg';
+import defaultLayout from '@/assets/images/customization/default.svg';
+import containerLayout from '@/assets/images/customization/container.svg';
 
 // ==============================|| CUSTOMIZATION - CONTAINER ||============================== //
 
 const ThemeWidth = () => {
   const theme = useTheme();
 
-  const { container, onChangeContainer } = useConfig();
-
+  // const { container, onChangeContainer } = useConfig();
+  const container = true;
   const handleContainerChange = () => {
-    onChangeContainer();
+    // onChangeContainer();
+    console.warn("TODO:")
   };
 
   return (
@@ -39,7 +40,7 @@ const ThemeWidth = () => {
                 content={false}
                 sx={{ bgcolor: !container ? 'primary.lighter' : 'secondary.lighter', p: 1 }}
                 border={false}
-                {...(!container && { boxShadow: true, shadow: theme.customShadows.primary })}
+                {...(!container ? { boxShadow: true, shadow: theme.customShadows.primary }:{})}
               >
                 <Stack spacing={1.25} alignItems="center">
                   <CardMedia component="img" src={defaultLayout} alt="Vertical" sx={{ borderRadius: 1, width: 64, height: 64 }} />

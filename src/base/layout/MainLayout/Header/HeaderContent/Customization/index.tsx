@@ -10,11 +10,11 @@ import ThemeMode from './ThemeMode';
 import ColorScheme from './ColorScheme';
 import ThemeWidth from './ThemeWidth';
 import ThemeFont from './ThemeFont';
-import MainCard from 'components/MainCard';
-import IconButton from 'components/@extended/IconButton';
-import AnimateButton from 'components/@extended/AnimateButton';
-import SimpleBar from 'components/third-party/SimpleBar';
-import useConfig from 'hooks/useConfig';
+import MainCard from '@/base/components/MainCard';
+import IconButton from '@/base/components/@extended/IconButton';
+import AnimateButton from '@/base/components/@extended/AnimateButton';
+import SimpleBar from '@/base/components/third-party/SimpleBar';
+import useConfig from '@/base/hooks/useConfig';
 
 // assets
 import {
@@ -63,7 +63,7 @@ const Customization = () => {
           aria-label="settings toggler"
         >
           <AnimateButton type="rotate">
-            <SettingOutlined />
+            <SettingOutlined rev={{}} />
           </AnimateButton>
         </IconButton>
       </Box>
@@ -92,7 +92,7 @@ const Customization = () => {
             content={false}
             secondary={
               <IconButton shape="rounded" size="small" onClick={handleToggle} sx={{ color: 'background.paper' }}>
-                <CloseCircleOutlined style={{ fontSize: '1.15rem' }} />
+                <CloseCircleOutlined rev={{}} style={{ fontSize: '1.15rem' }} />
               </IconButton>
             }
           >
@@ -133,7 +133,7 @@ const Customization = () => {
                         onClick={handleToggle}
                         aria-label="settings toggler"
                       >
-                        <LayoutOutlined />
+                        <LayoutOutlined rev={{}} />
                       </IconButton>
                       <Stack>
                         <Typography variant="subtitle1" color="textPrimary">
@@ -157,7 +157,7 @@ const Customization = () => {
                         onClick={handleToggle}
                         aria-label="settings toggler"
                       >
-                        <HighlightOutlined />
+                        <HighlightOutlined  rev={{}}/>
                       </IconButton>
                       <Stack>
                         <Typography variant="subtitle1" color="textPrimary">
@@ -181,7 +181,7 @@ const Customization = () => {
                         onClick={handleToggle}
                         aria-label="settings toggler"
                       >
-                        <BgColorsOutlined />
+                        <BgColorsOutlined rev={{}}/>
                       </IconButton>
                       <Stack>
                         <Typography variant="subtitle1" color="textPrimary">
@@ -205,7 +205,7 @@ const Customization = () => {
                         onClick={handleToggle}
                         aria-label="settings toggler"
                       >
-                        <BorderInnerOutlined />
+                        <BorderInnerOutlined rev={{}}/>
                       </IconButton>
                       <Stack>
                         <Typography variant="subtitle1" color="textPrimary">
@@ -229,7 +229,7 @@ const Customization = () => {
                         onClick={handleToggle}
                         aria-label="settings toggler"
                       >
-                        <FontColorsOutlined />
+                        <FontColorsOutlined rev={{}}/>
                       </IconButton>
                       <Stack>
                         <Typography variant="subtitle1" color="textPrimary">

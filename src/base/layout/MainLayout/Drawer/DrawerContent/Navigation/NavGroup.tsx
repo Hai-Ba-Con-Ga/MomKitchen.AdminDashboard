@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -9,8 +9,8 @@ import NavItem from './NavItem';
 import NavCollapse from './NavCollapse';
 
 // types
-import { NavItemType } from 'types/menu';
-import { RootStateProps } from 'types/root';
+import { NavItemType } from '@/types/menu';
+import { RootStateProps } from '@/types/root';
 
 // ==============================|| NAVIGATION - LIST GROUP ||============================== //
 
@@ -20,8 +20,13 @@ interface Props {
 
 const NavGroup = ({ item }: Props) => {
   const theme = useTheme();
-  const menu = useSelector((state: RootStateProps) => state.menu);
-  const { drawerOpen } = menu;
+  // const menu = useSelector((state: RootStateProps) => state.menu);
+  const { drawerOpen,openItem, openComponent, componentDrawerOpen } = {
+    openItem: ['dashboard'],
+    openComponent: 'buttons',
+    drawerOpen: false,
+    componentDrawerOpen: true
+  };
 
   const navCollapse = item.children?.map((menuItem) => {
     switch (menuItem.type) {

@@ -19,7 +19,7 @@ import {
 
 // project import
 import NavItem from "./NavItem";
-import Transitions from "components/@extended/Transitions";
+import Transitions from "@/base/components/@extended/Transitions";
 
 // assets
 import { BorderOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
@@ -66,7 +66,7 @@ const NavCollapse = ({ menu, level }: Props) => {
 
   // const menuState = useSelector((state: RootStateProps) => state.menu);
   // const { drawerOpen } = menuState;
-
+  const drawerOpen = true;
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string | null | undefined>(null);
 

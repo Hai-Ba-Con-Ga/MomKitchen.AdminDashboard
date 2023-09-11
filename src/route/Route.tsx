@@ -20,7 +20,7 @@ const routes: RouteObject[] = [
     element: <MainLayout />,
     children: [
       {
-        path: "/",
+        path: "",
         element: <h1>Click below to contact</h1>,
       },
     ],

@@ -1,7 +1,7 @@
 import React, { ReactNode, useRef, useState } from "react";
 import { Image } from "@/base/components/common/image";
 import { Box, DropdownList, DropdownListOptions } from "../layout";
-import { useDetectOutside } from "@/base/components/hooks";
+import { useDetectOutside } from "@/base/hooks";
 import { motion } from "framer-motion";
 import { Select } from "../select";
 import SelectItem, { SelectItemProps } from "../select/SelectItem";

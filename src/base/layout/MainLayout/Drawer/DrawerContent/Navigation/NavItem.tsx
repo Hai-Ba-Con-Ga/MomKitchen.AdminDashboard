@@ -1,17 +1,17 @@
 import { forwardRef, useEffect, ForwardRefExoticComponent, RefAttributes } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 
 // project import
-import { activeItem } from 'store/reducers/menu';
+// import { activeItem } from 'store/reducers/menu';
 
 // types
-import { LinkTarget, NavItemType } from 'types/menu';
-import { RootStateProps } from 'types/root';
+import { LinkTarget, NavItemType } from '@/types/menu';
+import { RootStateProps } from '@/types/root';
 
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
 
@@ -22,9 +22,14 @@ interface Props {
 
 const NavItem = ({ item, level }: Props) => {
   const theme = useTheme();
-  const dispatch = useDispatch();
-  const menu = useSelector((state: RootStateProps) => state.menu);
-  const { drawerOpen, openItem } = menu;
+  // const dispatch = useDispatch();
+  // const menu = useSelector((state: RootStateProps) => state.menu);
+  const { drawerOpen, openItem,openComponent,componentDrawerOpen } = {
+    openItem: ['dashboard'],
+    openComponent: 'buttons',
+    drawerOpen: false,
+    componentDrawerOpen: true
+  };
 
   let itemTarget: LinkTarget = '_self';
   if (item.target) {
@@ -51,12 +56,12 @@ const NavItem = ({ item, level }: Props) => {
   useEffect(() => {
     if (pathname && pathname.includes('product-details')) {
       if (item.url && item.url.includes('product-details')) {
-        dispatch(activeItem({ openItem: [item.id] }));
+        // dispatch(activeItem({ openItem: [item.id] }));
       }
     }
 
     if (pathname === item.url) {
-      dispatch(activeItem({ openItem: [item.id] }));
+      // dispatch(activeItem({ openItem: [item.id] }));
     }
     // eslint-disable-next-line
   }, [pathname]);

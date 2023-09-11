@@ -1,31 +1,31 @@
 import { useState, ChangeEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { CardMedia, FormControlLabel, Grid, Radio, RadioGroup, Stack, Typography } from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
-import useConfig from 'hooks/useConfig';
-import { openDrawer } from 'store/reducers/menu';
+import MainCard from '@/base/components/MainCard';
+import useConfig from '@/base/hooks/useConfig';
+// import { openDrawer } from 'store/reducers/menu';
 
 // assets
-import defaultLayout from 'assets/images/customization/default.svg';
-import rtlLayout from 'assets/images/customization/rtl.svg';
-import miniMenu from 'assets/images/customization/mini-menu.svg';
+import defaultLayout from '@/assets/images/customization/default.svg';
+import rtlLayout from '@/assets/images/customization/rtl.svg';
+import miniMenu from '@/assets/images/customization/mini-menu.svg';
 
 // types
-import { RootStateProps } from 'types/root';
+import { RootStateProps } from '@/types/root';
 
 // ==============================|| CUSTOMIZATION - LAYOUT ||============================== //
 
 const ThemeLayout = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const { miniDrawer, themeDirection, onChangeDirection, onChangeMiniDrawer } = useConfig();
-  const { drawerOpen } = useSelector((state: RootStateProps) => state.menu);
+  // const { drawerOpen } = useSelector((state: RootStateProps) => state.menu);
 
   let initialTheme = 'default';
   if (miniDrawer === true) initialTheme = 'mini';
@@ -37,15 +37,15 @@ const ThemeLayout = () => {
     setValue(newValue);
     if (newValue === 'default') {
       onChangeDirection('ltr');
-      if (!drawerOpen) {
-        dispatch(openDrawer({ drawerOpen: true }));
-      }
+      // if (!drawerOpen) {
+      //   dispatch(openDrawer({ drawerOpen: true }));
+      // }
     }
     if (newValue === 'mini') {
       onChangeMiniDrawer(true);
-      if (drawerOpen) {
-        dispatch(openDrawer({ drawerOpen: false }));
-      }
+      // if (drawerOpen) {
+      //   dispatch(openDrawer({ drawerOpen: false }));
+      // }
     }
     if (newValue === 'rtl') {
       onChangeDirection('rtl');

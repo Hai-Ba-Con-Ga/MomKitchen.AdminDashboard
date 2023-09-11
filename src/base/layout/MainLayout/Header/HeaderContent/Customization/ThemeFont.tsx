@@ -5,10 +5,10 @@ import { useTheme } from '@mui/material/styles';
 import { Box, FormControlLabel, Grid, Radio, RadioGroup, Stack, Typography } from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
-import useConfig from 'hooks/useConfig';
+import MainCard from '@/base/components/MainCard';
+import useConfig from '@/base/hooks/useConfig';
 
-import { FontFamily } from 'types/config';
+import { FontFamily } from '@/types/config';
 
 // ==============================|| CUSTOMIZATION - FONT FAMILY ||============================== //
 

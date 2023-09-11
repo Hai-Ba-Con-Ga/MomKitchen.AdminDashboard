@@ -19,15 +19,15 @@ import {
 } from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
-import IconButton from 'components/@extended/IconButton';
-import Transitions from 'components/@extended/Transitions';
+import MainCard from '@/base/components/MainCard';
+import IconButton from '@/base/components/@extended/IconButton';
+import Transitions from '@/base/components/@extended/Transitions';
 
 // assets
-import avatar2 from 'assets/images/users/avatar-2.png';
-import avatar3 from 'assets/images/users/avatar-3.png';
-import avatar4 from 'assets/images/users/avatar-4.png';
-import avatar5 from 'assets/images/users/avatar-5.png';
+import avatar2 from '@/assets/images/users/avatar-2.png';
+import avatar3 from '@/assets/images/users/avatar-3.png';
+import avatar4 from '@/assets/images/users/avatar-4.png';
+import avatar5 from '@/assets/images/users/avatar-5.png';
 import { MailOutlined, CloseOutlined } from '@ant-design/icons';
 
 // sx styles

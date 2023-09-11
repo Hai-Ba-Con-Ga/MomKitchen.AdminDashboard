@@ -5,14 +5,14 @@ import { useTheme } from '@mui/material/styles';
 import { CardMedia, FormControlLabel, Grid, Radio, RadioGroup, Stack, Typography } from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
-import useConfig from 'hooks/useConfig';
+import MainCard from '@/base/components/MainCard';
+import useConfig from '@/base/hooks/useConfig';
 
 // assets
-import defaultLayout from 'assets/images/customization/default.svg';
-import darkLayout from 'assets/images/customization/dark.svg';
+import defaultLayout from '@/assets/images/customization/default.svg';
+import darkLayout from '@/assets/images/customization/dark.svg';
 
-import { ThemeMode } from 'types/config';
+import { ThemeMode } from '@/types/config';
 
 // ==============================|| CUSTOMIZATION - MODE ||============================== //
 

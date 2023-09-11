@@ -5,13 +5,13 @@ import { useTheme } from '@mui/material/styles';
 import { Box, ClickAwayListener, Grid, List, ListItemButton, ListItemText, Paper, Popper, Typography, useMediaQuery } from '@mui/material';
 
 // project import
-import IconButton from 'components/@extended/IconButton';
-import Transitions from 'components/@extended/Transitions';
-import useConfig from 'hooks/useConfig';
+import IconButton from '@/base/components/@extended/IconButton';
+import Transitions from '@/base/components/@extended/Transitions';
+import useConfig from '@/base/hooks/useConfig';
 
 // assets
 import { TranslationOutlined } from '@ant-design/icons';
-import { I18n } from 'types/config';
+import { I18n } from '@/types/config';
 
 // ==============================|| HEADER CONTENT - LOCALIZATION ||============================== //
 

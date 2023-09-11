@@ -21,17 +21,17 @@ import {
 } from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
-import Dot from 'components/@extended/Dot';
-import IconButton from 'components/@extended/IconButton';
-import Transitions from 'components/@extended/Transitions';
-import { drawerWidth } from 'config';
+import MainCard from '@/base/components/MainCard';
+import Dot from '@/base/components/@extended/Dot';
+import IconButton from '@/base/components/@extended/IconButton';
+import Transitions from '@/base/components/@extended/Transitions';
+import { drawerWidth } from '@/config';
 
 // assets
 import { ArrowRightOutlined, WindowsOutlined } from '@ant-design/icons';
-import backgroundVector from 'assets/images/mega-menu/back.svg';
-import imageChart from 'assets/images/mega-menu/chart.svg';
-import AnimateButton from 'components/@extended/AnimateButton';
+import backgroundVector from '@/assets/images/mega-menu/back.svg';
+import imageChart from '@/assets/images/mega-menu/chart.svg';
+import AnimateButton from '@/base/components/@extended/AnimateButton';
 
 // ==============================|| HEADER CONTENT - MEGA MENU SECTION ||============================== //
 

@@ -8,8 +8,8 @@ import { AppBar, Box, ClickAwayListener, Paper, Popper, Toolbar } from '@mui/mat
 import Search from './Search';
 import Profile from './Profile';
 import Localization from './Localization';
-import IconButton from 'components/@extended/IconButton';
-import Transitions from 'components/@extended/Transitions';
+import IconButton from '@/base/components/@extended/IconButton';
+import Transitions from '@/base/components/@extended/Transitions';
 
 // assets
 import { MoreOutlined } from '@ant-design/icons';

@@ -5,16 +5,16 @@ import { useTheme } from '@mui/material/styles';
 import { Box, ButtonBase, CardContent, ClickAwayListener, Grid, Paper, Popper, Stack, Tab, Tabs, Tooltip, Typography } from '@mui/material';
 
 // project import
-import Avatar from 'components/@extended/Avatar';
-import MainCard from 'components/MainCard';
-import Transitions from 'components/@extended/Transitions';
-import IconButton from 'components/@extended/IconButton';
-import useAuth from 'hooks/useAuth';
+import Avatar from '@/base/components/@extended/Avatar';
+import MainCard from '@/base/components/MainCard';
+import Transitions from '@/base/components/@extended/Transitions';
+import IconButton from '@/base/components/@extended/IconButton';
+import useAuth from '@/base/hooks/useAuth';
 import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
 
 // assets
-import avatar1 from 'assets/images/users/avatar-1.png';
+import avatar1 from '@/assets/images/users/avatar-1.png';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 
 // types

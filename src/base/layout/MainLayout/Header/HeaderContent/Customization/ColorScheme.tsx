@@ -5,16 +5,16 @@ import { alpha, useTheme } from '@mui/material/styles';
 import { CardMedia, FormControlLabel, Grid, Radio, RadioGroup, Stack, Typography } from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
-import useConfig from 'hooks/useConfig';
+import MainCard from '@/base/components/MainCard';
+import useConfig from '@/base/hooks/useConfig';
 
 // third-party
 import { presetDarkPalettes, presetPalettes, PalettesProps } from '@ant-design/colors';
 
 // assets
-import colorLayout from 'assets/images/customization/theme-color.svg';
+import colorLayout from '@/assets/images/customization/theme-color.svg';
 
-import { PresetColor } from 'types/config';
+import { PresetColor } from '@/types/config';
 
 interface ColorProps {
   id: PresetColor;

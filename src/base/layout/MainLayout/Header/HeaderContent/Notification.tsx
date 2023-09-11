@@ -21,9 +21,9 @@ import {
 } from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
-import IconButton from 'components/@extended/IconButton';
-import Transitions from 'components/@extended/Transitions';
+import MainCard from '@/base/components/MainCard';
+import IconButton from '@/base/components/@extended/IconButton';
+import Transitions from '@/base/components/@extended/Transitions';
 
 // assets
 import { BellOutlined, CheckCircleOutlined, GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
