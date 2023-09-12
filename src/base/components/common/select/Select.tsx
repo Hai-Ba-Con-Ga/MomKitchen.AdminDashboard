@@ -10,7 +10,7 @@ import React, {
   useState,
 } from "react";
 import { deepEqual } from "@/utils/dataHelper";
-import { useDetectOutside } from "@/base/components/hooks";
+import { useDetectOutside } from "@/base/hooks";
 
 const selectStyle = cva("relative", {
   variants: {

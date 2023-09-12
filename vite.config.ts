@@ -17,6 +17,7 @@ export default defineConfig({
     alias: {
       "@ui": "/src/components/",
       "@": "/src",
+      "@base" :"/src/base/"
     },
   },
 });
