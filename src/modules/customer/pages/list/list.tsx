@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useState, Fragment } from 'react';
+import { useCallback, useEffect, useMemo, useState, Fragment } from "react";
 
 // material-ui
-import { alpha, useTheme } from '@mui/material/styles';
+import { alpha, useTheme } from "@mui/material/styles";
 import {
   Button,
   Chip,
@@ -14,29 +14,50 @@ import {
   TableRow,
   Tooltip,
   Typography,
-  useMediaQuery
-} from '@mui/material';
+  useMediaQuery,
+} from "@mui/material";
 
 // third-party
 // import NumberFormat from 'react-number-format';
-import { useFilters, useExpanded, useGlobalFilter, useRowSelect, useSortBy, useTable, usePagination, Column } from 'react-table';
+import {
+  useFilters,
+  useExpanded,
+  useGlobalFilter,
+  useRowSelect,
+  useSortBy,
+  useTable,
+  usePagination,
+  Column,
+} from "react-table";
 
 // project import
-import CustomerView from '@/modules/customer/components/CustomerView';
+import CustomerView from "@/modules/customer/components/CustomerView";
 // import AddCustomer from 'sections/apps/customer/AddCustomer';
-import Avatar from '@/base/components/@extended/Avatar';
-import IconButton from '@/base/components/@extended/IconButton';
-import MainCard from '@/base/components/MainCard';
-import ScrollX from '@/base/components/ScrollX';
-import makeData from '@/data/react-table';
-import { renderFilterTypes, GlobalFilter } from '@/base/utils/react-table';
-import { HeaderSort, IndeterminateCheckbox, SortingSelect, TablePagination, TableRowSelection } from '@/base/components/third-party/ReactTable';
+import Avatar from "@/base/components/@extended/Avatar";
+import IconButton from "@/base/components/@extended/IconButton";
+import MainCard from "@/base/components/MainCard";
+import ScrollX from "@/base/components/ScrollX";
+import makeData from "@/data/react-table";
+import { renderFilterTypes, GlobalFilter } from "@/base/utils/react-table";
+import {
+  HeaderSort,
+  IndeterminateCheckbox,
+  SortingSelect,
+  TablePagination,
+  TableRowSelection,
+} from "@/base/components/third-party/ReactTable";
 
 // assets
-import { CloseOutlined, PlusOutlined, EyeTwoTone, EditTwoTone, DeleteTwoTone } from '@ant-design/icons';
-import { NumberFormatBase } from 'react-number-format';
+import {
+  CloseOutlined,
+  PlusOutlined,
+  EyeTwoTone,
+  EditTwoTone,
+  DeleteTwoTone,
+} from "@ant-design/icons";
+import NumberFormat from "react-number-format";
 
-const avatarImage = (s:string)=>'@/assets/images/users'+s;
+const avatarImage = (s: string) => "@/assets/images/users" + s;
 
 // ==============================|| REACT TABLE ||============================== //
 
@@ -48,12 +69,18 @@ interface Props {
   renderRowSubComponent: any;
 }
 
-function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent, handleAdd }: Props) {
+function ReactTable({
+  columns,
+  data,
+  getHeaderProps,
+  renderRowSubComponent,
+  handleAdd,
+}: Props) {
   const theme = useTheme();
-  const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const filterTypes = useMemo(() => renderFilterTypes, []);
-  const sortBy = { id: 'fatherName', desc: false };
+  const sortBy = { id: "fatherName", desc: false };
 
   const {
     getTableProps,
@@ -77,7 +104,7 @@ function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent, hand
     // @ts-ignore
     setGlobalFilter,
     // @ts-ignore
-    setSortBy
+    setSortBy,
   } = useTable(
     {
       columns,
@@ -85,7 +112,12 @@ function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent, hand
       // @ts-ignore
       filterTypes,
       // @ts-ignore
-      initialState: { pageIndex: 0, pageSize: 10, hiddenColumns: ['avatar', 'email'], sortBy: [sortBy] }
+      initialState: {
+        pageIndex: 0,
+        pageSize: 10,
+        hiddenColumns: ["avatar", "email"],
+        sortBy: [sortBy],
+      },
     },
     useGlobalFilter,
     useFilters,
@@ -97,9 +129,16 @@ function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent, hand
 
   useEffect(() => {
     if (matchDownSM) {
-      setHiddenColumns(['age', 'contact', 'visits', 'email', 'status', 'avatar']);
+      setHiddenColumns([
+        "age",
+        "contact",
+        "visits",
+        "email",
+        "status",
+        "avatar",
+      ]);
     } else {
-      setHiddenColumns(['avatar', 'email']);
+      setHiddenColumns(["avatar", "email"]);
     }
     // eslint-disable-next-line
   }, [matchDownSM]);
@@ -109,21 +148,30 @@ function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent, hand
       <TableRowSelection selected={Object.keys(selectedRowIds).length} />
       <Stack spacing={3}>
         <Stack
-          direction={matchDownSM ? 'column' : 'row'}
+          direction={matchDownSM ? "column" : "row"}
           spacing={1}
           justifyContent="space-between"
           alignItems="center"
-          sx={{ p: 3, pb: 0 }}
-        >
+          sx={{ p: 3, pb: 0 }}>
           <GlobalFilter
             preGlobalFilteredRows={preGlobalFilteredRows}
             globalFilter={globalFilter}
             setGlobalFilter={setGlobalFilter}
             size="small"
           />
-          <Stack direction={matchDownSM ? 'column' : 'row'} alignItems="center" spacing={1}>
-            <SortingSelect sortBy={sortBy.id} setSortBy={setSortBy} allColumns={allColumns} />
-            <Button variant="contained" startIcon={<PlusOutlined rev={{}} />} onClick={handleAdd}>
+          <Stack
+            direction={matchDownSM ? "column" : "row"}
+            alignItems="center"
+            spacing={1}>
+            <SortingSelect
+              sortBy={sortBy.id}
+              setSortBy={setSortBy}
+              allColumns={allColumns}
+            />
+            <Button
+              variant="contained"
+              startIcon={<PlusOutlined rev={{}} />}
+              onClick={handleAdd}>
               Add Customer
             </Button>
           </Stack>
@@ -131,10 +179,16 @@ function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent, hand
 
         <Table {...getTableProps()}>
           <TableHead>
-            {headerGroups.map((headerGroup:any) => (
-              <TableRow {...headerGroup.getHeaderGroupProps()} sx={{ '& > th:first-of-type': { width: '58px' } }}>
+            {headerGroups.map((headerGroup: any) => (
+              <TableRow
+                {...headerGroup.getHeaderGroupProps()}
+                sx={{ "& > th:first-of-type": { width: "58px" } }}>
                 {headerGroup.headers.map((column: any) => (
-                  <TableCell {...column.getHeaderProps([{ className: column.className }, getHeaderProps(column)])}>
+                  <TableCell
+                    {...column.getHeaderProps([
+                      { className: column.className },
+                      getHeaderProps(column),
+                    ])}>
                     <HeaderSort column={column} />
                   </TableCell>
                 ))}
@@ -153,19 +207,35 @@ function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent, hand
                     onClick={() => {
                       row.toggleRowSelected();
                     }}
-                    sx={{ cursor: 'pointer', bgcolor: row.isSelected ? alpha(theme.palette.primary.light, 0.35) : 'inherit' }}
-                  >
+                    sx={{
+                      cursor: "pointer",
+                      bgcolor: row.isSelected
+                        ? alpha(theme.palette.primary.light, 0.35)
+                        : "inherit",
+                    }}>
                     {row.cells.map((cell: any) => (
-                      <TableCell {...cell.getCellProps([{ className: cell.column.className }])}>{cell.render('Cell')}</TableCell>
+                      <TableCell
+                        {...cell.getCellProps([
+                          { className: cell.column.className },
+                        ])}>
+                        {cell.render("Cell")}
+                      </TableCell>
                     ))}
                   </TableRow>
-                  {row.isExpanded && renderRowSubComponent({ row, rowProps, visibleColumns })}
+                  {row.isExpanded &&
+                    renderRowSubComponent({ row, rowProps, visibleColumns })}
                 </Fragment>
               );
             })}
-            <TableRow sx={{ '&:hover': { bgcolor: 'transparent !important' } }}>
+            <TableRow sx={{ "&:hover": { bgcolor: "transparent !important" } }}>
               <TableCell sx={{ p: 2, py: 3 }} colSpan={9}>
-                <TablePagination gotoPage={gotoPage} rows={rows} setPageSize={setPageSize} pageSize={pageSize} pageIndex={pageIndex} />
+                <TablePagination
+                  gotoPage={gotoPage}
+                  rows={rows}
+                  setPageSize={setPageSize}
+                  pageSize={pageSize}
+                  pageIndex={pageIndex}
+                />
               </TableCell>
             </TableRow>
           </TableBody>
@@ -193,27 +263,40 @@ const CustomerList = () => {
   const columns = useMemo(
     () => [
       {
-        title: 'Row Selection',
+        title: "Row Selection",
         Header: ({ getToggleAllPageRowsSelectedProps }: any) => (
-          <IndeterminateCheckbox indeterminate {...getToggleAllPageRowsSelectedProps()} />
+          <IndeterminateCheckbox
+            indeterminate
+            {...getToggleAllPageRowsSelectedProps()}
+          />
         ),
-        accessor: 'selection',
-        Cell: ({ row }: any) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
-        disableSortBy: true
+        accessor: "selection",
+        Cell: ({ row }: any) => (
+          <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+        ),
+        disableSortBy: true,
       },
       {
-        Header: '#',
-        accessor: 'id',
-        className: 'cell-center'
+        Header: "#",
+        accessor: "id",
+        className: "cell-center",
       },
       {
-        Header: 'Customer Name',
-        accessor: 'fatherName',
+        Header: "Customer Name",
+        accessor: "fatherName",
         Cell: ({ row }: any) => {
           const { values } = row;
           return (
             <Stack direction="row" spacing={1.5} alignItems="center">
-              <Avatar alt="Avatar 1" size="sm" src={avatarImage(`./avatar-${!values.avatar ? 1 : values.avatar}.png`).default} />
+              <Avatar
+                alt="Avatar 1"
+                size="sm"
+                src={
+                  avatarImage(
+                    `./avatar-${!values.avatar ? 1 : values.avatar}.png`
+                  ).default
+                }
+              />
               <Stack spacing={0}>
                 <Typography variant="subtitle1">{values.fatherName}</Typography>
                 <Typography variant="caption" color="textSecondary">
@@ -222,69 +305,110 @@ const CustomerList = () => {
               </Stack>
             </Stack>
           );
-        }
+        },
       },
       {
-        Header: 'Avatar',
-        accessor: 'avatar',
-        disableSortBy: true
+        Header: "Avatar",
+        accessor: "avatar",
+        disableSortBy: true,
       },
       {
-        Header: 'Email',
-        accessor: 'email'
+        Header: "Email",
+        accessor: "email",
       },
       {
-        Header: 'Contact',
-        accessor: 'contact',
+        Header: "Contact",
+        accessor: "contact",
         // eslint-disable-next-line
-        Cell: ({ value }) => <NumberFormatBase displayType="text" format="+1 (###) ###-####" mask="_" defaultValue={value} />
+        Cell: ({ value }) => (
+          <NumberFormat
+            displayType="text"
+            format="+1 (###) ###-####"
+            mask="_"
+            defaultValue={value}
+          />
+        ),
       },
       {
-        Header: 'Order',
-        accessor: 'age',
-        className: 'cell-right'
+        Header: "Order",
+        accessor: "age",
+        className: "cell-right",
       },
       {
-        Header: 'Spent',
-        accessor: 'visits',
-        className: 'cell-right',
-        Cell: ({ value }: any) => <NumberFormatBase value={value} displayType="text" thousandSeparator prefix="$" />
+        Header: "Spent",
+        accessor: "visits",
+        className: "cell-right",
+        Cell: ({ value }: any) => (
+          <NumberFormat
+            value={value}
+            displayType="text"
+            thousandSeparator
+            prefix="$"
+          />
+        ),
       },
       {
-        Header: 'Status',
-        accessor: 'status',
+        Header: "Status",
+        accessor: "status",
         Cell: ({ value }: any) => {
           switch (value) {
-            case 'Complicated':
-              return <Chip color="error" label="Complicated" size="small" variant="filled" />;
-            case 'Relationship':
-              return <Chip color="success" label="Relationship" size="small" variant="filled" />;
-            case 'Single':
+            case "Complicated":
+              return (
+                <Chip
+                  color="error"
+                  label="Complicated"
+                  size="small"
+                  variant="filled"
+                />
+              );
+            case "Relationship":
+              return (
+                <Chip
+                  color="success"
+                  label="Relationship"
+                  size="small"
+                  variant="filled"
+                />
+              );
+            case "Single":
             default:
-              return <Chip color="primary" label="Single" size="small" variant="filled" />;
+              return (
+                <Chip
+                  color="primary"
+                  label="Single"
+                  size="small"
+                  variant="filled"
+                />
+              );
           }
-        }
+        },
       },
       {
-        Header: 'Actions',
-        className: 'cell-center',
+        Header: "Actions",
+        className: "cell-center",
         disableSortBy: true,
         Cell: ({ row }: any) => {
           const collapseIcon = row.isExpanded ? (
-            <CloseOutlined rev={{}} style={{ color: theme.palette.error.main }} />
+            <CloseOutlined
+              rev={{}}
+              style={{ color: theme.palette.error.main }}
+            />
           ) : (
             <EyeTwoTone rev={{}} twoToneColor={theme.palette.secondary.main} />
           );
           return (
-            <Stack direction="row" alignItems="center" justifyContent="center" spacing={0}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="center"
+              spacing={0}>
               <Tooltip title="View">
                 <IconButton
                   color="secondary"
                   onClick={(e: any) => {
                     e.stopPropagation();
                     row.toggleRowExpanded();
-                  }}
-                >
+                  }}>
                   {collapseIcon}
                 </IconButton>
               </Tooltip>
@@ -295,9 +419,11 @@ const CustomerList = () => {
                     e.stopPropagation();
                     setCustomer(row.values);
                     handleAdd();
-                  }}
-                >
-                  <EditTwoTone rev={{}} twoToneColor={theme.palette.primary.main} />
+                  }}>
+                  <EditTwoTone
+                    rev={{}}
+                    twoToneColor={theme.palette.primary.main}
+                  />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Delete">
@@ -305,21 +431,26 @@ const CustomerList = () => {
                   color="error"
                   onClick={(e: any) => {
                     e.stopPropagation();
-                  }}
-                >
-                  <DeleteTwoTone rev={{}} twoToneColor={theme.palette.error.main} />
+                  }}>
+                  <DeleteTwoTone
+                    rev={{}}
+                    twoToneColor={theme.palette.error.main}
+                  />
                 </IconButton>
               </Tooltip>
             </Stack>
           );
-        }
-      }
+        },
+      },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [theme]
   );
 
-  const renderRowSubComponent = useCallback(({ row }:any) => <CustomerView data={data[row.id]} />, [data]);
+  const renderRowSubComponent = useCallback(
+    ({ row }: any) => <CustomerView data={data[row.id]} />,
+    [data]
+  );
 
   return (
     <MainCard content={false}>
@@ -334,7 +465,12 @@ const CustomerList = () => {
       </ScrollX>
 
       {/* add customer dialog */}
-      <Dialog maxWidth="sm" fullWidth onClose={handleAdd} open={add} sx={{ '& .MuiDialog-paper': { p: 0 } }}>
+      <Dialog
+        maxWidth="sm"
+        fullWidth
+        onClose={handleAdd}
+        open={add}
+        sx={{ "& .MuiDialog-paper": { p: 0 } }}>
         {/* {add && <AddCustomer customer={customer} onCancel={handleAdd} />} */}
       </Dialog>
     </MainCard>

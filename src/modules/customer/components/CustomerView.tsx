@@ -1,5 +1,5 @@
 // material-ui
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 import {
   useMediaQuery,
   Grid,
@@ -13,33 +13,41 @@ import {
   Stack,
   TableCell,
   TableRow,
-  Typography
-} from '@mui/material';
+  Typography,
+} from "@mui/material";
 
 // third-party
 // import * as NumberFormat from 'react-number-format';
 
 // project import
-import Avatar from '@/base/components/@extended/Avatar';
-import MainCard from '@/base/components/MainCard';
+import Avatar from "@/base/components/@extended/Avatar";
+import MainCard from "@/base/components/MainCard";
 
 // assets
-import { EnvironmentOutlined, LinkOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
-import { NumberFormatBase } from 'react-number-format';
+import {
+  EnvironmentOutlined,
+  LinkOutlined,
+  MailOutlined,
+  PhoneOutlined,
+} from "@ant-design/icons";
+import NumberFormat from "react-number-format";
 
 // const avatarImage = require.context('assets/images/users', true);
-const avatarImage = (s:string)=>'@/assets/images/users'+s;
+const avatarImage = (s: string) => "@/assets/images/users" + s;
 
 // ==============================|| CUSTOMER - VIEW ||============================== //
 
 const CustomerView = ({ data }: any) => {
   const theme = useTheme();
-  const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
+  const matchDownMD = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <TableRow sx={{ '&:hover': { bgcolor: `transparent !important` } }}>
+    <TableRow sx={{ "&:hover": { bgcolor: `transparent !important` } }}>
       <TableCell colSpan={8} sx={{ p: 2.5 }}>
-        <Grid container spacing={2.5} sx={{ pl: { xs: 0, sm: 5, md: 6, lg: 10, xl: 12 } }}>
+        <Grid
+          container
+          spacing={2.5}
+          sx={{ pl: { xs: 0, sm: 5, md: 6, lg: 10, xl: 12 } }}>
           <Grid item xs={12} sm={5} md={4} lg={3}>
             <MainCard>
               <Chip
@@ -47,16 +55,20 @@ const CustomerView = ({ data }: any) => {
                 size="small"
                 color="primary"
                 sx={{
-                  position: 'absolute',
+                  position: "absolute",
                   right: 10,
                   top: 10,
-                  fontSize: '0.675rem'
+                  fontSize: "0.675rem",
                 }}
               />
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Stack spacing={2.5} alignItems="center">
-                    <Avatar alt="Avatar 1" size="xl" src={avatarImage(`./avatar-${data.avatar}.png`).default} />
+                    <Avatar
+                      alt="Avatar 1"
+                      size="xl"
+                      src={avatarImage(`./avatar-${data.avatar}.png`).default}
+                    />
                     <Stack spacing={0.5} alignItems="center">
                       <Typography variant="h5">{data.fatherName}</Typography>
                       <Typography color="secondary">{data.role}</Typography>
@@ -67,7 +79,10 @@ const CustomerView = ({ data }: any) => {
                   <Divider />
                 </Grid>
                 <Grid item xs={12}>
-                  <Stack direction="row" justifyContent="space-around" alignItems="center">
+                  <Stack
+                    direction="row"
+                    justifyContent="space-around"
+                    alignItems="center">
                     <Stack spacing={0.5} alignItems="center">
                       <Typography variant="h5">{data.age}</Typography>
                       <Typography color="secondary">Age</Typography>
@@ -88,7 +103,10 @@ const CustomerView = ({ data }: any) => {
                   <Divider />
                 </Grid>
                 <Grid item xs={12}>
-                  <List component="nav" aria-label="main mailbox folders" sx={{ py: 0 }}>
+                  <List
+                    component="nav"
+                    aria-label="main mailbox folders"
+                    sx={{ py: 0 }}>
                     <ListItem>
                       <ListItemIcon>
                         <MailOutlined rev={{}} />
@@ -99,17 +117,22 @@ const CustomerView = ({ data }: any) => {
                     </ListItem>
                     <ListItem>
                       <ListItemIcon>
-                        <PhoneOutlined rev={{}}/>
+                        <PhoneOutlined rev={{}} />
                       </ListItemIcon>
                       <ListItemSecondaryAction>
                         <Typography align="right">
-                          <NumberFormatBase displayType="text" format="+1 (###) ###-####" mask="_" defaultValue={data.contact} />
+                          <NumberFormat
+                            displayType="text"
+                            format="+1 (###) ###-####"
+                            mask="_"
+                            defaultValue={data.contact}
+                          />
                         </Typography>
                       </ListItemSecondaryAction>
                     </ListItem>
                     <ListItem>
                       <ListItemIcon>
-                        <EnvironmentOutlined rev={{}}/>
+                        <EnvironmentOutlined rev={{}} />
                       </ListItemIcon>
                       <ListItemSecondaryAction>
                         <Typography align="right">{data.country}</Typography>
@@ -117,10 +140,13 @@ const CustomerView = ({ data }: any) => {
                     </ListItem>
                     <ListItem>
                       <ListItemIcon>
-                        <LinkOutlined rev={{}}/>
+                        <LinkOutlined rev={{}} />
                       </ListItemIcon>
                       <ListItemSecondaryAction>
-                        <Link align="right" href="https://google.com" target="_blank">
+                        <Link
+                          align="right"
+                          href="https://google.com"
+                          target="_blank">
                           https://anshan.dh.url
                         </Link>
                       </ListItemSecondaryAction>
@@ -164,7 +190,12 @@ const CustomerView = ({ data }: any) => {
                         <Stack spacing={0.5}>
                           <Typography color="secondary">Zip Code</Typography>
                           <Typography>
-                            <NumberFormatBase displayType="text" format="### ###" mask="_" defaultValue={data.contact} />
+                            <NumberFormat
+                              displayType="text"
+                              format="### ###"
+                              mask="_"
+                              defaultValue={data.contact}
+                            />
                           </Typography>
                         </Stack>
                       </Grid>
@@ -180,7 +211,8 @@ const CustomerView = ({ data }: any) => {
               </MainCard>
               <MainCard title="About me">
                 <Typography color="secondary">
-                  Hello, I’m {data.fatherName} {data.role} based in international company, {data.about}
+                  Hello, I’m {data.fatherName} {data.role} based in
+                  international company, {data.about}
                 </Typography>
               </MainCard>
             </Stack>
