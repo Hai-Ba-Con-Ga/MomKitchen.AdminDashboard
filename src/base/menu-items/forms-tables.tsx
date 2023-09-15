@@ -13,7 +13,7 @@ import {
 } from '@ant-design/icons';
 
 // type
-import { NavItemType } from 'types/menu';
+import { NavItemType } from '@/types/menu';
 
 // icons
 const icons = {

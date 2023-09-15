@@ -1,8 +1,8 @@
 // types
-import { PaletteThemeProps } from 'types/theme';
+import { PaletteThemeProps } from '@/types/theme';
 import { PalettesProps } from '@ant-design/colors';
 import { PaletteColorOptions } from '@mui/material/styles';
-import { ThemeMode } from 'types/config';
+import { ThemeMode } from '@/types/config';
 
 // ==============================|| PRESET THEME - GREEN THEME7 ||============================== //
 

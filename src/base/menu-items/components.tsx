@@ -2,7 +2,7 @@
 import { FormattedMessage } from 'react-intl';
 
 // project import
-import { NavItemType } from 'types/menu';
+import { NavItemType } from '@/types/menu';
 
 // ==============================|| MENU ITEMS - COMPONENTS ||============================== //
 

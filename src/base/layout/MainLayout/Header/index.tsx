@@ -45,7 +45,7 @@ const Header = ({ open, handleDrawerToggle }: Props) => {
           bgcolor: open ? iconBackColorOpen : iconBackColor,
           ml: { xs: 0, lg: -2 },
         }}>
-        {!open ? <MenuUnfoldOutlined rev={{}} /> : <MenuFoldOutlined />}
+        {!open ? <MenuUnfoldOutlined rev={{}} /> : <MenuFoldOutlined rev={{}} />}
       </IconButton>
       {headerContent}
     </Toolbar>

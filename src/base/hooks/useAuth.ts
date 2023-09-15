@@ -7,7 +7,9 @@ const useAuth = () => {
         logout: ()=>{
             console.log("TODO: impl");
         },
-        user: {}
+        user: {
+          name: ""
+        }
     }
   )
 }

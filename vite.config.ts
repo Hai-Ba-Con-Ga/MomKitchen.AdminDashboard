@@ -5,14 +5,19 @@ import federation from "@originjs/vite-plugin-federation";
 export default defineConfig({
   plugins: [
     react(),
-    federation({
+   /* 
+   Micro-frontend
+   federation({
       name: "app",
       remotes: {
         remoteApp: "http://localhost:5001/assets/remoteEntry.js",
       },
       shared: ["react", "react-dom"],
-    }),
+    }), */
   ],
+  build:{
+  },
+
   resolve: {
     alias: {
       "@ui": "/src/components/",

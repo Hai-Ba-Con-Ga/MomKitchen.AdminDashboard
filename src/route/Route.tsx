@@ -2,7 +2,7 @@ import { Navigate, Outlet, RouteObject, createBrowserRouter } from "react-router
 import LandingLayout from "../base/layout/LandingLayout";
 import appRoutes from "@/base/app/route";
 import MainLayout from "../base/layout/MainLayout";
-
+import CustomerList from "@/modules/customer/pages/list/list";
 const routes: RouteObject[] = [
   {
     path: "/",
@@ -23,7 +23,7 @@ const routes: RouteObject[] = [
           },
           {
             path: "list",
-            element: <h1>Customer List</h1>
+            element: <CustomerList/>
           },
           {
             path: "analytic",

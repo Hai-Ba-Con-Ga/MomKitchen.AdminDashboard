@@ -34,7 +34,7 @@ const Locales = ({ children }: Props) => {
   const [messages, setMessages] = useState<Record<string, string> | Record<string, MessageFormatElement[]> | undefined>();
 
   useEffect(() => {
-    loadLocaleData(i18n).then((d: { default: Record<string, string> | Record<string, MessageFormatElement[]> | undefined }) => {
+    loadLocaleData(i18n as I18n).then((d: { default: Record<string, string> | Record<string, MessageFormatElement[]> | undefined }) => {
       setMessages(d.default);
     });
   }, [i18n]);

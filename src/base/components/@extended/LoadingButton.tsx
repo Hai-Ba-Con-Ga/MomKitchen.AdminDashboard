@@ -11,7 +11,7 @@ import getColors from '@/base/utils/getColors';
 import getShadow from '@/base/utils/getShadow';
 
 // types
-import { ButtonVariantProps, ExtendedStyleProps, IconButtonShapeProps } from 'types/extended';
+import { ButtonVariantProps, ExtendedStyleProps, IconButtonShapeProps } from '@/types/extended';
 
 // ==============================|| LOADING BUTTON - COLOR STYLE ||============================== //
 
