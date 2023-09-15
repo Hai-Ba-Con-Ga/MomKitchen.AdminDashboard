@@ -1,6 +1,6 @@
 // material-ui
 import { Theme } from '@mui/material/styles';
-import { ColorProps } from 'types/extended';
+import { ColorProps } from '@/types/extended';
 
 // project import
 import getColors from '@/base/utils/getColors';

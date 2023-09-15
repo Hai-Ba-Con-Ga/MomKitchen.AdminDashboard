@@ -6,7 +6,7 @@ import getColors from '@/base/utils/getColors';
 import getShadow from '@/base/utils/getShadow';
 
 // types
-import { ButtonVariantProps, ExtendedStyleProps } from 'types/extended';
+import { ButtonVariantProps, ExtendedStyleProps } from '@/types/extended';
 
 // ==============================|| BUTTON - COLORS ||============================== //
 

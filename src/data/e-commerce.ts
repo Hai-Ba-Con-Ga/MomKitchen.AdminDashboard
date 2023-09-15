@@ -3,7 +3,7 @@ import { add, sub } from 'date-fns';
 import { Chance } from 'chance';
 
 // types
-import { Address, Products, Reviews } from 'types/e-commerce';
+import { Address, Products, Reviews } from '@/types/e-commerce';
 
 const chance = new Chance();
 

@@ -162,7 +162,11 @@ const IconButton = forwardRef(
     const theme = useTheme();
 
     return (
-      <IconButtonStyle ref={ref} disableRipple variant={variant} shape={shape} theme={theme} color={color} {...others}>
+      <IconButtonStyle ref={ref} disableRipple 
+      // TODO :cmt 16/09
+      // variant={variant}
+      //  shape={shape}
+        theme={theme} color={color} {...others}>
         {children}
       </IconButtonStyle>
     );

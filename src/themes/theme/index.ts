@@ -10,9 +10,9 @@ import Theme7 from './theme7';
 import Theme8 from './theme8';
 
 // types
-import { PaletteThemeProps } from 'types/theme';
+import { PaletteThemeProps } from '@/types/theme';
 import { PalettesProps } from '@ant-design/colors';
-import { ThemeMode, PresetColor } from 'types/config';
+import { ThemeMode, PresetColor } from '@/types/config';
 
 // ==============================|| PRESET THEME - THEME SELECTOR ||============================== //
 

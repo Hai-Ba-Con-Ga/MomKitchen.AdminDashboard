@@ -294,7 +294,7 @@ const CustomerList = () => {
                 src={
                   avatarImage(
                     `./avatar-${!values.avatar ? 1 : values.avatar}.png`
-                  ).default
+                  )
                 }
               />
               <Stack spacing={0}>

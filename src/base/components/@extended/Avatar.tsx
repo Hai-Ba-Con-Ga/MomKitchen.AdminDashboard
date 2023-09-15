@@ -128,7 +128,11 @@ export default function Avatar({ variant = 'circular', children, color = 'primar
   const theme = useTheme();
 
   return (
-    <AvatarStyle variant={variant} theme={theme} color={color} type={type} size={size} {...others}>
+    <AvatarStyle variant={variant} theme={theme} color={color} 
+    // TODO : 16/09/23 cmt
+    // type={type}
+    // size={size} 
+    {...others}>
       {children}
     </AvatarStyle>
   );

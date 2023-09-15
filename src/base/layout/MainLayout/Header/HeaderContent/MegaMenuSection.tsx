@@ -66,7 +66,7 @@ const MegaMenuSection = () => {
         aria-haspopup="true"
         onClick={handleToggle}
       >
-        <WindowsOutlined />
+        <WindowsOutlined rev={{}}/>
       </IconButton>
       <Popper
         placement="bottom"
@@ -128,7 +128,7 @@ const MegaMenuSection = () => {
                                   color: 'text.primary',
                                   '&:hover': { bgcolor: 'background.paper', color: 'text.primary' }
                                 }}
-                                endIcon={<ArrowRightOutlined />}
+                                endIcon={<ArrowRightOutlined rev={{}} />}
                                 component={Link}
                                 to="/components-overview/buttons"
                                 target="_blank"

@@ -43,12 +43,14 @@ export const HeaderSort = ({ column, sort }: HeaderSortProps) => {
       {!column.disableSortBy && (
         <Stack sx={{ color: 'secondary.light' }} {...(sort && { ...column.getHeaderProps(column.getSortByToggleProps()) })}>
           <CaretUpOutlined
+          rev={{}}
             style={{
               fontSize: '0.625rem',
               color: column.isSorted && !column.isSortedDesc ? theme.palette.text.secondary : 'inherit'
             }}
           />
           <CaretDownOutlined
+          rev={{}}
             style={{
               fontSize: '0.625rem',
               marginTop: -2,
@@ -232,7 +234,7 @@ export const DraggableHeader = ({ children, column, index, reorder, sort }: Drag
   }
 
   return (
-    <Box sx={{ cursor: 'move', opacity: isDragging ? 0.5 : 1, color: borderColor }} ref={ref} {...isDragging}>
+    <Box sx={{ cursor: 'move', opacity: isDragging ? 0.5 : 1, color: borderColor }} ref={ref} {...{isDragging}}>
       {children}
     </Box>
   );
@@ -263,10 +265,11 @@ export const DragPreview = () => {
   const { x, y } = currentOffset || {};
 
   return isDragging ? (
+    // @ts-ignore
     <DragHeader theme={theme} x={x} y={y}>
       {item.header && (
         <Stack direction="row" spacing={1} alignItems="center">
-          <DragOutlined style={{ fontSize: '1rem' }} />
+          <DragOutlined rev={{}} style={{ fontSize: '1rem' }} />
           <Typography>{item.header}</Typography>
         </Stack>
       )}
@@ -328,7 +331,7 @@ export const DraggableRow = ({ index, moveRow, children }: any) => {
   return (
     <TableRow ref={dropRef} style={{ opacity, backgroundColor: isDragging ? 'red' : 'inherit' }}>
       <TableCell ref={dragRef} sx={{ cursor: 'pointer', textAlign: 'center' }}>
-        <DragOutlined />
+        <DragOutlined rev={{}}/>
       </TableCell>
       {children}
     </TableRow>
@@ -397,7 +400,7 @@ export const HidingSelect = ({ hiddenColumns, setHiddenColumns, allColumns }: an
                     position: 'relative'
                   }}
                 >
-                  <CloseSquareFilled className="filled" style={{ position: 'absolute' }} />
+                  <CloseSquareFilled rev={{}} className="filled" style={{ position: 'absolute' }} />
                 </Box>
               }
             />

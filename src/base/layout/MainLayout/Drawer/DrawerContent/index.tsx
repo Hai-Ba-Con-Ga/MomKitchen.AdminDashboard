@@ -11,7 +11,7 @@ import { menuWithDrawerOpen } from "@/base/store/selectors/app";
 import { useRecoilValue } from "recoil";
 
 // types
-// import { RootStateProps } from 'types/root';
+// import { RootStateProps } from '@/types/root';
 
 // ==============================|| DRAWER CONTENT ||============================== //
 

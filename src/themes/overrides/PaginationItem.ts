@@ -6,7 +6,7 @@ import { PaginationProps } from '@mui/material';
 import getColors from '@/base/utils/getColors';
 
 // types
-import { ExtendedStyleProps } from 'types/extended';
+import { ExtendedStyleProps } from '@/types/extended';
 
 // ==============================|| PAGINATION ITEM - COLORS ||============================== //
 

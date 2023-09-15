@@ -11,7 +11,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky install",
-    "test": ""
+    "test": "",
+    "preview-prod" : "serve -s dist"
   },
   "dependencies": {
     "@ant-design/colors": "^7.0.0",
@@ -83,6 +84,7 @@
     "husky": "^8.0.0",
     "postcss": "^8.4.23",
     "prop-types": "15.8.1",
+    "serve": "^14.2.1",
     "storybook": "7.0.12",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.2",

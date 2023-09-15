@@ -81,7 +81,7 @@ const Notification = () => {
         onClick={handleToggle}
       >
         <Badge badgeContent={read} color="primary">
-          <BellOutlined />
+          <BellOutlined rev={{}}/>
         </Badge>
       </IconButton>
       <Popper
@@ -126,7 +126,7 @@ const Notification = () => {
                       {read > 0 && (
                         <Tooltip title="Mark as all read">
                           <IconButton color="success" size="small" onClick={() => setRead(0)}>
-                            <CheckCircleOutlined style={{ fontSize: '1.15rem' }} />
+                            <CheckCircleOutlined rev={{}} style={{ fontSize: '1.15rem' }} />
                           </IconButton>
                         </Tooltip>
                       )}
@@ -153,7 +153,7 @@ const Notification = () => {
                             bgcolor: 'success.lighter'
                           }}
                         >
-                          <GiftOutlined />
+                          <GiftOutlined rev={{}} />
                         </Avatar>
                       </ListItemAvatar>
                       <ListItemText
@@ -183,7 +183,7 @@ const Notification = () => {
                             bgcolor: 'primary.lighter'
                           }}
                         >
-                          <MessageOutlined />
+                          <MessageOutlined  rev={{}}/>
                         </Avatar>
                       </ListItemAvatar>
                       <ListItemText
@@ -212,7 +212,7 @@ const Notification = () => {
                             bgcolor: 'error.lighter'
                           }}
                         >
-                          <SettingOutlined />
+                          <SettingOutlined rev={{}} />
                         </Avatar>
                       </ListItemAvatar>
                       <ListItemText

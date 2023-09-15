@@ -12,7 +12,7 @@ export default function AccordionSummary(theme: Theme) {
   return {
     MuiAccordionSummary: {
       defaultProps: {
-        expandIcon: <RightOutlined style={{ fontSize: '0.75rem' }} />
+        expandIcon: <RightOutlined rev={{}} style={{ fontSize: '0.75rem' }} />
       },
       styleOverrides: {
         root: {
