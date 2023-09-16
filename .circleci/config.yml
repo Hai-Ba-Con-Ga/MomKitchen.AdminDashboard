@@ -89,6 +89,7 @@ workflows:
   build-and-deploy:
     jobs:
       - scan
+      - lint
 
       # Deploy to preview environment for feature branches
       - deploy_preview:
