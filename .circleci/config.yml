@@ -32,7 +32,7 @@ jobs:
       - checkout
       - run: 
           name: "Install pnpm"
-          command: "sudo npm install -g pnpm@lastest"
+          command: sudo npm install --global pnpm@latest
       - run:
           name: "Linting"
           command: "pnpm lint"
