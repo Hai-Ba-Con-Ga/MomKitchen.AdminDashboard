@@ -9,7 +9,7 @@ import getColors from '@/base/utils/getColors';
 import { CheckSquareFilled, MinusSquareFilled } from '@ant-design/icons';
 
 // types
-import { ExtendedStyleProps } from 'types/extended';
+import { ExtendedStyleProps } from '@/types/extended';
 
 // ==============================|| RADIO - COLORS ||============================== //
 
@@ -91,7 +91,7 @@ export default function Checkbox(theme: Theme) {
               position: 'relative'
             }}
           >
-            <CheckSquareFilled className="filled" style={{ position: 'absolute' }} />
+            <CheckSquareFilled rev={{}} className="filled" style={{ position: 'absolute' }} />
           </Box>
         ),
         indeterminateIcon: (
@@ -106,7 +106,7 @@ export default function Checkbox(theme: Theme) {
               position: 'relative'
             }}
           >
-            <MinusSquareFilled className="filled" style={{ position: 'absolute' }} />
+            <MinusSquareFilled  rev={{}} className="filled" style={{ position: 'absolute' }} />
           </Box>
         )
       },

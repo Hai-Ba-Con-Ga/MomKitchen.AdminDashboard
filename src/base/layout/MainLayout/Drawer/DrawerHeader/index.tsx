@@ -15,7 +15,8 @@ const DrawerHeader = ({ open }: Props) => {
   const theme = useTheme();
 
   return (
-    <DrawerHeaderStyled theme={theme} open={open}>
+    // @ts-ignore
+    <DrawerHeaderStyled theme={theme} open={open }>
       <Logo isIcon={!open} sx={{ width: open ? 'auto' : 35, height: 35 }} />
     </DrawerHeaderStyled>
   );

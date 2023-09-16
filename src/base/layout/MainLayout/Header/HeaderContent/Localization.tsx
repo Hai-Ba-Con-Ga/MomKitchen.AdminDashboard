@@ -53,7 +53,7 @@ const Localization = () => {
         aria-haspopup="true"
         onClick={handleToggle}
       >
-        <TranslationOutlined />
+        <TranslationOutlined rev={{}}/>
       </IconButton>
       <Popper
         placement={matchesXs ? 'bottom-start' : 'bottom'}

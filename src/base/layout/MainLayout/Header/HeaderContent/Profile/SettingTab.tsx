@@ -18,31 +18,31 @@ const SettingTab = () => {
     <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32 } }}>
       <ListItemButton selected={selectedIndex === 0} onClick={(event: React.MouseEvent<HTMLDivElement>) => handleListItemClick(event, 0)}>
         <ListItemIcon>
-          <QuestionCircleOutlined />
+          <QuestionCircleOutlined rev={{}}/>
         </ListItemIcon>
         <ListItemText primary="Support" />
       </ListItemButton>
       <ListItemButton selected={selectedIndex === 1} onClick={(event: React.MouseEvent<HTMLDivElement>) => handleListItemClick(event, 1)}>
         <ListItemIcon>
-          <UserOutlined />
+          <UserOutlined rev={{}}/>
         </ListItemIcon>
         <ListItemText primary="Account Settings" />
       </ListItemButton>
       <ListItemButton selected={selectedIndex === 2} onClick={(event: React.MouseEvent<HTMLDivElement>) => handleListItemClick(event, 2)}>
         <ListItemIcon>
-          <LockOutlined />
+          <LockOutlined rev={{}}/>
         </ListItemIcon>
         <ListItemText primary="Privacy Center" />
       </ListItemButton>
       <ListItemButton selected={selectedIndex === 3} onClick={(event: React.MouseEvent<HTMLDivElement>) => handleListItemClick(event, 3)}>
         <ListItemIcon>
-          <CommentOutlined />
+          <CommentOutlined rev={{}}/>
         </ListItemIcon>
         <ListItemText primary="Feedback" />
       </ListItemButton>
       <ListItemButton selected={selectedIndex === 4} onClick={(event: React.MouseEvent<HTMLDivElement>) => handleListItemClick(event, 4)}>
         <ListItemIcon>
-          <UnorderedListOutlined />
+          <UnorderedListOutlined rev={{}}/>
         </ListItemIcon>
         <ListItemText primary="History" />
       </ListItemButton>

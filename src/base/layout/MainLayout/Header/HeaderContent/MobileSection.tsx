@@ -58,7 +58,7 @@ const MobileSection = () => {
           color="secondary"
           variant="light"
         >
-          <MoreOutlined />
+          <MoreOutlined rev={{}}/>
         </IconButton>
       </Box>
       <Popper

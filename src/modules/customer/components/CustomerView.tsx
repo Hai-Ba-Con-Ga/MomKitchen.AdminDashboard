@@ -67,7 +67,7 @@ const CustomerView = ({ data }: any) => {
                     <Avatar
                       alt="Avatar 1"
                       size="xl"
-                      src={avatarImage(`./avatar-${data.avatar}.png`).default}
+                      src={avatarImage(`./avatar-${data.avatar}.png`)}
                     />
                     <Stack spacing={0.5} alignItems="center">
                       <Typography variant="h5">{data.fatherName}</Typography>

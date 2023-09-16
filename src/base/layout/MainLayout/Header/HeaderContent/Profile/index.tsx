@@ -152,7 +152,7 @@ const Profile = () => {
                         <Grid item>
                           <Tooltip title="Logout">
                             <IconButton size="large" sx={{ color: 'text.primary' }} onClick={handleLogout}>
-                              <LogoutOutlined />
+                              <LogoutOutlined rev={{}}/>
                             </IconButton>
                           </Tooltip>
                         </Grid>
@@ -170,7 +170,7 @@ const Profile = () => {
                                 alignItems: 'center',
                                 textTransform: 'capitalize'
                               }}
-                              icon={<UserOutlined style={{ marginBottom: 0, marginRight: '10px' }} />}
+                              icon={<UserOutlined rev={{}} style={{ marginBottom: 0, marginRight: '10px' }} />}
                               label="Profile"
                               {...a11yProps(0)}
                             />
@@ -182,7 +182,7 @@ const Profile = () => {
                                 alignItems: 'center',
                                 textTransform: 'capitalize'
                               }}
-                              icon={<SettingOutlined style={{ marginBottom: 0, marginRight: '10px' }} />}
+                              icon={<SettingOutlined rev={{}} style={{ marginBottom: 0, marginRight: '10px' }} />}
                               label="Setting"
                               {...a11yProps(1)}
                             />

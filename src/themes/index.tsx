@@ -13,6 +13,7 @@ import componentsOverride from './overrides';
 
 // types
 import { CustomShadowProps } from '@/types/theme';
+import { FontFamily, PresetColor, ThemeDirection, ThemeMode } from '@/types/config';
 
 // types
 type ThemeCustomizationProps = {
@@ -24,10 +25,10 @@ type ThemeCustomizationProps = {
 export default function ThemeCustomization({ children }: ThemeCustomizationProps) {
   const { themeDirection, mode, presetColor, fontFamily } = useConfig();
 
-  const theme: Theme = useMemo<Theme>(() => Palette(mode, presetColor), [mode, presetColor]);
+  const theme: Theme = useMemo<Theme>(() => Palette(mode as ThemeMode, presetColor as PresetColor), [mode, presetColor]);
 
   const themeTypography: TypographyVariantsOptions = useMemo<TypographyVariantsOptions>(
-    () => Typography(mode, fontFamily, theme),
+    () => Typography(mode as ThemeMode, fontFamily as FontFamily, theme),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [mode, fontFamily]
   );
@@ -44,7 +45,7 @@ export default function ThemeCustomization({ children }: ThemeCustomizationProps
           xl: 1536
         }
       },
-      direction: themeDirection,
+      direction: themeDirection as ThemeDirection ,
       mixins: {
         toolbar: {
           minHeight: 60,

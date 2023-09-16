@@ -79,7 +79,7 @@ const Message = () => {
         aria-haspopup="true"
         onClick={handleToggle}
       >
-        <MailOutlined />
+        <MailOutlined rev={{}}/>
       </IconButton>
       <Popper
         placement={matchesXs ? 'bottom' : 'bottom-end'}
@@ -120,7 +120,7 @@ const Message = () => {
                   content={false}
                   secondary={
                     <IconButton size="small" onClick={handleToggle}>
-                      <CloseOutlined />
+                      <CloseOutlined rev={{}}/>
                     </IconButton>
                   }
                 >
