@@ -25,7 +25,17 @@ jobs:
             sonar-scanner \
               -Dsonar.login=$SONAR_TOKEN \
               -Dsonar.host.url=$SONAR_HOST_URL
-
+  lint: 
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run: 
+          name: "Install pnpm"
+          command: "sudo npm install -g pnpm@lastest"
+      - run:
+          name: "Linting"
+          command: "pnpm lint"
   deploy_preview:
     docker:
       - image: circleci/node:latest
