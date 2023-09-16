@@ -30,8 +30,8 @@ jobs:
     docker:
       - image: circleci/node:latest
     environment:
-      VERCEL_ORG_ID: team_5R7K2zgtOgiT8mFyEYNcWKOV
-      VERCEL_PROJECT_ID: prj_BNbYirBayj39gSEVODhRlBIgIi3Z
+      VERCEL_ORG_ID: team_IjB68xN2ZGiytfOu1AAYw5SD
+      VERCEL_PROJECT_ID: prj_fS2fHftQY3XXt9txAGPoqdKAdoHg
     steps:
       - checkout
       - run:
@@ -51,8 +51,8 @@ jobs:
     docker:
       - image: circleci/node:latest
     environment:
-      VERCEL_ORG_ID: team_5R7K2zgtOgiT8mFyEYNcWKOV
-      VERCEL_PROJECT_ID: prj_BNbYirBayj39gSEVODhRlBIgIi3Z
+      VERCEL_ORG_ID: team_IjB68xN2ZGiytfOu1AAYw5SD
+      VERCEL_PROJECT_ID: prj_fS2fHftQY3XXt9txAGPoqdKAdoHg
     steps:
       - checkout
       - run:
