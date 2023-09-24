@@ -24,7 +24,7 @@ export type KeyedObject = {
 };
 
 export type OverrideIcon =
-  | (OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
+  | (OverridableComponent<SvgIconTypeMap<unknown, 'svg'>> & {
       muiName: string;
     })
   | ComponentClass<any>

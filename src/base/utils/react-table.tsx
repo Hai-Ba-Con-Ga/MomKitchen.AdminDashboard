@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { Dispatch, useMemo, useState } from 'react';
 
 // material-ui
-import { MenuItem, OutlinedInput, Select, Slider, Stack, TextField, Tooltip } from '@mui/material';
+import { MenuItem, OutlinedInput, OutlinedInputProps, Select, Slider, Stack, TextField, Tooltip } from '@mui/material';
 
 // third-party
 import { useAsyncDebounce, Row } from 'react-table';
@@ -13,8 +13,7 @@ import IconButton from '@/base/components/@extended/IconButton';
 // assets
 import { CloseOutlined, LineOutlined, SearchOutlined } from '@ant-design/icons';
 
-export function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter, ...other }: any) {
-  const count = preGlobalFilteredRows.length;
+export function GlobalFilter({globalFilter, setGlobalFilter ,...props}: {globalFilter: string,setGlobalFilter: Dispatch<string> } & OutlinedInputProps) {
   const [value, setValue] = useState(globalFilter);
   const onChange = useAsyncDebounce((value:any) => {
     setGlobalFilter(value || undefined);
@@ -27,10 +26,10 @@ export function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFil
         setValue(e.target.value);
         onChange(e.target.value);
       }}
-      placeholder={`Search ${count} records...`}
+      placeholder={`Search records...`}
       id="start-adornment-email"
       startAdornment={<SearchOutlined  rev={{}}/>}
-      {...other}
+      {...props}
     />
   );
 }
@@ -150,9 +149,7 @@ export function NumberRangeColumnFilter({ column: { filterValue = [], preFiltere
   );
 }
 
-// @ts-ignore
 function fuzzyTextFilterFn(rows, id, filterValue) {
-  // @ts-ignore
   return matchSorter(rows, filterValue, { keys: [(row: any) => row.values[id]] });
 }
 
@@ -168,7 +165,7 @@ export const renderFilterTypes = () => ({
   }
 });
 
-// @ts-ignore
+
 export function filterGreaterThan(rows, id, filterValue) {
   return rows.filter((row: any) => {
     const rowValue = row.values[id];

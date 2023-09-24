@@ -40,6 +40,7 @@ import { GlobalFilter, renderFilterTypes } from "@/base/utils/react-table";
 import {
     PlusOutlined
 } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   columns: Column[];
@@ -47,6 +48,7 @@ interface Props {
   getHeaderProps: (column: any) => void;
   handleAdd: () => void;
   renderRowSubComponent: any;
+  addButtonContentKey: string;
 }
 
 function BaseTable({
@@ -55,9 +57,12 @@ function BaseTable({
   getHeaderProps,
   renderRowSubComponent,
   handleAdd,
+  addButtonContentKey
 }: Props) {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const {t} = useTranslation();
 
   const filterTypes = useMemo(() => renderFilterTypes, []);
   const sortBy = { id: "fatherName", desc: false };
@@ -98,6 +103,7 @@ function BaseTable({
     useRowSelect
   );
 
+  
   useEffect(() => {
     if (matchDownSM) {
       setHiddenColumns([
@@ -111,8 +117,7 @@ function BaseTable({
     } else {
       setHiddenColumns(["avatar", "email"]);
     }
-    // eslint-disable-next-line
-  }, [matchDownSM]);
+  }, [matchDownSM,setHiddenColumns]);
 
   return (
     <>
@@ -125,7 +130,7 @@ function BaseTable({
           alignItems="center"
           sx={{ p: 3, pb: 0 }}>
           <GlobalFilter
-            preGlobalFilteredRows={preGlobalFilteredRows}
+            // preGlobalFilteredRows={preGlobalFilteredRows}
             globalFilter={globalFilter}
             setGlobalFilter={setGlobalFilter}
             size="small"
@@ -140,10 +145,10 @@ function BaseTable({
               allColumns={allColumns}
             />
             <Button
-              variant="contained"
+              variant="shadow"
               startIcon={<PlusOutlined rev={{}} />}
               onClick={handleAdd}>
-              Add Customer
+              {t(addButtonContentKey)}
             </Button>
           </Stack>
         </Stack>

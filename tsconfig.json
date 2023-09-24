@@ -14,14 +14,15 @@
     "jsx": "react-jsx",
     /* Linting */
     // TODO : temp turn off
+    "noImplicitAny": false,
     "strict": false,
     "noEmitOnError": true,
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@ui/*": ["src/base/components/*"],
+      "@ui/*": ["./src/base/components/*"],
       "@/*": ["./src/*"],
       "@base" : ["./src/base/*"]
     }
