@@ -20,7 +20,6 @@ interface Props {
 
 const MainDrawer = ({ open, handleDrawerToggle, window }: Props) => {
   const theme = useTheme();
-  console.log(theme.breakpoints.down("lg"));
   
   const matchDownMD = useMediaQuery(theme.breakpoints.down("lg"));
   // responsive drawer container
@@ -30,7 +29,6 @@ const MainDrawer = ({ open, handleDrawerToggle, window }: Props) => {
   // header content
   const drawerContent = useMemo(() => <DrawerContent />, []);
   const drawerHeader = useMemo(() => <DrawerHeader open={open} />, [open]);
-console.log(matchDownMD);
 
   return (
     <Box

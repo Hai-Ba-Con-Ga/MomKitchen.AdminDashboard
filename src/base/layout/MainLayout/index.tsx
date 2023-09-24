@@ -25,9 +25,6 @@ const MainLayout = () => {
   const { container, miniDrawer } = useConfig();
   const [drawerOpen,setDrawerOpen] = useRecoilState(menuWithDrawerOpen);
 
-  console.log("MAINLAYOUT => ", drawerOpen);
-  
-
   // drawer toggler
   // const [open, setOpen] = useState(!miniDrawer || drawerOpen);
   const [open, setOpen] = useState(!miniDrawer || drawerOpen);

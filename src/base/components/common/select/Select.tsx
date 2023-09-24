@@ -72,7 +72,7 @@ const Select = <T,>({
   });
   const handleChange = (value: string, display: JSX.Element) => {
     if (multiple && Array.isArray(valueDisplay)) {
-      console.log(valueDisplay.includes(display));
+      // console.log(valueDisplay.includes(display));
 
       setValueDisplay(
         !valueDisplay.includes(display)

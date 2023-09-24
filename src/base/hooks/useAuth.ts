@@ -5,7 +5,7 @@ const useAuth = () => {
   return (
     {
         logout: ()=>{
-            console.log("TODO: impl");
+            // console.log("TODO: impl");
         },
         user: {
           name: ""
