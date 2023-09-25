@@ -42,6 +42,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import ListTableHeader from "@/base/components/common/table/ListTableHeader";
 import TablePagination from "@/base/components/common/table/TablePagination";
 import QuickTable from "@ui/common/table/QuickTable";
+import AddCustomerModal from "../../components/AddCustomerModal";
 
 const avatarImage = (s: string) => "@/assets/images/users" + s;
 
@@ -226,186 +227,7 @@ const CustomerList = () => {
               </Stack>
             );
           },
-        }),
-        // {
-        //   title: "Row Selection",
-        //   Header: ({ getToggleAllPageRowsSelectedProps }: any) => (
-        //     <IndeterminateCheckbox
-        //       indeterminate
-        //       {...getToggleAllPageRowsSelectedProps()}
-        //     />
-        //   ),
-        //   accessor: "selection",
-        //   Cell: ({ row }: any) => (
-        //     <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-        //   ),
-        //   disableSortBy: true,
-        // },
-        // {
-        //   Header: "#",
-        //   accessor: "id",
-        //   className: "cell-center",
-        // },
-        // {
-        //   Header: "Customer Name",
-        //   accessor: "fatherName",
-        //   Cell: ({ row }: any) => {
-        //     const { values } = row;
-        //     return (
-        //       <Stack direction="row" spacing={1.5} alignItems="center">
-        //         <Avatar
-        //           alt="Avatar 1"
-        //           size="sm"
-        //           src={avatarImage(
-        //             `./avatar-${!values.avatar ? 1 : values.avatar}.png`
-        //           )}
-        //         />
-        //         <Stack spacing={0}>
-        //           <Typography variant="subtitle1">{values.fatherName}</Typography>
-        //           <Typography variant="caption" color="textSecondary">
-        //             {values.email}
-        //           </Typography>
-        //         </Stack>
-        //       </Stack>
-        //     );
-        //   },
-        // },
-        // {
-        //   Header: "Avatar",
-        //   accessor: "avatar",
-        //   disableSortBy: true,
-        // },
-        // {
-        //   Header: "Email",
-        //   accessor: "email",
-        // },
-        // {
-        //   Header: "Contact",
-        //   accessor: "contact",
-        //   // eslint-disable-next-line
-        //   Cell: ({ value }) => (
-        //     <NumberFormat
-        //       displayType="text"
-        //       format="+1 (###) ###-####"
-        //       mask="_"
-        //       defaultValue={value}
-        //     />
-        //   ),
-        // },
-        // {
-        //   Header: "Order",
-        //   accessor: "age",
-        //   className: "cell-right",
-        // },
-        // {
-        //   Header: "Spent",
-        //   accessor: "visits",
-        //   className: "cell-right",
-        //   Cell: ({ value }: any) => (
-        //     <NumberFormat
-        //       value={value}
-        //       displayType="text"
-        //       thousandSeparator
-        //       prefix="$"
-        //     />
-        //   ),
-        // },
-        // {
-        //   Header: "Status",
-        //   accessor: "status",
-        //   Cell: ({ value }: any) => {
-        //     switch (value) {
-        //       case "Complicated":
-        //         return (
-        //           <Chip
-        //             color="error"
-        //             label="Complicated"
-        //             size="small"
-        //             variant="filled"
-        //           />
-        //         );
-        //       case "Relationship":
-        //         return (
-        //           <Chip
-        //             color="success"
-        //             label="Relationship"
-        //             size="small"
-        //             variant="filled"
-        //           />
-        //         );
-        //       case "Single":
-        //       default:
-        //         return (
-        //           <Chip
-        //             color="primary"
-        //             label="Single"
-        //             size="small"
-        //             variant="filled"
-        //           />
-        //         );
-        //     }
-        //   },
-        // },
-        // {
-        //   Header: "Actions",
-        //   className: "cell-center",
-        //   disableSortBy: true,
-        //   Cell: ({ row }: any) => {
-        //     const collapseIcon = row.isExpanded ? (
-        //       <CloseOutlined
-        //         rev={{}}
-        //         style={{ color: theme.palette.error.main }}
-        //       />
-        //     ) : (
-        //       <EyeTwoTone rev={{}} twoToneColor={theme.palette.secondary.main} />
-        //     );
-        //     return (
-        //       <Stack
-        //         direction="row"
-        //         alignItems="center"
-        //         justifyContent="center"
-        //         spacing={0}>
-        //         <Tooltip title="View">
-        //           <IconButton
-        //             color="secondary"
-        //             onClick={(e: any) => {
-        //               e.stopPropagation();
-        //               row.toggleRowExpanded();
-        //             }}>
-        //             {collapseIcon}
-        //           </IconButton>
-        //         </Tooltip>
-        //         <Tooltip title="Edit">
-        //           <IconButton
-        //             color="primary"
-        //             onClick={(e: any) => {
-        //               e.stopPropagation();
-        //               setCustomer(row.values);
-        //               handleAdd();
-        //             }}>
-        //             <EditTwoTone
-        //               rev={{}}
-        //               twoToneColor={theme.palette.primary.main}
-        //             />
-        //           </IconButton>
-        //         </Tooltip>
-        //         <Tooltip title="Delete">
-        //           <IconButton
-        //             color="error"
-        //             onClick={(e: any) => {
-        //               e.stopPropagation();
-        //             }}>
-        //             <DeleteTwoTone
-        //               rev={{}}
-        //               twoToneColor={theme.palette.error.main}
-        //             />
-        //           </IconButton>
-        //         </Tooltip>
-        //       </Stack>
-        //     );
-        //   },
-        // },
-        
+        })
       ] ;
       return cols;
     },
@@ -471,6 +293,7 @@ const CustomerList = () => {
         <TablePagination gotoPage={goToPage} pageIndex={pagination.pageIndex} pageSize={pagination.pageSize} totalItems={200} setPageSize={changePageSize} />
       </ScrollX> */}
     <QuickTable columns={columns} data={data} 
+      renderRowSubComponent={renderRowSubComponent}
       onPaginationChange={(pagination)=> {console.log(pagination);
       }}
       onRowSelectedChange={rows=>console.log(rows)
@@ -492,7 +315,7 @@ const CustomerList = () => {
         onClose={handleAdd}
         open={add}
         sx={{ "& .MuiDialog-paper": { p: 0 } }}>
-        {/* {add && <AddCustomer customer={customer} onCancel={handleAdd} />} */}
+        {add && <AddCustomerModal customer={customer} onCancel={handleAdd} />}
       </Dialog>
     </MainCard>
   );
