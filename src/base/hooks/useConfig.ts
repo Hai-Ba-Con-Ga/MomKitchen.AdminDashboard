@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import config from "@/config"
+import config from "@/config";
 // ==============================|| CONFIG - HOOKS  ||============================== //
-import { CustomizationProps, FontFamily, I18n, PresetColor, ThemeDirection, ThemeMode } from '@/types/config';
+import { FontFamily, I18n, PresetColor, ThemeDirection, ThemeMode } from '@/types/config';
 
 const useConfig = () => ({
     ...config,

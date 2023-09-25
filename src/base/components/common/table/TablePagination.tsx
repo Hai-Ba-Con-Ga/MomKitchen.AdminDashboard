@@ -1,5 +1,4 @@
 import { FormControl, Grid, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
-import {TablePagination as TablePaginationMui} from "@mui/material";
 import { Stack } from "@mui/system";
 import { useState } from "react";
 

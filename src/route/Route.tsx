@@ -1,8 +1,7 @@
-import { Navigate, Outlet, RouteObject, createBrowserRouter } from "react-router-dom";
-import LandingLayout from "../base/layout/LandingLayout";
 import appRoutes from "@/base/app/route";
-import MainLayout from "../base/layout/MainLayout";
 import CustomerList from "@/modules/customer/pages/list/list";
+import { Navigate, Outlet, RouteObject, createBrowserRouter } from "react-router-dom";
+import MainLayout from "../base/layout/MainLayout";
 const routes: RouteObject[] = [
   {
     path: "/",

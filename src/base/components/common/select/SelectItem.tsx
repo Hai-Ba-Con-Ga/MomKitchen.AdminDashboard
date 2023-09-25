@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 
 export interface SelectItemProps<T>
   extends Omit<HTMLAttributes<HTMLLIElement>, "onClick"> {

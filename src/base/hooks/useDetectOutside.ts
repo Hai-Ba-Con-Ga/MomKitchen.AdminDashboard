@@ -1,4 +1,4 @@
-import React, { Ref, useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 type Props = {
   ref: any;

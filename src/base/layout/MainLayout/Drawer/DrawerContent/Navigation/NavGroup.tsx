@@ -1,18 +1,17 @@
 // import { useSelector } from 'react-redux';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
 import { Box, List, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // project import
-import NavItem from './NavItem';
 import NavCollapse from './NavCollapse';
+import NavItem from './NavItem';
 
 // types
-import { NavItemType } from '@/types/menu';
-import { RootStateProps } from '@/types/root';
-import { useRecoilValue } from 'recoil';
 import { menuWithDrawerOpen } from '@/base/store/selectors/app';
+import { NavItemType } from '@/types/menu';
+import { useRecoilValue } from 'recoil';
 
 // ==============================|| NAVIGATION - LIST GROUP ||============================== //
 

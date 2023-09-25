@@ -8,7 +8,7 @@ export const facebookColor = "#3b5998";
 export const linkedInColor = "#0e76a8";
 
 export const FIREBASE_API = {
-  apiKey: "AIzaSyC74w_JCigORyepa_esLkPt-B3HgtI_X3o",
+  apiKey: "",
   authDomain: "mantis-4040b.firebaseapp.com",
   projectId: "mantis-4040b",
   storageBucket: "mantis-4040b.appspot.com",

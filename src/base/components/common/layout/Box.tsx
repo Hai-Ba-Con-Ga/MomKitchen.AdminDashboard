@@ -1,5 +1,5 @@
-import React, { AllHTMLAttributes, HTMLAttributes, ReactNode } from "react";
-import { cva, VariantProps } from "class-variance-authority";
+import { VariantProps, cva } from "class-variance-authority";
+import { AllHTMLAttributes, ReactNode } from "react";
 
 const BoxStyle = cva("relative", {
   variants: {

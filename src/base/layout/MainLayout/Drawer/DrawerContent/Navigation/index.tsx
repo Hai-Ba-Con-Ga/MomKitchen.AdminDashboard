@@ -4,13 +4,12 @@
 import { Box, Typography } from "@mui/material";
 
 // types
-import { RootStateProps } from '@/types/root';
 
 // project import
-import NavGroup from "./NavGroup";
-import menuItem from "../../../../../menu-items";
 import { menuWithDrawerOpen } from "@/base/store/selectors/app";
 import { useRecoilValue } from "recoil";
+import menuItem from "../../../../../menu-items";
+import NavGroup from "./NavGroup";
 
 // ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 

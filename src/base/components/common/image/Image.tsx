@@ -1,7 +1,5 @@
 import { VariantProps, cva } from "class-variance-authority";
-import React, { Attributes, ImgHTMLAttributes } from "react";
-import { HTMLAttributes } from "react";
-import { UISize } from "@/types/common/component";
+import { HTMLAttributes, ImgHTMLAttributes } from "react";
 
 const ImageStyle = cva("overflow-hidden", {
   variants: {

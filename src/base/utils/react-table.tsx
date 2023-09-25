@@ -158,10 +158,11 @@ fuzzyTextFilterFn.autoRemove = (val: any) => !val;
 export const renderFilterTypes = () => ({
   fuzzyText: fuzzyTextFilterFn,
   text: (rows: Row[], id: string, filterValue: string) => {
-    rows.filter((row: Row) => {
+   const byPass =  rows.filter((row: Row) => {
       const rowValue = row.values[id];
       return rowValue !== undefined ? String(rowValue).toLowerCase().startsWith(String(filterValue).toLowerCase()) : true;
     });
+    return !!byPass;
   }
 });
 

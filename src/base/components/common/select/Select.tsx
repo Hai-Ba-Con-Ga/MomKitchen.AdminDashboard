@@ -1,16 +1,13 @@
+import { useDetectOutside } from "@/base/hooks";
 import { VariantProps, cva } from "class-variance-authority";
 import { AnimatePresence, motion } from "framer-motion";
 import React, {
   HTMLAttributes,
   ReactNode,
-  RefObject,
-  useEffect,
   useMemo,
   useRef,
-  useState,
+  useState
 } from "react";
-import { deepEqual } from "@/utils/dataHelper";
-import { useDetectOutside } from "@/base/hooks";
 
 const selectStyle = cva("relative", {
   variants: {

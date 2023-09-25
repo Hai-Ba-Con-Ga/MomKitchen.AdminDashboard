@@ -21,7 +21,7 @@ const LogoMain = ({ reverse, ...others }: { reverse?: boolean }) => {
     *
     */
    <>
-     <img src={theme.palette.mode === 'dark' ? logo : logo} alt="Mantis" width="100" />
+     <img src={ logo} alt="Mantis" width="100" />
    </>
    /*  <>
       <svg width="118" height="35" viewBox="0 0 118 35" fill="none" xmlns="http://www.w3.org/2000/svg">

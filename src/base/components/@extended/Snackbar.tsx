@@ -1,49 +1,46 @@
-import { SyntheticEvent } from 'react';
+// import { SyntheticEvent } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
-import { Alert, Button, Fade, Grow, Slide, SlideProps } from '@mui/material';
-import MuiSnackbar from '@mui/material/Snackbar';
+// import { Fade, Grow, Slide, SlideProps } from '@mui/material';
 
 // project-import
-import IconButton from './IconButton';
 
 // assets
-import { CloseOutlined } from '@ant-design/icons';
 
-import { KeyedObject, RootStateProps } from '@/types/root';
-// import { closeSnackbar } from 'store/reducers/snackbar';
+// import { KeyedObject } from '@/types/root';
+// // import { closeSnackbar } from 'store/reducers/snackbar';
 
-// animation function
-function TransitionSlideLeft(props: SlideProps) {
-  return <Slide {...props} direction="left" />;
-}
+// // animation function
+// function TransitionSlideLeft(props: SlideProps) {
+//   return <Slide {...props} direction="left" />;
+// }
 
-function TransitionSlideUp(props: SlideProps) {
-  return <Slide {...props} direction="up" />;
-}
+// function TransitionSlideUp(props: SlideProps) {
+//   return <Slide {...props} direction="up" />;
+// }
 
-function TransitionSlideRight(props: SlideProps) {
-  return <Slide {...props} direction="right" />;
-}
+// function TransitionSlideRight(props: SlideProps) {
+//   return <Slide {...props} direction="right" />;
+// }
 
-function TransitionSlideDown(props: SlideProps) {
-  return <Slide {...props} direction="down" />;
-}
+// function TransitionSlideDown(props: SlideProps) {
+//   return <Slide {...props} direction="down" />;
+// }
 
-function GrowTransition(props: SlideProps) {
-  return <Grow {...props} />;
-}
+// function GrowTransition(props: SlideProps) {
+//   return <Grow {...props} />;
+// }
 
 // animation options
-const animation: KeyedObject = {
-  SlideLeft: TransitionSlideLeft,
-  SlideUp: TransitionSlideUp,
-  SlideRight: TransitionSlideRight,
-  SlideDown: TransitionSlideDown,
-  Grow: GrowTransition,
-  Fade
-};
+// const animation: KeyedObject = {
+//   SlideLeft: TransitionSlideLeft,
+//   SlideUp: TransitionSlideUp,
+//   SlideRight: TransitionSlideRight,
+//   SlideDown: TransitionSlideDown,
+//   Grow: GrowTransition,
+//   Fade
+// };
 
 // ==============================|| SNACKBAR ||============================== //
 
@@ -52,12 +49,12 @@ const Snackbar = () => {
   // const snackbar = useSelector((state: RootStateProps) => state.snackbar);
   // const { actionButton, anchorOrigin, alert, close, message, open, transition, variant } = snackbar;
 
-  const handleClose = (event: SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    // dispatch(closeSnackbar());
-  };
+  // const handleClose = (event: SyntheticEvent | Event, reason?: string) => {
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+  //   // dispatch(closeSnackbar());
+  // };
 
   // return (
   //   <>

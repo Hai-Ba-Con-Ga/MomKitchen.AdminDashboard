@@ -81,7 +81,7 @@ const Breadcrumbs = ({
   // set active item state
   const getCollapse = (menu: NavItemType) => {
     if (menu.children) {
-      menu.children.filter((collapse: NavItemType) => {
+     const menus =  menu.children.filter((collapse: NavItemType) => {
         if (collapse.type && collapse.type === 'collapse') {
           getCollapse(collapse as { children: NavItemType[]; type?: string });
         } else if (collapse.type && collapse.type === 'item') {
@@ -92,6 +92,7 @@ const Breadcrumbs = ({
         }
         return false;
       });
+      return menus;
     }
   };
 

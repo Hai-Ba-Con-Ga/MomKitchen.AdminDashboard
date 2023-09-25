@@ -8,9 +8,6 @@ import {
   Tooltip,
   Typography
 } from "@mui/material";
-import {
-  Column
-} from "react-table"
 import { useTheme } from "@mui/material/styles";
 
 // third-party
@@ -22,7 +19,6 @@ import CustomerView from "@/modules/customer/components/CustomerView";
 import Avatar from "@/base/components/@extended/Avatar";
 import IconButton from "@/base/components/@extended/IconButton";
 import MainCard from "@/base/components/MainCard";
-import ScrollX from "@/base/components/ScrollX";
 import {
   IndeterminateCheckbox
 } from "@/base/components/third-party/ReactTable";
@@ -35,13 +31,9 @@ import {
   EditTwoTone,
   EyeTwoTone
 } from "@ant-design/icons";
-import NumberFormat from "react-number-format";
-import BaseTable from "@/base/components/common/table/BaseTable";
-import BaseTableV8 from "@/base/components/common/table/BaseTableV8";
 import { createColumnHelper } from "@tanstack/react-table";
-import ListTableHeader from "@/base/components/common/table/ListTableHeader";
-import TablePagination from "@/base/components/common/table/TablePagination";
 import QuickTable from "@ui/common/table/QuickTable";
+import NumberFormat from "react-number-format";
 import AddCustomerModal from "../../components/AddCustomerModal";
 
 const avatarImage = (s: string) => "@/assets/images/users" + s;
@@ -242,16 +234,7 @@ const CustomerList = () => {
     return <CustomerView data={data[row.id]} />},
     [data]
   );
-  const [pagination,setPagination] = useState<any>({
-    pageIndex: 0, 
-    pageSize: 25
-  })
-  const goToPage = (page: number)=> {
-    setPagination({...pagination,pageIndex: page})
-  }
-  const changePageSize = (size: number)=>{
-    setPagination({...pagination,pageSize: size})
-}
+ 
   return (
     <MainCard content={false}>
       {/* <ScrollX>

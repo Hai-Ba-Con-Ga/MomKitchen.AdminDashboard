@@ -1,4 +1,3 @@
-import React from "react";
 import { Box } from "@/base/components/common/layout";
 
 describe("<Box /> testing", () => {

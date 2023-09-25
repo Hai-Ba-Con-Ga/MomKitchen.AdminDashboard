@@ -1,30 +1,30 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 import {
-    ArrowDropDownOutlined,
-    ArrowDropUpOutlined
+  ArrowDropDownOutlined,
+  ArrowDropUpOutlined
 } from "@mui/icons-material";
 import {
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableFooter,
-    TableHead,
-    TableRow,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableFooter,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 import { Box, Stack, alpha, useTheme } from "@mui/system";
 import {
-    ColumnDef,
-    Table as ReactTableType,
-    Row,
-    SortDirection,
-    TableOptions,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    useReactTable
+  ColumnDef,
+  Table as ReactTableType,
+  Row,
+  SortDirection,
+  TableOptions,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  useReactTable
 } from "@tanstack/react-table";
 import { isEmpty, reduce } from "lodash";
 import styled from "styled-components";
@@ -68,7 +68,6 @@ function BaseTableV8<T> (props: BaseTableV8Props<T>) {
     footer = {hasFooter: false},
     setRowHover,
     isRowSpanned,
-    isDraggable,
     renderRowSubComponent
   } = props;
   const initialRowSelection = reduce(
