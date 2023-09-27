@@ -1,66 +1,39 @@
-import { MouseEvent, useCallback, useMemo, useState } from "react";
-
-// material-ui
-import { Chip, Dialog, Stack, Tooltip, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-
-// third-party
-// import NumberFormat from 'react-number-format';
-
-// project import
-import CustomerView from "@/modules/customer/components/CustomerView";
-// import AddCustomer from 'sections/apps/customer/AddCustomer';
-import Avatar from "@/base/components/@extended/Avatar";
-import IconButton from "@/base/components/@extended/IconButton";
-import MainCard from "@/base/components/MainCard";
-import { IndeterminateCheckbox } from "@/base/components/third-party/ReactTable";
 import makeData from "@/data/react-table";
-
-// assets
-import {
-  CloseOutlined,
-  DeleteTwoTone,
-  EditTwoTone,
-  EyeTwoTone,
-} from "@ant-design/icons";
-import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import CustomerView from "@/modules/customer/components/CustomerView";
+import { Order } from "@/types/@mk/entity/order";
+import { CloseOutlined, EyeTwoTone } from "@ant-design/icons";
+import { DeleteTwoTone, EditTwoTone } from "@mui/icons-material";
+import { Chip, Tooltip, Typography } from "@mui/material";
+import { Dialog, IconButton } from "@mui/material";
+import { Stack, useTheme } from "@mui/system";
+import { createColumnHelper } from "@tanstack/react-table";
+import Avatar from "@ui/@extended/Avatar";
+import MainCard from "@ui/MainCard";
 import QuickTable from "@ui/common/table/QuickTable";
+import { IndeterminateCheckbox } from "@ui/third-party/ReactTable";
+import React, { useCallback, useMemo, useState } from "react";
 import NumberFormat from "react-number-format";
-import AddCustomerModal from "../../components/AddCustomerModal";
-import { CustomerAdmin } from "@/types/@mk/entity/customer";
-import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
-import { mockCustomers } from "@/data/@mk/mock/Customer";
-import ConfirmationDialog from "@ui/common/dialogs/ConfirmationDialog";
 
-const avatarImage = (s: string) => "@/assets/images/users" + s;
+interface OrderAdmin extends Order {}
 
-// ==============================|| REACT TABLE ||============================== //
-
-// ==============================|| CUSTOMER - LIST VIEW ||============================== //
-
-const CustomerList = () => {
+const OrderListPage = () => {
   const theme = useTheme();
 
-  const data = useMemo(
-    () =>
-      // makeData(20)
-      mockCustomers,
-    []
-  );
+  const data = useMemo(() => makeData(20), []);
 
   const [customer, setCustomer] = useState(null);
   const [add, setAdd] = useState<boolean>(false);
-  const [deleteConfirm, setDeleteConfirmation] = useState<boolean>(false);
+
   const handleAdd = () => {
     setAdd(!add);
     if (customer && !add) setCustomer(null);
   };
 
-  const columnHelper = createColumnHelper<CustomerAdmin>();
+  const columnHelper = createColumnHelper();
 
-  const columns = useMemo<ColumnDef<CustomerAdmin>[]>(
+  const columns = useMemo(
     () => {
-      const cols: ColumnDef<CustomerAdmin>[] = [
+      const cols = [
         columnHelper.accessor("selection", {
           header: ({
             table: {
@@ -88,20 +61,16 @@ const CustomerList = () => {
         columnHelper.accessor("id", {
           header: "#",
         }),
-        columnHelper.accessor("user.fullName", {
+        columnHelper.accessor("fatherName", {
           header: "Customer Name",
           cell: ({ row }) => {
-            const { getValue, original } = row;
+            const { getValue } = row;
             return (
               <Stack direction="row" spacing={1.5} alignItems="center">
-                <Avatar
-                  alt="Avatar 1"
-                  size="sm"
-                  src={row.original.user.avatarUrl}
-                />
+                <Avatar alt="Avatar 1" size="sm" src={row} />
                 <Stack spacing={0}>
                   <Typography variant="subtitle1">
-                    {row.original.user.fullName}
+                    {getValue("fatherName")}
                   </Typography>
                   <Typography variant="caption" color="textSecondary">
                     {getValue("email")}
@@ -111,15 +80,14 @@ const CustomerList = () => {
             );
           },
         }),
-        // columnHelper.accessor("user.avatarUrl", {
-        //   header: "Avatar",
-        //   enableSorting: false,
-        //   enableHiding: true,
-        // }),
-        columnHelper.accessor("user.email", {
+        columnHelper.accessor("avatar", {
+          header: "Avatar",
+          enableSorting: false,
+        }),
+        columnHelper.accessor("email", {
           header: "Email",
         }),
-        columnHelper.accessor("user.phone", {
+        columnHelper.accessor("contact", {
           header: "Contact",
           cell: ({ renderValue }) => (
             <NumberFormat
@@ -130,10 +98,10 @@ const CustomerList = () => {
             />
           ),
         }),
-        columnHelper.accessor("order_quantity", {
+        columnHelper.accessor("age", {
           header: "Order",
         }),
-        columnHelper.accessor("spentMoney", {
+        columnHelper.accessor("visits", {
           header: "Spent",
           cell: ({ renderValue }) => (
             <NumberFormat
@@ -146,22 +114,32 @@ const CustomerList = () => {
         }),
         columnHelper.accessor("status", {
           header: "Status",
-          cell: ({ row }) => {
-            switch (row.original.status) {
-              case CustomerStatus.INACTIVE:
+          cell: ({ renderValue }) => {
+            switch (renderValue()) {
+              case "Complicated":
                 return (
                   <Chip
                     color="error"
-                    label="Inactive"
+                    label="Complicated"
                     size="small"
                     variant="filled"
                   />
                 );
-              case CustomerStatus.ACTIVE:
+              case "Relationship":
                 return (
                   <Chip
                     color="success"
-                    label="Active"
+                    label="Relationship"
+                    size="small"
+                    variant="filled"
+                  />
+                );
+              case "Single":
+              default:
+                return (
+                  <Chip
+                    color="primary"
+                    label="Single"
                     size="small"
                     variant="filled"
                   />
@@ -169,7 +147,7 @@ const CustomerList = () => {
             }
           },
         }),
-        columnHelper.accessor<any, any>("action", {
+        columnHelper.accessor("action", {
           header: "Actions",
           enableSorting: false,
           cell: ({ row }) => {
@@ -208,22 +186,18 @@ const CustomerList = () => {
                       setCustomer(null);
                       handleAdd();
                     }}>
-                    <EditTwoTone
-                      rev={{}}
-                      twoToneColor={theme.palette.primary.main}
-                    />
+                    <EditTwoTone color={theme.palette.primary.main} />
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Delete">
                   <IconButton
                     color="error"
-                    onClick={(e: MouseEvent) => {
-                      setDeleteConfirmation(true);
+                    onClick={(e: any) => {
                       e.stopPropagation();
                     }}>
                     <DeleteTwoTone
-                      rev={{}}
-                      twoToneColor={theme.palette.error.main}
+                      // rev={{}}
+                      color={theme.palette.error.main}
                     />
                   </IconButton>
                 </Tooltip>
@@ -242,7 +216,7 @@ const CustomerList = () => {
     (row) => {
       console.log(row);
 
-      return <CustomerView data={row.original} />;
+      return <CustomerView data={data[row.id]} />;
     },
     [data]
   );
@@ -250,9 +224,6 @@ const CustomerList = () => {
   return (
     <MainCard content={false}>
       <QuickTable
-        columnVisibility={{
-          "user.avatarUrl": true,
-        }}
         columns={columns}
         data={data}
         renderRowSubComponent={renderRowSubComponent}
@@ -265,17 +236,10 @@ const CustomerList = () => {
           addButtonHandler: () => {
             setAdd(true);
           },
-          buttonContentLangKey: "Add customer",
+          buttonContentLangKey: "Add order",
         }}
         onSearchKeywordChange={(q) => console.log(q)}
         onSortByChange={(sort) => console.log(sort)}
-        filter={{
-          isShow: true,
-          isExpandFilterMenu: true,
-          setIsExpandFilterMenu: (val) => {
-            console.log(val);
-          },
-        }}
       />
       {/* add customer dialog */}
       <Dialog
@@ -283,22 +247,9 @@ const CustomerList = () => {
         fullWidth
         onClose={handleAdd}
         open={add}
-        sx={{ "& .MuiDialog-paper": { p: 0 } }}>
-        {add && <AddCustomerModal customer={customer} onCancel={handleAdd} />}
-      </Dialog>
-
-      {deleteConfirm && (
-        <Dialog
-          maxWidth="sm"
-          fullWidth
-          onClose={handleAdd}
-          open={add}
-          sx={{ "& .MuiDialog-paper": { p: 0 } }}>
-          <ConfirmationDialog />
-        </Dialog>
-      )}
+        sx={{ "& .MuiDialog-paper": { p: 0 } }}></Dialog>
     </MainCard>
   );
 };
 
-export default CustomerList;
+export default OrderListPage;

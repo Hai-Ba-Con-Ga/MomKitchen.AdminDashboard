@@ -1,6 +1,12 @@
 import { ColumnDef, Row } from "@tanstack/react-table";
 import ScrollX from "@ui/ScrollX";
-import { ReactElement, MouseEvent as ReactMouseEvent, useEffect, useState } from "react";
+import {
+  Dispatch,
+  ReactElement,
+  MouseEvent as ReactMouseEvent,
+  useEffect,
+  useState,
+} from "react";
 import BaseTableV8 from "./BaseTableV8";
 import ListTableHeader from "./ListTableHeader";
 import TablePagination from "./TablePagination";
@@ -13,11 +19,19 @@ interface Props<T> {
   onSearchKeywordChange?: (keyword: string) => void;
   onSortByChange?: (sortBy: SortBy) => void;
   onRowSelectedChange?: (rows: any[]) => void;
-  addButton ? : {
-    isShown :boolean,
-    addButtonHandler: (e :ReactMouseEvent<Element,MouseEvent>) =>void;
-    buttonContentLangKey : string
-  }
+  addButton?: {
+    isShown: boolean;
+    addButtonHandler: (e: ReactMouseEvent<Element, MouseEvent>) => void;
+    buttonContentLangKey: string;
+  };
+  filter?: {
+    isShow: boolean;
+    isExpandFilterMenu: boolean;
+    setIsExpandFilterMenu: Dispatch<boolean>;
+  };
+  columnVisibility?: {
+    [key: string]: boolean;
+  };
 }
 type PaginationState = {
   pageIndex: number;
@@ -36,7 +50,13 @@ function QuickTable<T>(props: Props<T>) {
     onRowSelectedChange,
     onSearchKeywordChange,
     onSortByChange,
-    addButton = {isShown: false, buttonContentLangKey: "", addButtonHandler:()=>console.log}
+    columnVisibility,
+    addButton = {
+      isShown: false,
+      buttonContentLangKey: "",
+      addButtonHandler: () => console.log,
+    },
+    filter,
   } = props;
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -52,10 +72,18 @@ function QuickTable<T>(props: Props<T>) {
     setPagination({ ...pagination, pageSize: size });
   };
   //========Expose pagination change
-  useEffect(() => {onPaginationChange(pagination)}, [pagination,onPaginationChange]);
-  useEffect(() => {onRowSelectedChange(rowSelected)}, [rowSelected,onRowSelectedChange]);
-  useEffect(() => {onSortByChange(sortBy)}, [sortBy,onSortByChange]);
-  useEffect(() => {onSearchKeywordChange(keyword)}, [keyword,onSearchKeywordChange]);
+  useEffect(() => {
+    onPaginationChange(pagination);
+  }, [pagination, onPaginationChange]);
+  useEffect(() => {
+    onRowSelectedChange(rowSelected);
+  }, [rowSelected, onRowSelectedChange]);
+  useEffect(() => {
+    onSortByChange(sortBy);
+  }, [sortBy, onSortByChange]);
+  useEffect(() => {
+    onSearchKeywordChange(keyword);
+  }, [keyword, onSearchKeywordChange]);
   return (
     <ScrollX>
       <ListTableHeader
@@ -73,8 +101,10 @@ function QuickTable<T>(props: Props<T>) {
             addButton.addButtonHandler(e);
           },
         }}
+        filter={filter}
       />
       <BaseTableV8<T>
+        columnVisibility={columnVisibility}
         footer={{ hasFooter: false }}
         columns={columns}
         isMultiSelection={true}

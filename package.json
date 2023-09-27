@@ -65,6 +65,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.22.15",
+    "@faker-js/faker": "^8.1.0",
     "@storybook/addon-essentials": "7.0.12",
     "@storybook/addon-interactions": "7.0.12",
     "@storybook/addon-links": "7.0.12",

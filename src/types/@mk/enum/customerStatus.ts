@@ -1,4 +1,4 @@
 export enum CustomerStatus {
-    ACTIVE,
-    INACTIVE
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
 }
