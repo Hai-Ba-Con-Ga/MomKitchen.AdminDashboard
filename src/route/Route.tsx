@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import MainLayout from "../base/layout/MainLayout";
 import OrderListPage from "@/modules/order/pages/list/OrderListPage";
+import LoginPage from "@/base/page/auth/LoginPage";
 const routes: RouteObject[] = [
   {
     path: "/",
@@ -102,6 +103,10 @@ const routes: RouteObject[] = [
         element: <h1>Click below to contact</h1>,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
 ];
 

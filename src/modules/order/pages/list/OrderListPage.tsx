@@ -14,7 +14,6 @@ import { IndeterminateCheckbox } from "@ui/third-party/ReactTable";
 import React, { useCallback, useMemo, useState } from "react";
 import NumberFormat from "react-number-format";
 
-interface OrderAdmin extends Order {}
 
 const OrderListPage = () => {
   const theme = useTheme();

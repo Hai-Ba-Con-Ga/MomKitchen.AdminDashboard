@@ -12,9 +12,13 @@ export interface Order extends BaseEntity {
     surcharge: number;
     status: OrderStatus;
     customerId: string;
-    customer: Customer;
+    customer?: Customer;
     mealId: string;
-    meal: Meal;
-    feedback: Feedback | null;
-    orderPayments: OrderPayment[];
+    meal?: Meal;
+    feedback?: Feedback | null;
+    orderPayments?: OrderPayment[];
+}
+
+export interface OrderAdmin extends Order{
+    selection: boolean
 }

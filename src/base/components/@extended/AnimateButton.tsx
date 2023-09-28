@@ -23,7 +23,7 @@ export default function AnimateButton({
   type = "scale",
   direction = "right",
   offset = 10,
-  scale = { hover: 1.05, tap: 0.954 },
+  scale = { hover: 1.008, tap: 0.954 },
 }: Props) {
   let offset1;
   let offset2;
