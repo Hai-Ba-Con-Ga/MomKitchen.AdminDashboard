@@ -20,5 +20,5 @@ export interface Order extends BaseEntity {
 }
 
 export interface OrderAdmin extends Order{
-    selection: boolean
+    selection?: boolean
 }

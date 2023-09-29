@@ -1,35 +1,15 @@
+import { Order, OrderAdmin } from "@/types/@mk/entity/order";
 import { OrderStatus } from "@/types/@mk/enum/orderStatus";
-import {faker} from "@faker-js/faker"
-// Define a function to generate a random meal
-function generateRandomMeal() {
-    return {
-      id: faker.number.int()
-      ,
-      createdDate: faker.date.recent().toISOString(),
-      updatedDate: faker.date.recent().toISOString(),
-      createdBy: null,
-      updatedBy: 'admin',
-      isDeleted: false,
-      name: faker.lorem.words(2),
-      price: faker.datatype.number({ min: 5, max: 50, precision: 0.01 }),
-      serviceFrom: faker.date.future().toISOString(),
-      serviceTo: faker.date.future().toISOString(),
-      serviceQuantity: faker.datatype.number({ min: 1, max: 10 }),
-      trayId: faker.number.int()
-      ,
-      tray: null, // This will be populated when linking with a Tray entity
-      kitchenId: faker.number.int()
-      ,
-      kitchen: null, // This will be populated when linking with a Kitchen entity
-      trays: [], // You can populate this array with Tray objects
-      orders: [], // You can populate this array with Order objects
-    };
-  }
+import { faker } from "@faker-js/faker";
+import { generateRandomMeal } from "./Meal";
+import { generateRandomCustomer } from "./Customer";
+
   
   // Define a function to generate a random order
-  function generateRandomOrder() {
+  function generateRandomOrder():Order {
+    const customer = generateRandomCustomer()
     return {
-      id: faker.number.int()
+      id: faker.number.int().toString()
       ,
       createdDate: faker.date.recent().toISOString(),
       updatedDate: faker.date.recent().toISOString(),
@@ -40,10 +20,34 @@ function generateRandomMeal() {
       totalQuantity: faker.datatype.number({ min: 1, max: 10 }),
       surcharge: faker.datatype.number({ min: 1, max: 20, precision: 0.01 }),
       status: faker.number.int({min:0,max: 1}),
-      customerId: faker.number.int()
+      customerId: customer.id
       ,
-      customer: null, // This will be populated when linking with a Customer entity
-      mealId: faker.number.int()
+      customer: customer, // This will be populated when linking with a Customer entity
+      mealId: faker.number.int().toString()
+      ,
+      meal: generateRandomMeal(),
+      feedback: null, // This will be populated when linking with a Feedback entity
+      orderPayments: [], // You can populate this array with OrderPayment objects
+    };
+  }
+  function generateRandomOrderAdmin():OrderAdmin {
+    const customer = generateRandomCustomer()
+    return {
+      id: faker.number.int({min:0,max: 1000}).toString()
+      ,
+      createdDate: faker.date.recent().toISOString(),
+      updatedDate: faker.date.recent().toISOString(),
+      createdBy: 'admin',
+      updatedBy: 'admin',
+      isDeleted: false,
+      totalPrice: faker.datatype.number({ min: 10, max: 200, precision: 0.01 }),
+      totalQuantity: faker.datatype.number({ min: 1, max: 10 }),
+      surcharge: faker.datatype.number({ min: 1, max: 20, precision: 0.01 }),
+      status: faker.number.int({min:100,max: 105}),
+      customerId: customer.id
+      ,
+      customer: customer, // This will be populated when linking with a Customer entity
+      mealId: faker.number.int().toString()
       ,
       meal: generateRandomMeal(),
       feedback: null, // This will be populated when linking with a Feedback entity
@@ -51,6 +55,7 @@ function generateRandomMeal() {
     };
   }
   
+  
   // Generate a list of 20 mock order objects
   const mockOrders = Array.from({ length: 20 }, () => generateRandomOrder());
-  
+  export function mockOrder():OrderAdmin[] {return Array.from({ length:faker.number.int({min:10,max: 50})  }, () => generateRandomOrderAdmin())}

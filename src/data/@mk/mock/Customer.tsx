@@ -3,31 +3,11 @@ import { CustomerAdmin } from "@/types/@mk/entity/customer";
 import { User } from "@/types/@mk/entity/user";
 import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
 import { faker } from "@faker-js/faker";
+import { generateRandomUser } from "./User";
 // Define a function to generate a random user
-function generateRandomUser(): User {
-  return {
-    id: faker.datatype.bigInt().toString(),
-    createdDate: faker.date.recent().toISOString(),
-    updatedDate: faker.date.recent().toISOString(),
-    createdBy: "admin",
-    updatedBy: "admin",
-    isDeleted: false,
-    email: faker.internet.email(),
-    credential: "customer",
-    phone: faker.phone.number(),
-    birthday: faker.date.past().toISOString(),
-    avatarUrl: faker.image.avatar(),
-    fullName: faker.name.fullName(),
-    roleId: faker.datatype.uuid(),
-    role: null,
-    notifications: [],
-    customer: null,
-    kitchen: null,
-  };
-}
 
 // Define a function to generate a random customer
-function generateRandomCustomer(): CustomerAdmin {
+export function generateRandomCustomer(): CustomerAdmin {
   return {
     id: faker.datatype.number().toString(),
     createdDate: faker.date.recent().toISOString(),

@@ -10,9 +10,9 @@ export interface Meal extends BaseEntity {
     serviceTo: string;
     serviceQuantity: number;
     trayId: string;
-    tray: Tray;
+    tray?: Tray;
     kitchenId: string;
-    kitchen: Kitchen;
-    trays: Tray[];
-    orders: Order[];
+    kitchen?: Kitchen;
+    trays?: Tray[];
+    orders?: Order[];
 }

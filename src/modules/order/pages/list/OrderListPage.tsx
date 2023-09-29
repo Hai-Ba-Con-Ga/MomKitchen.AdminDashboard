@@ -1,24 +1,30 @@
-import makeData from "@/data/react-table";
-import CustomerView from "@/modules/customer/components/CustomerView";
-import { Order } from "@/types/@mk/entity/order";
+import { mockDishes } from "@/data/@mk/mock/Dish";
+import { mockOrder } from "@/data/@mk/mock/Order";
+import { OrderAdmin } from "@/types/@mk/entity/order";
 import { CloseOutlined, EyeTwoTone } from "@ant-design/icons";
 import { DeleteTwoTone, EditTwoTone } from "@mui/icons-material";
-import { Chip, Tooltip, Typography } from "@mui/material";
-import { Dialog, IconButton } from "@mui/material";
-import { Stack, useTheme } from "@mui/system";
-import { createColumnHelper } from "@tanstack/react-table";
+import { Chip, Dialog, IconButton, Tab, Tabs, Tooltip, Typography } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/system";
+import { Row, createColumnHelper } from "@tanstack/react-table";
 import Avatar from "@ui/@extended/Avatar";
 import MainCard from "@ui/MainCard";
 import QuickTable from "@ui/common/table/QuickTable";
 import { IndeterminateCheckbox } from "@ui/third-party/ReactTable";
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import NumberFormat from "react-number-format";
-
+import OrderViewInline from "../../components/OrderViewInline";
 
 const OrderListPage = () => {
   const theme = useTheme();
 
-  const data = useMemo(() => makeData(20), []);
+  const data = useMemo(
+    () =>
+      mockOrder().map((order) => {
+        order.meal?.tray?.dishies?.push(...mockDishes);
+        return order;
+      }),
+    []
+  );
 
   const [customer, setCustomer] = useState(null);
   const [add, setAdd] = useState<boolean>(false);
@@ -28,7 +34,7 @@ const OrderListPage = () => {
     if (customer && !add) setCustomer(null);
   };
 
-  const columnHelper = createColumnHelper();
+  const columnHelper = createColumnHelper<OrderAdmin>();
 
   const columns = useMemo(
     () => {
@@ -60,80 +66,127 @@ const OrderListPage = () => {
         columnHelper.accessor("id", {
           header: "#",
         }),
-        columnHelper.accessor("fatherName", {
-          header: "Customer Name",
+        columnHelper.accessor("customer", {
+          header: "Customer",
           cell: ({ row }) => {
             const { getValue } = row;
             return (
               <Stack direction="row" spacing={1.5} alignItems="center">
-                <Avatar alt="Avatar 1" size="sm" src={row} />
+                <Avatar
+                  alt="Avatar 1"
+                  size="sm"
+                  src={row.original.customer?.user?.avatarUrl}
+                />
                 <Stack spacing={0}>
                   <Typography variant="subtitle1">
-                    {getValue("fatherName")}
+                    {row.original.customer?.user?.fullName}
                   </Typography>
                   <Typography variant="caption" color="textSecondary">
-                    {getValue("email")}
+                    {row.original.customer?.user?.email}
                   </Typography>
                 </Stack>
               </Stack>
             );
           },
         }),
-        columnHelper.accessor("avatar", {
-          header: "Avatar",
+        columnHelper.accessor("meal", {
+          header: "Tray",
           enableSorting: false,
+          cell: ({ row }) => {
+            const { getValue } = row;
+            return (
+              <Stack direction="row" spacing={1.5} alignItems="center">
+                <Avatar
+                  alt="Meal"
+                  size="sm"
+                  src={row.original.meal?.tray?.imgUrl}
+                />
+                <Stack spacing={0}>
+                  <Typography variant="subtitle1">
+                    {row.original.meal?.tray?.name.toUpperCase()}
+                  </Typography>
+                  {/* <Typography variant="caption" color="textSecondary">
+                    {row.original.customer?.user?.email}
+                  </Typography> */}
+                </Stack>
+              </Stack>
+            );
+          },
         }),
-        columnHelper.accessor("email", {
-          header: "Email",
+        columnHelper.accessor("totalQuantity", {
+          header: "Total Quantity",
+          cell: ({ renderValue }) => (
+            <Typography
+              fontWeight="500"
+              textAlign={"center"}
+              variant="subtitle1">
+              {renderValue()}
+            </Typography>
+          ),
         }),
-        columnHelper.accessor("contact", {
-          header: "Contact",
+        columnHelper.accessor("totalPrice", {
+          header: "totalPrice ",
           cell: ({ renderValue }) => (
             <NumberFormat
               displayType="text"
-              format="+1 (###) ###-####"
-              mask="_"
-              defaultValue={renderValue() as any}
+              prefix="₫"
+              defaultValue={renderValue()}
             />
           ),
         }),
-        columnHelper.accessor("age", {
-          header: "Order",
-        }),
-        columnHelper.accessor("visits", {
-          header: "Spent",
+        columnHelper.accessor("surcharge", {
+          header: "Surcharge",
           cell: ({ renderValue }) => (
             <NumberFormat
-              value={renderValue() as any}
               displayType="text"
-              thousandSeparator
-              prefix="$"
+              prefix="₫"
+              defaultValue={renderValue()}
             />
           ),
         }),
         columnHelper.accessor("status", {
           header: "Status",
           cell: ({ renderValue }) => {
-            switch (renderValue()) {
-              case "Complicated":
+            // TODO: order status migrate
+            switch (renderValue() as any) {
+              case 100:
                 return (
                   <Chip
                     color="error"
-                    label="Complicated"
+                    label="UNPAID"
                     size="small"
                     variant="filled"
                   />
                 );
-              case "Relationship":
+              case 101:
+                return (
+                  <Chip
+                    color="warning"
+                    label="PAID"
+                    size="small"
+                    variant="filled"
+                  />
+                );
+              case 102:
+              case 103:
+              case 104:
                 return (
                   <Chip
                     color="success"
-                    label="Relationship"
+                    label="COMPLETED"
                     size="small"
                     variant="filled"
                   />
                 );
-              case "Single":
+              case 105:
+                return (
+                  <Chip
+                    color="error"
+                    label="CANCEL"
+                    size="small"
+                    variant="filled"
+                  />
+                );
               default:
                 return (
                   <Chip
@@ -146,7 +199,7 @@ const OrderListPage = () => {
             }
           },
         }),
-        columnHelper.accessor("action", {
+        columnHelper.accessor<any, any>("action", {
           header: "Actions",
           enableSorting: false,
           cell: ({ row }) => {
@@ -212,16 +265,43 @@ const OrderListPage = () => {
   );
 
   const renderRowSubComponent = useCallback(
-    (row) => {
+    (row: Row<OrderAdmin>) => {
       console.log(row);
 
-      return <CustomerView data={data[row.id]} />;
+      return <OrderViewInline data={row.original} />;
     },
     [data]
   );
-
+  const [tabValue, setTabValue] = useState("all");
   return (
     <MainCard content={false}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider", margin: "2rem 0 0 2rem" }}>
+        <Tabs
+          value={tabValue}
+          onChange={(e, value) => {
+            setTabValue(value);
+          }}
+          aria-label="basic tabs example">
+          <Tab  
+          sx={{fontWeight: 600}}
+           label={<Stack direction={"row"} gap={1}>
+            <Typography>All</Typography>
+             <Chip
+            color="primary"
+            label="UNPAID"
+            size="small"
+            variant="filled"
+          />
+           </Stack>} value={"all"}  />
+          <Tab 
+          sx={{fontWeight: 600}}
+          
+          label="Cancel" value="cancel" />
+          <Tab 
+          sx={{fontWeight: 600}}
+          label="Complete" value="complete"/>
+        </Tabs>
+      </Box>
       <QuickTable
         columns={columns}
         data={data}

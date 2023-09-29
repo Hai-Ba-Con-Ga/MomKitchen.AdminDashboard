@@ -37,7 +37,7 @@ const ListTableHeader = (props: Props) => {
       spacing={1}
       justifyContent="space-between"
       alignItems="center"
-      sx={{ p: 3 }}>
+      sx={{ p: 1.5 }}>
       <Stack
         direction={matchDownSM ? "column" : "row"}
         spacing={1}
