@@ -20,7 +20,7 @@ import {
   Switch,
   TextField,
   Tooltip,
-  Typography
+  Typography,
 } from "@mui/material";
 import { Box, Stack, useTheme } from "@mui/system";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -62,7 +62,7 @@ const AddCustomerModal = ({
     }
   }, [selectedImage]);
 
- /*  const CustomerSchema = Yup.object().shape({
+  /*  const CustomerSchema = Yup.object().shape({
     name: Yup.string().max(255).required("Name is required"),
     orderStatus: Yup.string().required("Name is required"),
     email: Yup.string()
@@ -135,9 +135,9 @@ const AddCustomerModal = ({
   //     }
   //   }
   // });
-  const {  control } = useForm();
+  const { control } = useForm();
   // const allStatus = ["Complicated", "Single", "Relationship"];
-  const roles = [] // TODO: load from be
+  const roles = []; // TODO: load from be
   // const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue } = formik;
 
   return (
@@ -341,9 +341,7 @@ const AddCustomerModal = ({
                 </Grid>
                 <Grid item xs={12}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="customer-orderStatus">
-                      Role
-                    </InputLabel>
+                    <InputLabel htmlFor="customer-orderStatus">Role</InputLabel>
                     <FormControl fullWidth>
                       <Select
                         id="column-hiding"

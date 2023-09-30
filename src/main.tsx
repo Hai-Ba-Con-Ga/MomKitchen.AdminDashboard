@@ -10,14 +10,13 @@ import "./utils/lang/i18n.ts";
 import "regenerator-runtime";
 // import "./utils/errorTracking/sentry";
 import { QueryClient, QueryClientProvider } from "react-query";
-import {
-  ReactQueryDevtools
-} from "react-query/devtools";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { RecoilRoot } from "recoil";
 import "./index.css";
+import queryClient from "./services/queryClient.ts";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <App />
       </RecoilRoot>

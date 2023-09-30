@@ -33,11 +33,11 @@ interface Props<T> {
     [key: string]: boolean;
   };
 }
-type PaginationState = {
+export type PaginationState = {
   pageIndex: number;
   pageSize: number;
 };
-type SortBy = {
+export type SortBy = {
   colName: string;
   isDesc: boolean;
 };
