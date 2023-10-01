@@ -32,7 +32,7 @@ jobs:
       - checkout
       - run: 
           name: "Install pnpm"
-          command: "sudo npm install -g pnpm@lastest"
+          command: "sudo npm install -g pnpm"
       - run:
           name: "Linting"
           command: "pnpm lint"
@@ -52,7 +52,7 @@ jobs:
           command: "sudo npm install -g pnpm"
       - run:
           name: Install Vercel CLI
-          command: sudo npm install --global pnpm@latest
+          command: sudo npm install --global pnpm
       - run:
           name: Pull Vercel Environment Information
           command: vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
@@ -79,7 +79,7 @@ jobs:
           command: "sudo npm install -g pnpm"
       - run:
           name: Install Vercel CLI
-          command: sudo npm install --global pnpm@latest
+          command: sudo npm install --global pnpm
       - run:
           name: Pull Vercel Environment Information
           command: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
