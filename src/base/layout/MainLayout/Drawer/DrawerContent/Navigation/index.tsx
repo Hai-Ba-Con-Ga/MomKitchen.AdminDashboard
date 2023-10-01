@@ -18,7 +18,6 @@ const Navigation = () => {
   // const menu = useSelector((state: RootStateProps) => state.menu);
   // const { drawerOpen } = menu;
   const drawerOpen = useRecoilValue(menuWithDrawerOpen);
-  console.log("menuItem => ", menuItem);
   
   const navGroups = menuItem.items.map((item) => {
     switch (item.type) {

@@ -20,7 +20,7 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      "@ui": "/src/components/",
+      "@ui": "/src/base/components/",
       "@": "/src",
       "@base" :"/src/base/"
     },

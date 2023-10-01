@@ -1,4 +1,5 @@
-export function deepEqual(obj1: any, obj2: any) {
+
+export function deepEqual(obj1: unknown, obj2: unknown) {
   // Check if the objects are of the same type
   if (typeof obj1 !== typeof obj2) {
     return false;

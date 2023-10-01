@@ -1,18 +1,17 @@
-import { forwardRef, useEffect, ForwardRefExoticComponent, RefAttributes } from 'react';
+import { ForwardRefExoticComponent, RefAttributes, forwardRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 // import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
 import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // project import
 // import { activeItem } from 'store/reducers/menu';
 
 // types
-import { LinkTarget, NavItemType } from '@/types/menu';
-import { RootStateProps } from '@/types/root';
 import { menuWithDrawerOpen, menuWithOpenItem } from '@/base/store/selectors/app';
+import { LinkTarget, NavItemType } from '@/types/menu';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
@@ -24,11 +23,8 @@ interface Props {
 
 const NavItem = ({ item, level }: Props) => {
   const theme = useTheme();
-  // const dispatch = useDispatch();
-  // const menu = useSelector((state: RootStateProps) => state.menu);
-  const [drawerOpen, setDrawerOpen] = useRecoilState(menuWithDrawerOpen);
+  const drawerOpen = useRecoilValue(menuWithDrawerOpen);
   const [openItem, setOpenItem] = useRecoilState(menuWithOpenItem);
-  console.log("NavItem => ", item);
   
   let itemTarget: LinkTarget = '_self';
   if (item.target) {

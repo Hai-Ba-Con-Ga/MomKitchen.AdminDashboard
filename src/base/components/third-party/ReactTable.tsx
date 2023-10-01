@@ -126,7 +126,6 @@ export const TablePagination = ({ gotoPage, rows, setPageSize, pageSize, pageInd
           <TextField
             size="small"
             type="number"
-            // @ts-ignore
             value={pageIndex + 1}
             onChange={(e) => {
               const page = e.target.value ? Number(e.target.value) : 0;
@@ -138,9 +137,7 @@ export const TablePagination = ({ gotoPage, rows, setPageSize, pageSize, pageInd
       </Grid>
       <Grid item sx={{ mt: { xs: 2, sm: 0 } }}>
         <Pagination
-          // @ts-ignore
           count={Math.ceil(rows.length / pageSize)}
-          // @ts-ignore
           page={pageIndex + 1}
           onChange={handleChangePagination}
           color="primary"
@@ -155,11 +152,11 @@ export const TablePagination = ({ gotoPage, rows, setPageSize, pageSize, pageInd
 
 // ==============================|| SELECTION - PREVIEW ||============================== //
 
-export const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }: { indeterminate: any }, ref: any) => {
+export const IndeterminateCheckbox = forwardRef(({ indeterminate, checked,...rest }: { indeterminate: boolean, checked?: boolean  }, ref: any) => {
   const defaultRef = useRef();
   const resolvedRef = ref || defaultRef;
 
-  return <Checkbox indeterminate={indeterminate} ref={resolvedRef} {...rest} />;
+  return <Checkbox indeterminate={indeterminate} checked={checked} ref={resolvedRef} {...rest} />;
 });
 
 export const TableRowSelection = ({ selected }: { selected: number }) => (

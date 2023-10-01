@@ -70,7 +70,8 @@ const newPerson = (index: number) => {
 };
 
 export default function makeData(...lens: any) {
-  const makeDataLevel: any = (depth: number = 0) => {
+  const makeDataLevel: any = (depth: number ) => {
+    depth = 0;
     const len = lens[depth];
     return range(len).map((d, index) => ({
       ...newPerson(index + 1),

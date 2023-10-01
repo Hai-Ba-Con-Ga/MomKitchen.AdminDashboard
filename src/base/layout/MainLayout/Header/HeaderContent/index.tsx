@@ -24,7 +24,6 @@ const HeaderContent = () => {
     theme.breakpoints.down("md")
   );
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   // const localization = useMemo(() => <Localization />, [i18n]);
   const localization = useMemo(() => <Localization />, []);
 

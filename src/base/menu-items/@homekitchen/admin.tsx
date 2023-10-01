@@ -7,6 +7,9 @@ import {
   CustomerServiceOutlined,
   AreaChartOutlined,
   TableOutlined,
+  ForkOutlined,
+  SnippetsOutlined,
+  ShopOutlined
 } from "@ant-design/icons";
 
 // type
@@ -18,6 +21,9 @@ const icons = {
   CustomerServiceOutlined,
   AreaChartOutlined,
   TableOutlined,
+  ForkOutlined,
+  SnippetsOutlined,
+  ShopOutlined
 };
 
 // ==============================|| MENU ITEMS - APPLICATIONS ||============================== //
@@ -69,7 +75,7 @@ export const admin: NavItemType = {
         id: "kitchen",
         title: <FormattedMessage id="kitchen" />,
         type: "collapse",
-        icon: icons.CustomerServiceOutlined,
+        icon: icons.ForkOutlined,
         children: [
           {
             id: "kitchen-list",
@@ -91,7 +97,7 @@ export const admin: NavItemType = {
         id: "promotion",
         title: <FormattedMessage id="promotion" />,
         type: "collapse",
-        icon: icons.CustomerServiceOutlined,
+        icon: icons.ShopOutlined,
         children: [
           {
             id: "promotion-list",
@@ -113,7 +119,7 @@ export const admin: NavItemType = {
         id: "order",
         title: <FormattedMessage id="order" />,
         type: "collapse",
-        icon: icons.CustomerServiceOutlined,
+        icon: icons.SnippetsOutlined,
         children: [
           {
             id: "order-list",
