@@ -158,7 +158,7 @@ export interface Props extends IconButtonProps {
 }
 
 const IconButton = forwardRef(
-  ({ variant = 'text', shape = 'square', children, color = 'primary', tooltip, ...others }: Props, ref: Ref<HTMLButtonElement>) => {
+  ({ children, color = 'primary', ...others }: Props, ref: Ref<HTMLButtonElement>) => {
     const theme = useTheme();
 
     return (

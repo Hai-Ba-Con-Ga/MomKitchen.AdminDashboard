@@ -3,19 +3,19 @@ import { Outlet } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 
 // material-ui
+import { Box, Container, Toolbar, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useMediaQuery, Box, Container, Toolbar } from "@mui/material";
 
 // project import
-import Drawer from "./Drawer";
-import Header from "./Header";
-import Footer from "./Footer";
-import navigation from "@/base/menu-items";
-import useConfig from "@/base/hooks/useConfig";
 import Breadcrumbs from '@/base/components/@extended/Breadcrumbs';
-import {drawerWidth} from "@/config"
-import { useRecoilState, useRecoilValue } from "recoil";
+import useConfig from "@/base/hooks/useConfig";
+import navigation from "@/base/menu-items";
 import { menuWithDrawerOpen } from "@/base/store/selectors/app";
+import { useRecoilState } from "recoil";
+import Drawer from "./Drawer";
+import Footer from "./Footer";
+import Header from "./Header";
+import AxiosInterceptor from "@/base/service/AxiosInterceptor";
 // ==============================|| MAIN LAYOUT ||============================== //
 
 const MainLayout = () => {
@@ -48,7 +48,7 @@ const MainLayout = () => {
   }, [drawerOpen]);
 
   return (
-    <Box sx={{ display: "flex", width: "100%" }}>
+    <Box sx={{ display: "flex", width: "100%", position: "relative" }}>
       <Header open={open} handleDrawerToggle={handleDrawerToggle} />
       <Drawer open={open} handleDrawerToggle={handleDrawerToggle} />
       <Box
@@ -72,7 +72,10 @@ const MainLayout = () => {
               card={false}
               divider={false}
             />
+            <AxiosInterceptor>
+
             <Outlet />
+            </AxiosInterceptor>
             <Footer />
           </Container>
         )}
@@ -91,7 +94,10 @@ const MainLayout = () => {
               card={false}
               divider={false}
             />
-            <Outlet />
+          <AxiosInterceptor>
+
+<Outlet />
+</AxiosInterceptor>
             <Footer />
           </Box>
         )}

@@ -1,20 +1,21 @@
-import { SyntheticEvent } from 'react';
+import { SyntheticEvent } from "react";
 // import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
-import { Alert, Button, Fade, Grow, Slide, SlideProps } from '@mui/material';
-import MuiSnackbar from '@mui/material/Snackbar';
-
+import { Alert, Button, Fade, Grow, Slide, SlideProps } from "@mui/material";
+import MuiSnackbar from "@mui/material/Snackbar";
 // project-import
-import IconButton from './IconButton';
 
 // assets
-import { CloseOutlined } from '@ant-design/icons';
 
-import { KeyedObject, RootStateProps } from '@/types/root';
+import { KeyedObject } from "@/types/root";
+import { useRecoilState } from "recoil";
+import { snackbarAtom } from "@/base/store/atoms/snackbar";
+import IconButton from "./IconButton";
+import { CloseOutlined } from "@mui/icons-material";
 // import { closeSnackbar } from 'store/reducers/snackbar';
 
-// animation function
+// // animation function
 function TransitionSlideLeft(props: SlideProps) {
   return <Slide {...props} direction="left" />;
 }
@@ -42,7 +43,7 @@ const animation: KeyedObject = {
   SlideRight: TransitionSlideRight,
   SlideDown: TransitionSlideDown,
   Grow: GrowTransition,
-  Fade
+  Fade,
 };
 
 // ==============================|| SNACKBAR ||============================== //
@@ -50,84 +51,96 @@ const animation: KeyedObject = {
 const Snackbar = () => {
   // const dispatch = useDispatch();
   // const snackbar = useSelector((state: RootStateProps) => state.snackbar);
-  // const { actionButton, anchorOrigin, alert, close, message, open, transition, variant } = snackbar;
-
+  const [snackbar, setSnackbar] = useRecoilState(snackbarAtom);
+  const {
+    actionButton,
+    anchorOrigin,
+    alert,
+    close,
+    message,
+    open,
+    transition,
+    variant,
+  } = snackbar;
   const handleClose = (event: SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
-    // dispatch(closeSnackbar());
+    setSnackbar({ ...snackbar, open: false });
   };
-
-  // return (
-  //   <>
-  //     {/* default snackbar */}
-  //     {variant === 'default' && (
-  //       <MuiSnackbar
-  //         anchorOrigin={anchorOrigin}
-  //         open={open}
-  //         autoHideDuration={6000}
-  //         onClose={handleClose}
-  //         message={message}
-  //         TransitionComponent={animation[transition]}
-  //         action={
-  //           <>
-  //             <Button color="secondary" size="small" onClick={handleClose}>
-  //               UNDO
-  //             </Button>
-  //             <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose} sx={{ mt: 0.25 }}>
-  //               <CloseOutlined />
-  //             </IconButton>
-  //           </>
-  //         }
-  //       />
-  //     )}
-
-  //     {/* alert snackbar */}
-  //     {variant === 'alert' && (
-  //       <MuiSnackbar
-  //         TransitionComponent={animation[transition]}
-  //         anchorOrigin={anchorOrigin}
-  //         open={open}
-  //         autoHideDuration={6000}
-  //         onClose={handleClose}
-  //       >
-  //         <Alert
-  //           variant={alert.variant}
-  //           color={alert.color}
-  //           action={
-  //             <>
-  //               {actionButton !== false && (
-  //                 <Button color={alert.color} size="small" onClick={handleClose}>
-  //                   UNDO
-  //                 </Button>
-  //               )}
-  //               {close !== false && (
-  //                 <IconButton
-  //                   sx={{ mt: 0.25 }}
-  //                   size="small"
-  //                   aria-label="close"
-  //                   variant="contained"
-  //                   color={alert.color}
-  //                   onClick={handleClose}
-  //                 >
-  //                   <CloseOutlined />
-  //                 </IconButton>
-  //               )}
-  //             </>
-  //           }
-  //           sx={{
-  //             ...(alert.variant === 'outlined' && {
-  //               bgcolor: 'grey.0'
-  //             })
-  //           }}
-  //         >
-  //           {message}
-  //         </Alert>
-  //       </MuiSnackbar>
-  //     )}
-  //   </>
-  // );
+  return (
+    <>
+      {/* default snackbar */}
+      {variant === "default" && (
+        <MuiSnackbar
+          anchorOrigin={anchorOrigin}
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          message={message}
+          TransitionComponent={animation[transition]}
+          action={
+            <>
+              <Button color="secondary" size="small" onClick={handleClose}>
+                UNDO
+              </Button>
+              <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+                sx={{ mt: 0.25 }}>
+                <CloseOutlined />
+              </IconButton>
+            </>
+          }
+        />
+      )}
+      {/* alert snackbar */}
+      {variant === "alert" && (
+        <MuiSnackbar
+          TransitionComponent={animation[transition]}
+          anchorOrigin={anchorOrigin}
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}>
+          <Alert
+            variant={alert.variant}
+            color={alert.color}
+            action={
+              <>
+                {actionButton !== false && (
+                  <Button
+                    color={alert.color}
+                    size="small"
+                    onClick={handleClose}>
+                    UNDO
+                  </Button>
+                )}
+                {close !== false && (
+                  <IconButton
+                    sx={{ mt: 0.25 }}
+                    size="small"
+                    aria-label="close"
+                    variant="contained"
+                    color={alert.color}
+                    onClick={handleClose}>
+                    <CloseOutlined />
+                  </IconButton>
+                )}
+              </>
+            }
+            sx={{
+              ...(alert.variant === "outlined" && {
+                bgcolor: "grey.0",
+              }),
+            }}>
+            {message}
+          </Alert>
+        </MuiSnackbar>
+      )}
+    </>
+  );
 };
 
 export default Snackbar;

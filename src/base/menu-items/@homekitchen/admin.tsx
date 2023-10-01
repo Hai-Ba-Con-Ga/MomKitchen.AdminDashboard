@@ -9,7 +9,7 @@ import {
   TableOutlined,
   ForkOutlined,
   SnippetsOutlined,
-  ShopOutlined
+  ShopOutlined,
 } from "@ant-design/icons";
 
 // type
@@ -23,7 +23,7 @@ const icons = {
   TableOutlined,
   ForkOutlined,
   SnippetsOutlined,
-  ShopOutlined
+  ShopOutlined,
 };
 
 // ==============================|| MENU ITEMS - APPLICATIONS ||============================== //
@@ -42,12 +42,34 @@ export const admin: NavItemType = {
   type: "group",
   children: [
     {
-      id: "chat",
+      id: "dashboard",
       title: <FormattedMessage id="dashboard" />,
       type: "item",
       url: "/dashboard",
       icon: icons.DashboardOutlined,
       breadcrumbs: false,
+    },
+    {
+      id: "order",
+      title: <FormattedMessage id="order" />,
+      type: "collapse",
+      icon: icons.SnippetsOutlined,
+      children: [
+        {
+          id: "order-list",
+          title: <FormattedMessage id="list" />,
+          type: "item",
+          icon: icons.TableOutlined,
+          url: "/order/list",
+        },
+        {
+          id: "order-analytics",
+          title: <FormattedMessage id="analytics" />,
+          type: "item",
+          url: "/order/analytic",
+          icon: icons.AreaChartOutlined,
+        },
+      ],
     },
     {
       id: "customer",
@@ -72,70 +94,92 @@ export const admin: NavItemType = {
       ],
     },
     {
-        id: "kitchen",
-        title: <FormattedMessage id="kitchen" />,
-        type: "collapse",
-        icon: icons.ForkOutlined,
-        children: [
-          {
-            id: "kitchen-list",
-            title: <FormattedMessage id="list" />,
-            type: "item",
-            icon: icons.TableOutlined,
-            url: "/kitchen/list",
-          },
-          {
-            id: "kitchen-analytics",
-            title: <FormattedMessage id="analytics" />,
-            type: "item",
-            url: "/kitchen/analytic",
-            icon: icons.AreaChartOutlined,
-          },
-        ],
+      id: "kitchen",
+      title: <FormattedMessage id="kitchen" />,
+      type: "collapse",
+      icon: icons.ForkOutlined,
+      children: [
+        {
+          id: "kitchen-list",
+          title: <FormattedMessage id="list" />,
+          type: "item",
+          icon: icons.TableOutlined,
+          url: "/kitchen/list",
+        },
+        {
+          id: "kitchen-analytics",
+          title: <FormattedMessage id="analytics" />,
+          type: "item",
+          url: "/kitchen/analytic",
+          icon: icons.AreaChartOutlined,
+        },
+      ],
     },
-      {
-        id: "promotion",
-        title: <FormattedMessage id="promotion" />,
-        type: "collapse",
-        icon: icons.ShopOutlined,
-        children: [
-          {
-            id: "promotion-list",
-            title: <FormattedMessage id="list" />,
-            type: "item",
-            icon: icons.TableOutlined,
-            url: "/promotion/list",
-          },
-          {
-            id: "promotion-analytics",
-            title: <FormattedMessage id="analytics" />,
-            type: "item",
-            url: "/promotion/analytic",
-            icon: icons.AreaChartOutlined,
-          },
-        ],
-      },
-      {
-        id: "order",
-        title: <FormattedMessage id="order" />,
-        type: "collapse",
-        icon: icons.SnippetsOutlined,
-        children: [
-          {
-            id: "order-list",
-            title: <FormattedMessage id="list" />,
-            type: "item",
-            icon: icons.TableOutlined,
-            url: "/order/list",
-          },
-          {
-            id: "order-analytics",
-            title: <FormattedMessage id="analytics" />,
-            type: "item",
-            url: "/order/analytic",
-            icon: icons.AreaChartOutlined,
-          },
-        ],
-      },
+    {
+      id: "area",
+      title: <FormattedMessage id="area" />,
+      type: "collapse",
+      icon: icons.ShopOutlined,
+      children: [
+        {
+          id: "area-list",
+          title: <FormattedMessage id="list" />,
+          type: "item",
+          icon: icons.TableOutlined,
+          url: "/area/list",
+        },
+        {
+          id: "area-analytics",
+          title: <FormattedMessage id="analytics" />,
+          type: "item",
+          url: "/area/analytic",
+          icon: icons.AreaChartOutlined,
+        },
+      ],
+    },
+    {
+      id: "feedback",
+      title: <FormattedMessage id="feedback" />,
+      type: "collapse",
+      icon: icons.ShopOutlined,
+      children: [
+        {
+          id: "feedback-list",
+          title: <FormattedMessage id="list" />,
+          type: "item",
+          icon: icons.TableOutlined,
+          url: "/feedback/list",
+        },
+        {
+          id: "feedback-analytics",
+          title: <FormattedMessage id="analytics" />,
+          type: "item",
+          url: "/feedback/analytic",
+          icon: icons.AreaChartOutlined,
+        },
+      ],
+    },
+    {
+      id: "payment",
+      title: <FormattedMessage id="payment" />,
+      type: "collapse",
+      icon: icons.ShopOutlined,
+      children: [
+        {
+          id: "payment-list",
+          title: <FormattedMessage id="list" />,
+          type: "item",
+          icon: icons.TableOutlined,
+          url: "/payment/list",
+        },
+        {
+          id: "payment-analytics",
+          title: <FormattedMessage id="analytics" />,
+          type: "item",
+          url: "/payment-type/analytic",
+          icon: icons.AreaChartOutlined,
+        },
+      ],
+    },
   ],
 };

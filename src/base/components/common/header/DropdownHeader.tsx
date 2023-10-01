@@ -1,13 +1,13 @@
-import React, { ReactNode, useRef, useState } from "react";
 import { Image } from "@/base/components/common/image";
-import { Box, DropdownList, DropdownListOptions } from "../layout";
 import { useDetectOutside } from "@/base/hooks";
-import { motion } from "framer-motion";
-import { Select } from "../select";
-import SelectItem, { SelectItemProps } from "../select/SelectItem";
+// import { motion } from "framer-motion";
+import { ReactNode, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { Box, DropdownList, DropdownListOptions } from "../layout";
+import { Select } from "../select";
+import SelectItem from "../select/SelectItem";
 
-const Check = motion(DropdownList);
+// const Check = motion(DropdownList);
 const DropdownHeader = () => {
   const options: DropdownListOptions[] = [
     {

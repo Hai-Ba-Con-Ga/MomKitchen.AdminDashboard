@@ -1,16 +1,9 @@
 import { ErrorBoundary } from "@sentry/react";
-import DropdownHeader from "@/base/components/common/header/DropdownHeader";
-import { Select } from "@/base/components/common/select";
-import SelectItem from "@/base/components/common/select/SelectItem";
-import React from "react";
-import Draggable from "react-draggable";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import { Outlet } from "react-router-dom";
-import styled from "styled-components";
 
 const LandingLayout = () => {
-  const t = useTranslation();
-  const test = ["1", "2", "3"];
+  // const t = useTranslation();
   return (
     <>
       <ErrorBoundary>

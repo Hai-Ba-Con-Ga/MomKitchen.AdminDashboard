@@ -3,11 +3,10 @@ import { useLocation } from "react-router-dom";
 // import { useSelector } from 'react-redux';
 
 // material-ui
-import { styled, useTheme } from "@mui/material/styles";
 import {
   Box,
-  Collapse,
   ClickAwayListener,
+  Collapse,
   List,
   ListItemButton,
   ListItemIcon,
@@ -16,19 +15,19 @@ import {
   Popper,
   Typography,
 } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 
 // project import
-import NavItem from "./NavItem";
 import Transitions from "@/base/components/@extended/Transitions";
+import NavItem from "./NavItem";
 
 // assets
 import { BorderOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 
 // types
-import { NavItemType } from "../../../../../../types/menu";
-import { RootStateProps } from "../../../../../../types/root";
 import { menuWithDrawerOpen } from "@/base/store/selectors/app";
 import { useRecoilValue } from "recoil";
+import { NavItemType } from "../../../../../../types/menu";
 
 type VirtualElement = {
   getBoundingClientRect: () => ClientRect | DOMRect;

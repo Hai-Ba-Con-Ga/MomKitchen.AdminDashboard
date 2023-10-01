@@ -47,6 +47,9 @@ jobs:
       - run:
           name: Install Vercel CLI
           command: sudo npm install --global vercel@latest
+      - run: 
+          name: "Install pnpm"
+          command: "sudo npm install -g pnpm"
       - run:
           name: Install Vercel CLI
           command: sudo npm install --global pnpm@latest
@@ -71,6 +74,9 @@ jobs:
       - run:
           name: Install Vercel CLI
           command: sudo npm install --global vercel@latest
+      - run: 
+          name: "Install pnpm"
+          command: "sudo npm install -g pnpm"
       - run:
           name: Install Vercel CLI
           command: sudo npm install --global pnpm@latest

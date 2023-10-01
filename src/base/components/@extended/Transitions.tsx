@@ -12,6 +12,7 @@ interface Props {
   in?: boolean;
   type?: string;
   direction?: 'up' | 'right' | 'left' | 'down';
+     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [others: string]: any;
 }
 
@@ -56,7 +57,9 @@ const Transitions = forwardRef(
     }
 
     return (
-      <Box ref={ref}>
+      <Box ref={ref}
+      sx={sx}
+      >
         {type === 'grow' && (
           <Grow {...others}>
             <Box sx={positionSX}>{children}</Box>

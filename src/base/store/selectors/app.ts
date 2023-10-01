@@ -1,5 +1,5 @@
-import { selector, DefaultValue, selectorFamily } from 'recoil';
 import { menuAtom } from '@/base/store/atoms/menu';
+import { DefaultValue, selector } from 'recoil';
 /* import { formatSettingsAtom } from '../atoms';
 import {
   // Currency,

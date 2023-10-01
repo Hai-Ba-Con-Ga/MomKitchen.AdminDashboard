@@ -67,7 +67,7 @@ const Localization = () => {
             {
               name: 'offset',
               options: {
-                offset: [matchesXs ? 0 : 0, 9]
+                offset: [ 0, 9]
               }
             }
           ]

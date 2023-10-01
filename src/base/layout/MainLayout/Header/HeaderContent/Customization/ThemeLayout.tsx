@@ -1,9 +1,9 @@
-import { useState, ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
 import { CardMedia, FormControlLabel, Grid, Radio, RadioGroup, Stack, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // project import
 import MainCard from '@/base/components/MainCard';
@@ -12,11 +12,10 @@ import useConfig from '@/base/hooks/useConfig';
 
 // assets
 import defaultLayout from '@/assets/images/customization/default.svg';
-import rtlLayout from '@/assets/images/customization/rtl.svg';
 import miniMenu from '@/assets/images/customization/mini-menu.svg';
+import rtlLayout from '@/assets/images/customization/rtl.svg';
 
 // types
-import { RootStateProps } from '@/types/root';
 
 // ==============================|| CUSTOMIZATION - LAYOUT ||============================== //
 

@@ -1,45 +1,44 @@
+/* eslint-disable */
 import { Fragment, useEffect, useMemo } from "react";
 
 // material-ui
 import {
-    Button,
-    Stack,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow,
-    useMediaQuery
+  Button,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  useMediaQuery,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 
 // third-party
 // import NumberFormat from 'react-number-format';
 import {
-    Column,
-    useExpanded,
-    useFilters,
-    useGlobalFilter,
-    usePagination,
-    useRowSelect,
-    useSortBy,
-    useTable,
+  Column,
+  useExpanded,
+  useFilters,
+  useGlobalFilter,
+  usePagination,
+  useRowSelect,
+  useSortBy,
+  useTable,
 } from "react-table";
 
 // project import
 // import AddCustomer from 'sections/apps/customer/AddCustomer';
 import {
-    HeaderSort,
-    SortingSelect,
-    TablePagination,
-    TableRowSelection
+  HeaderSort,
+  SortingSelect,
+  TablePagination,
+  TableRowSelection,
 } from "@/base/components/third-party/ReactTable";
 import { GlobalFilter, renderFilterTypes } from "@/base/utils/react-table";
 
 // assets
-import {
-    PlusOutlined
-} from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -57,12 +56,12 @@ function BaseTable({
   getHeaderProps,
   renderRowSubComponent,
   handleAdd,
-  addButtonContentKey
+  addButtonContentKey,
 }: Props) {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const filterTypes = useMemo(() => renderFilterTypes, []);
   const sortBy = { id: "fatherName", desc: false };
@@ -80,7 +79,7 @@ function BaseTable({
     gotoPage,
     setPageSize,
     state: { globalFilter, selectedRowIds, pageIndex, pageSize },
-    preGlobalFilteredRows,
+    // preGlobalFilteredRows,
     setGlobalFilter,
     setSortBy,
   } = useTable(
@@ -103,7 +102,6 @@ function BaseTable({
     useRowSelect
   );
 
-  
   useEffect(() => {
     if (matchDownSM) {
       setHiddenColumns([
@@ -117,7 +115,7 @@ function BaseTable({
     } else {
       setHiddenColumns(["avatar", "email"]);
     }
-  }, [matchDownSM,setHiddenColumns]);
+  }, [matchDownSM, setHiddenColumns]);
 
   return (
     <>

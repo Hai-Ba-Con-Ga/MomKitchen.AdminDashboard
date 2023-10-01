@@ -1,5 +1,5 @@
 // material-ui
-import { useTheme } from '@mui/material/styles';
+// import { useTheme } from '@mui/material/styles';
 
 /**
  * if you want to use image instead of <svg> uncomment following.
@@ -11,8 +11,12 @@ import { useTheme } from '@mui/material/styles';
 
 // ==============================|| LOGO SVG ||============================== //
 
-const LogoMain = ({ reverse, ...others }: { reverse?: boolean }) => {
-  const theme = useTheme();
+const LogoMain = (
+//   { 
+//   reverse
+//  }: { reverse?: boolean }
+ ) => {
+  // const theme = useTheme();
   return (
     /**
      * if you want to use image instead of svg uncomment following, and comment out <svg> element.
@@ -21,7 +25,7 @@ const LogoMain = ({ reverse, ...others }: { reverse?: boolean }) => {
     *
     */
    <>
-     <img src={theme.palette.mode === 'dark' ? logo : logo} alt="Mantis" width="100" />
+     <img src={ logo} alt="Mantis" width="100" />
    </>
    /*  <>
       <svg width="118" height="35" viewBox="0 0 118 35" fill="none" xmlns="http://www.w3.org/2000/svg">

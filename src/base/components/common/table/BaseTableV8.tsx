@@ -1,38 +1,41 @@
+// TODO : fix the types later
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Fragment, useEffect, useState } from "react";
 
 import {
-    ArrowDropDownOutlined,
-    ArrowDropUpOutlined
+  ArrowDropDownOutlined,
+  ArrowDropUpOutlined,
 } from "@mui/icons-material";
 import {
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableFooter,
-    TableHead,
-    TableRow,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableFooter,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 import { Box, Stack, alpha, useTheme } from "@mui/system";
 import {
-    ColumnDef,
-    Table as ReactTableType,
-    Row,
-    SortDirection,
-    TableOptions,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    useReactTable
+  Cell,
+  ColumnDef,
+  Table as ReactTableType,
+  Row,
+  SortDirection,
+  SortingState,
+  TableOptions,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  useReactTable,
 } from "@tanstack/react-table";
 import { isEmpty, reduce } from "lodash";
 import styled from "styled-components";
 import NoData from "./NoData";
 
-
 interface BaseTableV8Props<T> {
-  columns: ColumnDef<T,any>[];
+  columns: ColumnDef<T, any>[];
   data: T[];
   paging?: any;
   rowSelected?: string[];
@@ -48,12 +51,16 @@ interface BaseTableV8Props<T> {
   setRowHover?: (row: any) => void;
   isRowSpanned?: boolean;
   isDraggable?: boolean;
-  renderRowSubComponent?: (row:Row<T>)=> React.ReactElement;
+  renderRowSubComponent?: (row: Row<T>) => React.ReactElement;
+  columnVisibility?: {
+    [key: string]: boolean;
+  };
 }
-function BaseTableV8<T> (props: BaseTableV8Props<T>) {
+function BaseTableV8<T>(props: BaseTableV8Props<T>) {
   const {
     columns = [],
     data = [],
+    columnVisibility,
     paging = {
       pageTotal: 0,
       pageCount: 0,
@@ -65,11 +72,10 @@ function BaseTableV8<T> (props: BaseTableV8Props<T>) {
     primaryKey = "id",
     onRowSelect,
     onSortBy,
-    footer = {hasFooter: false},
+    footer = { hasFooter: false },
     setRowHover,
     isRowSpanned,
-    isDraggable,
-    renderRowSubComponent
+    renderRowSubComponent,
   } = props;
   const initialRowSelection = reduce(
     rowSelected,
@@ -79,19 +85,18 @@ function BaseTableV8<T> (props: BaseTableV8Props<T>) {
     },
     {}
   );
-  
+
   const [rowSelection, setRowSelection] =
     React.useState<any>(initialRowSelection);
   const theme = useTheme();
   const tableOptions: TableOptions<T> = {
     data: data || [],
     columns: columns,
-    state: { rowSelection },
+    state: { rowSelection, columnVisibility },
     enableMultiRowSelection: isMultiSelection,
     onRowSelectionChange: setRowSelection,
     //option
     getRowId(originalRow, index: number, parent?) {
-        
       // return row id in select row
       return parent
         ? [parent[primaryKey], originalRow[primaryKey]].join(".")
@@ -108,17 +113,19 @@ function BaseTableV8<T> (props: BaseTableV8Props<T>) {
   const table = useReactTable(tableOptions);
   const { getHeaderGroups, getRowModel, getFooterGroups } = table;
 
-   // callback selected rows
-   useEffect(() => {
+  // callback selected rows
+  useEffect(() => {
     //console.log(rowSelection, 'rowSelection');
     if (Object.keys(rowSelection).length > 0) {
-      if (JSON.stringify(initialRowSelection) !== JSON.stringify(rowSelection)) {
+      if (
+        JSON.stringify(initialRowSelection) !== JSON.stringify(rowSelection)
+      ) {
         onRowSelect && onRowSelect(Object.keys(rowSelection)); //onChange
       }
     } else {
       onRowSelect && onRowSelect([]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowSelection]);
 
   // listen row selected
@@ -128,21 +135,26 @@ function BaseTableV8<T> (props: BaseTableV8Props<T>) {
     if (isEmpty(rowSelected) && Object.keys(rowSelection).length > 0) {
       setRowSelection({});
     } else {
-      if (JSON.stringify(initialRowSelection) !== JSON.stringify(rowSelection)) {
+      if (
+        JSON.stringify(initialRowSelection) !== JSON.stringify(rowSelection)
+      ) {
         setRowSelection(initialRowSelection);
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowSelected]);
 
   // initial state - SECONDS PROPS IS STATE
   useEffect(() => {
     // sorting state
     if (paging?.sorts?.length > 0) {
-      const sortingState: any[] = [];
+      const sortingState: SortingState = [];
       paging.sorts.map((_sort: any) => {
         if (_sort.field) {
-          sortingState.push({ id: _sort.field, desc: _sort?.orderBy === 2 ? true : false }); //desc = 2
+          sortingState.push({
+            id: _sort.field,
+            desc: _sort?.orderBy === 2 ? true : false,
+          }); //desc = 2
         }
       });
       table.setSorting(sortingState);
@@ -154,46 +166,48 @@ function BaseTableV8<T> (props: BaseTableV8Props<T>) {
     // } else {
     //   table.setPageSize(10); //default
     // }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paging]);
 
   const [, setListItems] = useState<Row<T>[]>(table.getRowModel().rows);
-  useEffect(()=> {
-    setListItems(table.getRowModel().rows)
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  ,[table.getRowModel().rows,table]) // update ListItem on data change in Draggable
+  useEffect(
+    () => {
+      setListItems(table.getRowModel().rows);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [table.getRowModel().rows, table]
+  ); // update ListItem on data change in Draggable
 
-  const tableFooterRender = ()=>{
-    if(footer?.hasFooter){
-        if(footer?.footerRender){
-        return footer?.footerRender(table)
-        }else {
-            return (
-                <TableFooter>
-                  {getFooterGroups().map((footerGroup) => (
-                    <TableRow key={footerGroup.id}>
-                      {footerGroup.headers.map((header) => (
-                        <TableCell key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.footer,
-                                header.getContext()
-                              )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableFooter>
-              )
-        }
+  const tableFooterRender = () => {
+    if (footer?.hasFooter) {
+      if (footer?.footerRender) {
+        return footer?.footerRender(table);
+      } else {
+        return (
+          <TableFooter>
+            {getFooterGroups().map((footerGroup) => (
+              <TableRow key={footerGroup.id}>
+                {footerGroup.headers.map((header) => (
+                  <TableCell key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.footer,
+                          header.getContext()
+                        )}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableFooter>
+        );
+      }
     }
     return null;
-  }
+  };
   return (
     <>
-      <TableContainer component={Paper} sx={{boxShadow: "none"}}>
+      <TableContainer component={Paper} sx={{ boxShadow: "none" }}>
         <Table>
           <TableHead
             sx={{
@@ -288,44 +302,56 @@ function BaseTableV8<T> (props: BaseTableV8Props<T>) {
             {getRowModel().rows.map((row, rIdx: number) => {
               return (
                 <Fragment key={rIdx}>
-
-                <TableRow
-                  onMouseEnter={() => {
-                    setRowHover && setRowHover(row);
-                  }}
-                  onMouseLeave={() => {
-                    setRowHover && setRowHover(undefined);
-                  }}
-                  onClick={()=>{
-                    row.toggleSelected();
-                  }}
-                  key={rIdx}
-                  sx={{
-                    height: 55,
-                    cursor: "pointer",
-                    bgcolor: row.getIsSelected()
-                      ? alpha(theme.palette.primary.lighter, 0.85)
-                      : "inherit",
-                  }}>
-                  {row.getVisibleCells().map((cell: any, ceIdx: number) => {
-                    if (isRowSpanned) {
-                      if (cell.getValue()?.rowSpan) {
-                        if (cell.getValue().isRowSpanned) {
-                          return null;
+                  <TableRow
+                    onMouseEnter={() => {
+                      setRowHover && setRowHover(row);
+                    }}
+                    onMouseLeave={() => {
+                      setRowHover && setRowHover(undefined);
+                    }}
+                    onClick={() => {
+                      row.toggleSelected();
+                    }}
+                    key={rIdx}
+                    sx={{
+                      height: 55,
+                      cursor: "pointer",
+                      bgcolor: row.getIsSelected()
+                        ? alpha(theme.palette.primary.lighter, 0.85)
+                        : "inherit",
+                    }}>
+                    {row.getVisibleCells().map((cell: Cell<T,any>, ceIdx: number) => {
+                      if (isRowSpanned) {
+                        if (cell.getValue()?.rowSpan) {
+                          if (cell.getValue().isRowSpanned) {
+                            return null;
+                          } else {
+                            return (
+                              <TableCell
+                                sx={{
+                                  "&.MuiTableCell-root:first-of-type ": {
+                                    padding: 1,
+                                    pl: "24px !important", // fix wrong display first-type on rowspanned
+                                  },
+                                  // ...(ceIdx != 0 && { borderLeft: `1px solid ${theme.palette.divider}` }), //only border right and left on spanned cell
+                                  // ...(ceIdx + 1 < row.getVisibleCells().length && { borderRight: `1px solid ${theme.palette.divider}` }),
+                                  position: "relative",
+                                }}
+                                rowSpan={cell.getValue()?.rowSpan}
+                                key={ceIdx}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext()
+                                )}
+                              </TableCell>
+                            );
+                          }
                         } else {
                           return (
                             <TableCell
-                              sx={{
-                                "&.MuiTableCell-root:first-of-type ": {
-                                  padding: 1,
-                                  pl: "24px !important", // fix wrong display first-type on rowspanned
-                                },
-                                // ...(ceIdx != 0 && { borderLeft: `1px solid ${theme.palette.divider}` }), //only border right and left on spanned cell
-                                // ...(ceIdx + 1 < row.getVisibleCells().length && { borderRight: `1px solid ${theme.palette.divider}` }),
-                                position: "relative",
-                              }}
-                              rowSpan={cell.getValue()?.rowSpan}
-                              key={ceIdx}>
+                              key={ceIdx}
+                              sx={{ position: "relative" }} // to display child absolute
+                            >
                               {flexRender(
                                 cell.column.columnDef.cell,
                                 cell.getContext()
@@ -333,31 +359,20 @@ function BaseTableV8<T> (props: BaseTableV8Props<T>) {
                             </TableCell>
                           );
                         }
-                      } else {
-                        return (
-                          <TableCell
-                            key={ceIdx}
-                            sx={{ position: "relative" }} // to display child absolute
-                          >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </TableCell>
-                        );
                       }
-                    }
-                    return (
-                      <TableCell sx={{ position: "relative" }} key={ceIdx}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-                {row.getIsExpanded() && renderRowSubComponent && renderRowSubComponent(row)}
+                      return (
+                        <TableCell sx={{ position: "relative" }} key={ceIdx}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                  {row.getIsExpanded() &&
+                    renderRowSubComponent &&
+                    renderRowSubComponent(row)}
                 </Fragment>
               );
             })}

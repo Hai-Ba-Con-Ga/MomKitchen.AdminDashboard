@@ -1,5 +1,5 @@
-import React, { AllHTMLAttributes, HTMLAttributes, ReactNode } from "react";
-import { cva, VariantProps } from "class-variance-authority";
+import { VariantProps, cva } from "class-variance-authority";
+import { AllHTMLAttributes, ReactNode } from "react";
 
 const BoxStyle = cva("relative", {
   variants: {
@@ -14,6 +14,7 @@ interface BoxProps
     VariantProps<typeof BoxStyle> {
   component?: "div" | "ul" | "li" | "span" | "p";
   children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ref?: any;
 }
 const Box = ({

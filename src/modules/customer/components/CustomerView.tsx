@@ -31,13 +31,12 @@ import {
   PhoneOutlined,
 } from "@ant-design/icons";
 import NumberFormat from "react-number-format";
-
-// const avatarImage = require.context('assets/images/users', true);
-const avatarImage = (s: string) => "@/assets/images/users" + s;
+import { CustomerAdmin } from "@/types/@mk/entity/customer";
+import { calculateAge } from "@/base/utils/common";
 
 // ==============================|| CUSTOMER - VIEW ||============================== //
 
-const CustomerView = ({ data }: any) => {
+const CustomerView = ({ data }: { data: CustomerAdmin }) => {
   const theme = useTheme();
   const matchDownMD = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -67,11 +66,13 @@ const CustomerView = ({ data }: any) => {
                     <Avatar
                       alt="Avatar 1"
                       size="xl"
-                      src={avatarImage(`./avatar-${data.avatar}.png`)}
+                      src={data.user.avatarUrl}
                     />
                     <Stack spacing={0.5} alignItems="center">
-                      <Typography variant="h5">{data.fatherName}</Typography>
-                      <Typography color="secondary">{data.role}</Typography>
+                      <Typography variant="h5">{data.user.fullName}</Typography>
+                      <Typography color="secondary">
+                        {data.user.role?.name}
+                      </Typography>
                     </Stack>
                   </Stack>
                 </Grid>
@@ -84,17 +85,19 @@ const CustomerView = ({ data }: any) => {
                     justifyContent="space-around"
                     alignItems="center">
                     <Stack spacing={0.5} alignItems="center">
-                      <Typography variant="h5">{data.age}</Typography>
+                      <Typography variant="h5">
+                        {calculateAge(data.user.birthday)}
+                      </Typography>
                       <Typography color="secondary">Age</Typography>
                     </Stack>
                     <Divider orientation="vertical" flexItem />
                     <Stack spacing={0.5} alignItems="center">
-                      <Typography variant="h5">{data.progress}%</Typography>
+                      <Typography variant="h5">{0}%</Typography>
                       <Typography color="secondary">Progress</Typography>
                     </Stack>
                     <Divider orientation="vertical" flexItem />
                     <Stack spacing={0.5} alignItems="center">
-                      <Typography variant="h5">{data.visits}</Typography>
+                      <Typography variant="h5">{0}</Typography>
                       <Typography color="secondary">Visits</Typography>
                     </Stack>
                   </Stack>
@@ -112,7 +115,7 @@ const CustomerView = ({ data }: any) => {
                         <MailOutlined rev={{}} />
                       </ListItemIcon>
                       <ListItemSecondaryAction>
-                        <Typography align="right">{data.email}</Typography>
+                        <Typography align="right">{data.user.email}</Typography>
                       </ListItemSecondaryAction>
                     </ListItem>
                     <ListItem>
@@ -125,7 +128,7 @@ const CustomerView = ({ data }: any) => {
                             displayType="text"
                             format="+1 (###) ###-####"
                             mask="_"
-                            defaultValue={data.contact}
+                            defaultValue={data.user.phone}
                           />
                         </Typography>
                       </ListItemSecondaryAction>
@@ -135,7 +138,7 @@ const CustomerView = ({ data }: any) => {
                         <EnvironmentOutlined rev={{}} />
                       </ListItemIcon>
                       <ListItemSecondaryAction>
-                        <Typography align="right">{data.country}</Typography>
+                        <Typography align="right">{"Vietnam"}</Typography>
                       </ListItemSecondaryAction>
                     </ListItem>
                     <ListItem>
@@ -165,14 +168,15 @@ const CustomerView = ({ data }: any) => {
                       <Grid item xs={12} md={6}>
                         <Stack spacing={0.5}>
                           <Typography color="secondary">Full Name</Typography>
-                          <Typography>{data.fatherName}</Typography>
+                          <Typography>{data.user.fullName}</Typography>
                         </Stack>
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <Stack spacing={0.5}>
                           <Typography color="secondary">Father Name</Typography>
                           <Typography>
-                            Mr. {data.firstName} {data.lastName}
+                            Mr. {data.user.fullName?.split(" ")?.[0]}{" "}
+                            {data.user.fullName?.split(" ")?.[1]}
                           </Typography>
                         </Stack>
                       </Grid>
@@ -183,7 +187,7 @@ const CustomerView = ({ data }: any) => {
                       <Grid item xs={12} md={6}>
                         <Stack spacing={0.5}>
                           <Typography color="secondary">Country</Typography>
-                          <Typography>{data.country}</Typography>
+                          <Typography>{"Vietnam"}</Typography>
                         </Stack>
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -194,7 +198,7 @@ const CustomerView = ({ data }: any) => {
                               displayType="text"
                               format="### ###"
                               mask="_"
-                              defaultValue={data.contact}
+                              defaultValue={data.user.phone}
                             />
                           </Typography>
                         </Stack>
@@ -204,15 +208,15 @@ const CustomerView = ({ data }: any) => {
                   <ListItem>
                     <Stack spacing={0.5}>
                       <Typography color="secondary">Address</Typography>
-                      <Typography>{data.address}</Typography>
+                      <Typography>{"Customer Address"}</Typography>
                     </Stack>
                   </ListItem>
                 </List>
               </MainCard>
               <MainCard title="About me">
                 <Typography color="secondary">
-                  Hello, I’m {data.fatherName} {data.role} based in
-                  international company, {data.about}
+                  Hello, I’m {data.user.fullName} {data.user.role?.name} based
+                  in international company, {"Bio"}
                 </Typography>
               </MainCard>
             </Stack>

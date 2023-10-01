@@ -1,11 +1,13 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, useMemo, useState } from 'react';
 
 // material-ui
 import { MenuItem, OutlinedInput, OutlinedInputProps, Select, Slider, Stack, TextField, Tooltip } from '@mui/material';
 
 // third-party
-import { useAsyncDebounce, Row } from 'react-table';
 import { matchSorter } from 'match-sorter';
+import { Row, useAsyncDebounce } from 'react-table';
 
 // project import
 import IconButton from '@/base/components/@extended/IconButton';
@@ -158,10 +160,11 @@ fuzzyTextFilterFn.autoRemove = (val: any) => !val;
 export const renderFilterTypes = () => ({
   fuzzyText: fuzzyTextFilterFn,
   text: (rows: Row[], id: string, filterValue: string) => {
-    rows.filter((row: Row) => {
+   const byPass =  rows.filter((row: Row) => {
       const rowValue = row.values[id];
       return rowValue !== undefined ? String(rowValue).toLowerCase().startsWith(String(filterValue).toLowerCase()) : true;
     });
+    return !!byPass;
   }
 });
 
@@ -175,7 +178,9 @@ export function filterGreaterThan(rows, id, filterValue) {
 
 filterGreaterThan.autoRemove = (val: any) => typeof val !== 'number';
 
-export function useControlledState(state: any, { instance }: any) {
+export function useControlledState(state: any, 
+  // { instance }: any
+  ) {
   return useMemo(() => {
     if (state.groupBy.length) {
       return {

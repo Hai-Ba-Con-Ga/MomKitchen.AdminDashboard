@@ -51,6 +51,7 @@ const Notification = () => {
   const theme = useTheme();
   const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
 
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const anchorRef = useRef<any>(null);
   const [read, setRead] = useState(2);
   const [open, setOpen] = useState(false);

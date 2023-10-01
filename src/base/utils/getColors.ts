@@ -7,7 +7,7 @@ import { ColorProps } from '@/types/extended';
 // ==============================|| CUSTOM FUNCTION - COLORS ||============================== //
 
 const getColors = (theme: Theme, color?: ColorProps) => {
-  switch (color!) {
+  switch (color) {
     case 'secondary':
       return theme.palette.secondary;
     case 'error':

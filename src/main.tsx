@@ -9,19 +9,21 @@ import "./utils/lang/i18n.ts";
  */
 import "regenerator-runtime";
 // import "./utils/errorTracking/sentry";
-import "./index.css";
-import {
-  ReactQueryDevtools,
-  ReactQueryDevtoolsPanel,
-} from "react-query/devtools";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { RecoilRoot } from "recoil";
+import "./index.css";
+import queryClient from "./services/queryClient.ts";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={queryClient}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <RecoilRoot>
-        <App />
+          <App />
       </RecoilRoot>
+      </LocalizationProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>

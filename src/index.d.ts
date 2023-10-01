@@ -1,6 +1,5 @@
 declare module 'remoteApp/Button' {
-    import { ReactNode } from 'react';
-  
+      
     interface ComponentProps {
         name : string
     }

@@ -1,7 +1,7 @@
 import mockData, { range } from '@/base/utils/mock-data';
 
 const newPerson = (index: number) => {
-  const tempData = mockData(index);
+  const tempData = mockData();
   const statusCode = tempData.number.status(0, 2);
   let status: string;
   switch (statusCode) {
@@ -68,8 +68,9 @@ const newPerson = (index: number) => {
     time: tempData.time
   };
 };
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function makeData(...lens: any) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const makeDataLevel: any = (depth: number ) => {
     depth = 0;
     const len = lens[depth];

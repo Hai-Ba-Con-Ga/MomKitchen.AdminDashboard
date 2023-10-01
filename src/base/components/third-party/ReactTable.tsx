@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { forwardRef, useEffect, useRef, useState, ReactNode } from 'react';
 
 // third-party
@@ -189,7 +191,9 @@ interface DraggableHeaderProps {
   children: ReactNode;
 }
 
-export const DraggableHeader = ({ children, column, index, reorder, sort }: DraggableHeaderProps) => {
+export const DraggableHeader = ({ children, column, index, reorder,
+  //  sort
+ }: DraggableHeaderProps) => {
   const theme = useTheme();
   const ref = useRef();
   const { id, Header } = column;
@@ -354,7 +358,7 @@ export const HidingSelect = ({ hiddenColumns, setHiddenColumns, allColumns }: an
       target: { value }
     } = event;
 
-    setHiddenColumns(typeof value === 'string' ? value.split(',') : value!);
+    setHiddenColumns(typeof value === 'string' ? value.split(',') : value);
   };
 
   return (
@@ -380,10 +384,10 @@ export const HidingSelect = ({ hiddenColumns, setHiddenColumns, allColumns }: an
         MenuProps={MenuProps}
         size="small"
       >
-        {allColumns.map((column: any, index: number) => (
+        {allColumns.map((column: any) => (
           <MenuItem key={column.id} value={column.id}>
             <Checkbox
-              checked={hiddenColumns!.indexOf(column.id) > -1}
+              checked={hiddenColumns.indexOf(column.id) > -1}
               color="error"
               checkedIcon={
                 <Box

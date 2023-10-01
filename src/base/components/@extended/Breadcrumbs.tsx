@@ -65,7 +65,7 @@ const Breadcrumbs = ({
   };
 
   useEffect(() => {
-    navigation?.items?.map((menu: NavItemType, index: number) => {
+    navigation?.items?.map((menu: NavItemType) => {
       if (menu.type && menu.type === 'group') {
         getCollapse(menu as { children: NavItemType[]; type?: string });
       }
@@ -81,7 +81,7 @@ const Breadcrumbs = ({
   // set active item state
   const getCollapse = (menu: NavItemType) => {
     if (menu.children) {
-      menu.children.filter((collapse: NavItemType) => {
+     const menus =  menu.children.filter((collapse: NavItemType) => {
         if (collapse.type && collapse.type === 'collapse') {
           getCollapse(collapse as { children: NavItemType[]; type?: string });
         } else if (collapse.type && collapse.type === 'item') {
@@ -92,11 +92,12 @@ const Breadcrumbs = ({
         }
         return false;
       });
+      return menus;
     }
   };
 
   // item separator
-  const SeparatorIcon = separator!;
+  const SeparatorIcon = separator;
   const separatorIcon = separator ? <SeparatorIcon style={{ fontSize: '0.75rem', marginTop: 2 }} /> : '/';
 
   let mainContent;
