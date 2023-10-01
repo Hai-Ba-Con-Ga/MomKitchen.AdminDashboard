@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from "react";
+import { SnackbarProps } from "@/types/snackbar";
+import { useCallback } from "react";
 import { useRecoilState } from "recoil";
 import { snackbarAtom } from "../store/atoms/snackbar";
-import { SnackbarProps } from "@/types/snackbar";
 
 const useSnackbar = () => {
   const [snackbar, setSnakebar] = useRecoilState(snackbarAtom);
@@ -24,7 +24,7 @@ const useSnackbar = () => {
         transition: null,
       });
     },
-    [snackbar]
+    [setSnakebar]
   );
   const openSnackbar = useCallback(
     (props: Omit<SnackbarProps, "open">) => {
@@ -33,7 +33,7 @@ const useSnackbar = () => {
         ...props,
       });
     },
-    [snackbar]
+    [setSnakebar]
   );
   const closeSnakebar = useCallback(() => {
     setSnakebar({

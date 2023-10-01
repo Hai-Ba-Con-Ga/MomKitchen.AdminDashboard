@@ -65,7 +65,7 @@ const Breadcrumbs = ({
   };
 
   useEffect(() => {
-    navigation?.items?.map((menu: NavItemType, index: number) => {
+    navigation?.items?.map((menu: NavItemType) => {
       if (menu.type && menu.type === 'group') {
         getCollapse(menu as { children: NavItemType[]; type?: string });
       }
@@ -97,7 +97,7 @@ const Breadcrumbs = ({
   };
 
   // item separator
-  const SeparatorIcon = separator!;
+  const SeparatorIcon = separator;
   const separatorIcon = separator ? <SeparatorIcon style={{ fontSize: '0.75rem', marginTop: 2 }} /> : '/';
 
   let mainContent;

@@ -1,3 +1,5 @@
+// TODO : fix the types later
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Fragment, useEffect, useState } from "react";
 
 import {
@@ -16,10 +18,12 @@ import {
 } from "@mui/material";
 import { Box, Stack, alpha, useTheme } from "@mui/system";
 import {
+  Cell,
   ColumnDef,
   Table as ReactTableType,
   Row,
   SortDirection,
+  SortingState,
   TableOptions,
   flexRender,
   getCoreRowModel,
@@ -144,7 +148,7 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
   useEffect(() => {
     // sorting state
     if (paging?.sorts?.length > 0) {
-      const sortingState: any[] = [];
+      const sortingState: SortingState = [];
       paging.sorts.map((_sort: any) => {
         if (_sort.field) {
           sortingState.push({
@@ -316,7 +320,7 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
                         ? alpha(theme.palette.primary.lighter, 0.85)
                         : "inherit",
                     }}>
-                    {row.getVisibleCells().map((cell: any, ceIdx: number) => {
+                    {row.getVisibleCells().map((cell: Cell<T,any>, ceIdx: number) => {
                       if (isRowSpanned) {
                         if (cell.getValue()?.rowSpan) {
                           if (cell.getValue().isRowSpanned) {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useDetectOutside } from "@/base/hooks";
 import { VariantProps, cva } from "class-variance-authority";
 import { AnimatePresence, motion } from "framer-motion";

@@ -15,3 +15,7 @@ export interface Area extends BaseEntity {
     west: Location;
     kitchens: Kitchen[];
 }
+
+export interface AreaAdmin extends Area {
+    noOfKitchen: number;
+}

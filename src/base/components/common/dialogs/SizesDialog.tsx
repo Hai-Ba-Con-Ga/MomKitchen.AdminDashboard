@@ -70,7 +70,7 @@ export default function MaxWidthDialog() {
                       id: 'max-width'
                     }}
                   >
-                    <MenuItem value={false as any}>false</MenuItem>
+                    <MenuItem value={""}>false</MenuItem>
                     <MenuItem value="xs">xs</MenuItem>
                     <MenuItem value="sm">sm</MenuItem>
                     <MenuItem value="md">md</MenuItem>

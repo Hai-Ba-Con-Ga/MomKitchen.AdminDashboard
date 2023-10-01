@@ -15,6 +15,7 @@ import { TransitionProps } from "@mui/material/transitions";
 
 const Transition = forwardRef(
   (
+     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     props: TransitionProps & { children: React.ReactElement<any, any> },
     ref: Ref<unknown>
   ) => <Slide direction="up" ref={ref} {...props} />

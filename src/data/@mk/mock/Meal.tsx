@@ -1,7 +1,6 @@
 import { Meal } from "@/types/@mk/entity/meal";
 import {faker} from "@faker-js/faker"
 import { generateRandomTray } from "./Tray";
-import { generateRandomKitchen } from "./Kitchen";
 // Define a function to generate a random meal
 export function generateRandomMeal(): Meal {
     const tray = generateRandomTray();

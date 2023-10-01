@@ -11,3 +11,8 @@ export interface OrderPayment extends BaseEntity {
     paymentTypeId: string;
     paymentType: PaymentType;
 }
+
+
+export interface OrderPaymentAdmin extends OrderPayment{
+    select?: boolean
+}

@@ -14,6 +14,7 @@ interface BoxProps
     VariantProps<typeof BoxStyle> {
   component?: "div" | "ul" | "li" | "span" | "p";
   children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ref?: any;
 }
 const Box = ({

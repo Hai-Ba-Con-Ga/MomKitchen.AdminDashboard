@@ -5,13 +5,12 @@ import {
   EditTwoTone,
   EyeTwoTone,
 } from "@ant-design/icons";
-import { IconButton } from "@mui/material";
-import { Chip, Tooltip, Typography } from "@mui/material";
+import { Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import { Stack, useTheme } from "@mui/system";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import Avatar from "@ui/@extended/Avatar";
 import { IndeterminateCheckbox } from "@ui/third-party/ReactTable";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { MouseEvent, useCallback, useMemo } from "react";
 import NumberFormat from "react-number-format";
 import OrderViewInline from "../components/OrderViewInline";
 
@@ -23,7 +22,7 @@ const useOrderTable = (props: Props) => {
   const { handleEditClick } = props;
   const theme = useTheme();
   const columnHelper = createColumnHelper<OrderAdmin>();
-  const [orderDetail, setOrderDetail] = useState(null);
+  // const [orderDetail, setOrderDetail] = useState(null);
   const columns = useMemo(
     () => {
       const cols = [
@@ -80,7 +79,6 @@ const useOrderTable = (props: Props) => {
           header: "Tray",
           enableSorting: false,
           cell: ({ row }) => {
-            const { getValue } = row;
             return (
               <Stack direction="row" spacing={1.5} alignItems="center">
                 <Avatar
@@ -135,7 +133,7 @@ const useOrderTable = (props: Props) => {
           header: "Status",
           cell: ({ renderValue }) => {
             // TODO: order status migrate
-            switch (renderValue() as any) {
+            switch (renderValue()) {
               case 100:
                 return (
                   <Chip
@@ -186,6 +184,7 @@ const useOrderTable = (props: Props) => {
             }
           },
         }),
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
         columnHelper.accessor<any, any>("action", {
           header: "Actions",
           enableSorting: false,
@@ -210,7 +209,7 @@ const useOrderTable = (props: Props) => {
                 <Tooltip title="View">
                   <IconButton
                     color="secondary"
-                    onClick={(e: any) => {
+                    onClick={(e: MouseEvent) => {
                       e.stopPropagation();
                       row.toggleExpanded();
                     }}>
@@ -220,7 +219,7 @@ const useOrderTable = (props: Props) => {
                 <Tooltip title="Edit">
                   <IconButton
                     color="primary"
-                    onClick={(e: any) => {
+                    onClick={(e: MouseEvent) => {
                       e.stopPropagation();
                       handleEditClick(row.original);
                     }}>
@@ -230,7 +229,7 @@ const useOrderTable = (props: Props) => {
                 <Tooltip title="Delete">
                   <IconButton
                     color="error"
-                    onClick={(e: any) => {
+                    onClick={(e: MouseEvent) => {
                       e.stopPropagation();
                     }}>
                     <DeleteTwoTone rev={{}} color={theme.palette.error.main} />

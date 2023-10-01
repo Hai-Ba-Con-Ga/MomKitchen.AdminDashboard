@@ -1,10 +1,8 @@
 // material-ui
-import { useTheme } from "@mui/material/styles";
 import {
-  useMediaQuery,
-  Grid,
   Chip,
   Divider,
+  Grid,
   Link,
   List,
   ListItem,
@@ -14,7 +12,9 @@ import {
   TableCell,
   TableRow,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 // third-party
 // import * as NumberFormat from 'react-number-format';
@@ -24,18 +24,17 @@ import Avatar from "@/base/components/@extended/Avatar";
 import MainCard from "@/base/components/MainCard";
 
 // assets
+import { calculateAge } from "@/base/utils/common";
+import { OrderAdmin } from "@/types/@mk/entity/order";
 import {
   EnvironmentOutlined,
   LinkOutlined,
   MailOutlined,
   PhoneOutlined,
 } from "@ant-design/icons";
-import NumberFormat from "react-number-format";
-import { CustomerAdmin } from "@/types/@mk/entity/customer";
-import { calculateAge } from "@/base/utils/common";
-import { OrderAdmin } from "@/types/@mk/entity/order";
-import { useMemo } from "react";
 import { Box, styled } from "@mui/system";
+import { useMemo } from "react";
+import NumberFormat from "react-number-format";
 import OrderDishCard from "./OrderDishCard";
 
 // ==============================|| CUSTOMER - VIEW ||============================== //

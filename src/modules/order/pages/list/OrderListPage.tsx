@@ -1,29 +1,19 @@
 import { mockDishes } from "@/data/@mk/mock/Dish";
 import { mockOrder } from "@/data/@mk/mock/Order";
-import { OrderAdmin } from "@/types/@mk/entity/order";
-import { CloseOutlined, EyeTwoTone } from "@ant-design/icons";
-import { DeleteTwoTone, EditTwoTone } from "@mui/icons-material";
 import {
   Chip,
-  Dialog,
-  IconButton,
   Tab,
   Tabs,
-  Tooltip,
-  Typography,
+  Typography
 } from "@mui/material";
-import { Box, Stack, useTheme } from "@mui/system";
-import { Row, createColumnHelper } from "@tanstack/react-table";
-import Avatar from "@ui/@extended/Avatar";
+import { Box, Stack } from "@mui/system";
+import { DatePicker } from "@mui/x-date-pickers";
+import Snackbar from "@ui/@extended/Snackbar";
 import MainCard from "@ui/MainCard";
 import QuickTable from "@ui/common/table/QuickTable";
-import { IndeterminateCheckbox } from "@ui/third-party/ReactTable";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import NumberFormat from "react-number-format";
-import OrderViewInline from "../../components/OrderViewInline";
+import { useEffect, useMemo, useState } from "react";
+import useOrderData from "../../hook/useOrderData";
 import useOrderTable from "../../hook/useOrderTable";
-import useSnackbar from "@/base/hooks/useSnackbar";
-import Snackbar from "@ui/@extended/Snackbar";
 
 const OrderListPage = () => {
   const data = useMemo(
@@ -34,15 +24,23 @@ const OrderListPage = () => {
       }),
     []
   );
+  const {
+    setSortState,
+    setKeyword,
+    setPagination,
+    orderData,
+    // deleteOrder,
+    // updateOrder,
+  } = useOrderData();
   const { columnsDef, renderRowSubComponent } = useOrderTable({
-    handleEditClick: (order) => {
+    handleEditClick: () => {
       // TODO implement
     },
   });
-  const { openSimpleErrorSnackbar } = useSnackbar();
   useEffect(() => {
-    openSimpleErrorSnackbar("Hello snackbar");
-  }, []);
+    console.log(orderData);
+  }, [orderData]);
+
   const [tabValue, setTabValue] = useState("all");
   return (
     <MainCard content={false}>
@@ -59,22 +57,51 @@ const OrderListPage = () => {
           }}
           aria-label="basic tabs example">
           <Tab
-            sx={{ fontWeight: 600 }}
             label={
               <Stack direction={"row"} gap={1}>
-                <Typography>All</Typography>
+                <Typography  fontWeight={600}>All</Typography>
                 <Chip
                   color="primary"
-                  label="UNPAID"
+                  label="1"
                   size="small"
-                  variant="filled"
+                  variant="light"
+
                 />
               </Stack>
             }
             value={"all"}
           />
-          <Tab sx={{ fontWeight: 600 }} label="Cancel" value="cancel" />
-          <Tab sx={{ fontWeight: 600 }} label="Complete" value="complete" />
+          <Tab  label={
+              <Stack direction={"row"} gap={1}>
+                <Typography fontWeight={600} >Unpaid</Typography>
+                <Chip
+                  color="warning"
+                  label="1"
+                  size="small"
+                  variant="light"
+
+                />
+              </Stack>
+            } value="unpaid" />
+          <Tab label={<Stack direction={"row"} gap={1}>
+                <Typography fontWeight={600} >Cancel</Typography>
+                <Chip
+                  color="error"
+                  label="1"
+                  size="small"
+                  variant="light"
+
+                />
+              </Stack>} value="cancel" />
+          <Tab  label={<Stack direction={"row"} gap={1}>
+                <Typography fontWeight={600} >Complete</Typography>
+                <Chip
+                  color="success"
+                  label="1"
+                  size="small"
+                  variant="light"
+                />
+              </Stack>}  value="complete" />
         </Tabs>
       </Box>
       <QuickTable
@@ -82,7 +109,7 @@ const OrderListPage = () => {
         data={data}
         renderRowSubComponent={renderRowSubComponent}
         onPaginationChange={(pagination) => {
-          console.log(pagination);
+          setPagination(pagination);
         }}
         onRowSelectedChange={(rows) => console.log(rows)}
         addButton={{
@@ -92,8 +119,24 @@ const OrderListPage = () => {
           },
           buttonContentLangKey: "Add order",
         }}
-        onSearchKeywordChange={(q) => console.log(q)}
-        onSortByChange={(sort) => console.log(sort)}
+        onSearchKeywordChange={(q) => setKeyword(q)}
+        onSortByChange={(sort) => setSortState(sort)}
+        actionComponents={
+          <>
+            <DatePicker
+              // value={value}
+              onChange={(val) => {
+                console.log(typeof val);
+              }}
+            />
+            <DatePicker
+              // value={value}
+              onChange={(val) => {
+                console.log(typeof val);
+              }}
+            />
+          </>
+        }
       />
       <Snackbar />
     </MainCard>

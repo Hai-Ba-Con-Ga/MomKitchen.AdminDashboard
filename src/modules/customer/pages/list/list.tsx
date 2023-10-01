@@ -14,30 +14,25 @@ import Avatar from "@/base/components/@extended/Avatar";
 import IconButton from "@/base/components/@extended/IconButton";
 import MainCard from "@/base/components/MainCard";
 import { IndeterminateCheckbox } from "@/base/components/third-party/ReactTable";
-import makeData from "@/data/react-table";
 
 // assets
+import { mockCustomers } from "@/data/@mk/mock/Customer";
+import { CustomerAdmin } from "@/types/@mk/entity/customer";
+import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
 import {
   CloseOutlined,
   DeleteTwoTone,
   EditTwoTone,
   EyeTwoTone,
 } from "@ant-design/icons";
+import { BlockOutlined } from "@mui/icons-material";
+import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { Box } from "@mui/system";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import QuickTable from "@ui/common/table/QuickTable";
 import NumberFormat from "react-number-format";
 import AddCustomerModal from "../../components/AddCustomerModal";
-import { CustomerAdmin } from "@/types/@mk/entity/customer";
-import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
-import { mockCustomers } from "@/data/@mk/mock/Customer";
-import ConfirmationDialog from "@ui/common/dialogs/ConfirmationDialog";
-import { Box } from "@mui/system";
-import { DialogTitle } from "@mui/material";
-import { DialogContent } from "@mui/material";
-import { DialogActions } from "@mui/material";
-import { BlockOutlined } from "@mui/icons-material";
 
-const avatarImage = (s: string) => "@/assets/images/users" + s;
 
 // ==============================|| REACT TABLE ||============================== //
 
@@ -96,7 +91,6 @@ const CustomerList = () => {
         columnHelper.accessor("user.fullName", {
           header: "Customer Name",
           cell: ({ row }) => {
-            const { getValue, original } = row;
             return (
               <Stack direction="row" spacing={1.5} alignItems="center">
                 <Avatar
@@ -109,7 +103,7 @@ const CustomerList = () => {
                     {row.original.user.fullName}
                   </Typography>
                   <Typography variant="caption" color="textSecondary">
-                    {getValue("email")}
+                    {row.original.user.email}
                   </Typography>
                 </Stack>
               </Stack>
@@ -131,7 +125,7 @@ const CustomerList = () => {
               displayType="text"
               format="+1 (###) ###-####"
               mask="_"
-              defaultValue={renderValue() as any}
+              defaultValue={renderValue()}
             />
           ),
         }),
@@ -142,7 +136,7 @@ const CustomerList = () => {
           header: "Spent",
           cell: ({ renderValue }) => (
             <NumberFormat
-              value={renderValue() as any}
+              value={renderValue()}
               displayType="text"
               thousandSeparator
               prefix="$"
@@ -174,6 +168,7 @@ const CustomerList = () => {
             }
           },
         }),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         columnHelper.accessor<any, any>("action", {
           header: "Actions",
           enableSorting: false,
@@ -198,7 +193,7 @@ const CustomerList = () => {
                 <Tooltip title="View">
                   <IconButton
                     color="secondary"
-                    onClick={(e: any) => {
+                    onClick={(e: MouseEvent) => {
                       e.stopPropagation();
                       row.toggleExpanded();
                     }}>
@@ -208,7 +203,7 @@ const CustomerList = () => {
                 <Tooltip title="Edit">
                   <IconButton
                     color="primary"
-                    onClick={(e: any) => {
+                    onClick={(e: MouseEvent) => {
                       e.stopPropagation();
                       setCustomer(null);
                       handleAdd();
@@ -249,7 +244,7 @@ const CustomerList = () => {
 
       return <CustomerView data={row.original} />;
     },
-    [data]
+    []
   );
 
   return (

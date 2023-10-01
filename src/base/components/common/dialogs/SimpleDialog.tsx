@@ -62,7 +62,7 @@ function SimpleDialog({ onClose, selectedValue, open }: Props) {
       </Grid>
 
       <List sx={{ p: 2.5 }}>
-        {emails.map((email, index) => (
+        {emails.map((email) => (
           <ListItem
             button
             onClick={() => handleListItemClick(email)}

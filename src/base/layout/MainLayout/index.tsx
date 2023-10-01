@@ -15,6 +15,7 @@ import { useRecoilState } from "recoil";
 import Drawer from "./Drawer";
 import Footer from "./Footer";
 import Header from "./Header";
+import AxiosInterceptor from "@/base/service/AxiosInterceptor";
 // ==============================|| MAIN LAYOUT ||============================== //
 
 const MainLayout = () => {
@@ -71,7 +72,10 @@ const MainLayout = () => {
               card={false}
               divider={false}
             />
+            <AxiosInterceptor>
+
             <Outlet />
+            </AxiosInterceptor>
             <Footer />
           </Container>
         )}
@@ -90,7 +94,10 @@ const MainLayout = () => {
               card={false}
               divider={false}
             />
-            <Outlet />
+          <AxiosInterceptor>
+
+<Outlet />
+</AxiosInterceptor>
             <Footer />
           </Box>
         )}

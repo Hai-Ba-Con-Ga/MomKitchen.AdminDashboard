@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { KeyboardEvent } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 // material-ui
@@ -7,19 +7,17 @@ import {
   Checkbox,
   Divider,
   FormControlLabel,
-  FormHelperText,
   Grid,
-  Link,
+  IconButton,
   InputAdornment,
   InputLabel,
+  Link,
   OutlinedInput,
   Stack,
-  Typography,
-  IconButton
+  Typography
 } from '@mui/material';
 
 // third party
-import * as Yup from 'yup';
 // import { Formik } from 'formik';
 
 // project import
@@ -30,7 +28,7 @@ import * as Yup from 'yup';
 // import AnimateButton from 'components/@extended/AnimateButton';
 
 // assets
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import AnimateButton from '@ui/@extended/AnimateButton';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
@@ -52,7 +50,7 @@ const AuthLogin = () => {
     event.preventDefault();
   };
 
-  const onKeyDown = (keyEvent: any) => {
+  const onKeyDown = (keyEvent: KeyboardEvent) => {
     if (keyEvent.getModifierState('CapsLock')) {
       setCapsWarning(true);
     } else {
@@ -90,8 +88,10 @@ const AuthLogin = () => {
                     type={showPassword ? 'text' : 'password'}
                     // value={values.password}
                     name="password"
-                    onBlur={(event: React.FocusEvent<any, Element>) => {
+                    onBlur={(event: React.FocusEvent<unknown, Element>) => {
                       setCapsWarning(false);
+                      console.log(event);
+                      
                       // handleBlur(event);
                     }}
                     onKeyDown={onKeyDown}

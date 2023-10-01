@@ -42,7 +42,7 @@ export const admin: NavItemType = {
   type: "group",
   children: [
     {
-      id: "chat",
+      id: "dashboard",
       title: <FormattedMessage id="dashboard" />,
       type: "item",
       url: "/dashboard",
@@ -160,20 +160,20 @@ export const admin: NavItemType = {
       ],
     },
     {
-      id: "payment-type",
-      title: <FormattedMessage id="payment-type" />,
+      id: "payment",
+      title: <FormattedMessage id="payment" />,
       type: "collapse",
       icon: icons.ShopOutlined,
       children: [
         {
-          id: "payment-type-list",
+          id: "payment-list",
           title: <FormattedMessage id="list" />,
           type: "item",
           icon: icons.TableOutlined,
-          url: "/payment-type/list",
+          url: "/payment/list",
         },
         {
-          id: "payment-type-analytics",
+          id: "payment-analytics",
           title: <FormattedMessage id="analytics" />,
           type: "item",
           url: "/payment-type/analytic",

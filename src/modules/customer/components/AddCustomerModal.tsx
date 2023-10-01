@@ -27,7 +27,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Avatar from "@ui/@extended/Avatar";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, ReactNode, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 // import * as Yup from "yup";
 
@@ -41,7 +41,7 @@ interface AddCustomerModalProps {
 const AddCustomerModal = ({
   customer,
   onCancel,
-  isOpen,
+  // isOpen,
 }: AddCustomerModalProps) => {
   console.log("render");
 
@@ -273,7 +273,7 @@ const AddCustomerModal = ({
                       control={control}
                       render={({
                         field: { onChange, value },
-                        fieldState: { error },
+                        // fieldState: { error },
                       }) => (
                         <DatePicker
                           value={value}
@@ -315,7 +315,7 @@ const AddCustomerModal = ({
 
                           return (
                             <Typography variant="subtitle2">
-                              {selected as any}
+                              {selected as ReactNode}
                             </Typography>
                           );
                         }}>
@@ -365,7 +365,7 @@ const AddCustomerModal = ({
 
                           return (
                             <Typography variant="subtitle2">
-                              {selected as any}
+                              {selected as ReactNode}
                             </Typography>
                           );
                         }}>

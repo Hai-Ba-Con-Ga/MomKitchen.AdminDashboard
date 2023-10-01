@@ -13,13 +13,20 @@ export interface Kitchen extends BaseEntity {
     address: string;
     status: KitchenStatus;
     locationId: string;
-    location: Location;
+    location?: Location;
     ownerId: string;
-    owner: User;
+    owner?: User;
     areaId: string;
-    area: Area;
-    favoriteKitchens: FavouriteKitchen[];
-    dishes: Dish[];
-    trays: Tray[];
-    meals: Meal[];
+    area?: Area;
+    favoriteKitchens?: FavouriteKitchen[];
+    dishes?: Dish[];
+    trays?: Tray[];
+    meals?: Meal[];
+}
+
+export interface KitchenAdmin extends Kitchen {
+    noOfDish : number;
+    noOfMeal: number;
+    noOfTray: number;
+    rating: number;
 }

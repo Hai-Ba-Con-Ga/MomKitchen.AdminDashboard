@@ -9,12 +9,20 @@ import {
 import MainLayout from "../base/layout/MainLayout";
 import OrderListPage from "@/modules/order/pages/list/OrderListPage";
 import LoginPage from "@/base/page/auth/LoginPage";
+import KitchenListPage from "@/modules/kitchen/pages/KitchenListPage";
+import AreaListPage from "@/modules/area/pages/AreaListPage";
+import FeedbackListPage from "@/modules/feedback/pages/FeedbackListPage";
+import PaymentListPage from "@/modules/payment/pages/PaymentListPage";
+import DashboardPage from "@/modules/dashboard/pages";
 const routes: RouteObject[] = [
   {
     path: "/",
     element: <MainLayout />,
     children: [
       appRoutes,
+      {
+        path: "", element: <DashboardPage/>
+      },
       {
         path: "/contact",
         element: <h1>Click below to contact</h1>,
@@ -48,7 +56,7 @@ const routes: RouteObject[] = [
           },
           {
             path: "list",
-            element: <h1>kitchen List</h1>,
+            element: <KitchenListPage/>,
           },
           {
             path: "analytic",
@@ -75,16 +83,52 @@ const routes: RouteObject[] = [
         ],
       },
       {
-        path: "/promotion",
+        path: "/area",
         element: <Outlet />,
         children: [
           {
             path: "",
-            element: <Navigate to="/promotion/list" replace />,
+            element: <Navigate to="/area/list" replace />,
           },
           {
             path: "list",
-            element: <h1>promotion List</h1>,
+            element: <AreaListPage/>,
+          },
+          {
+            path: "analytic",
+            element: <h1>promotion analytic</h1>,
+          },
+        ],
+      },
+      {
+        path: "/feedback",
+        element: <Outlet />,
+        children: [
+          {
+            path: "",
+            element: <Navigate to="/feedback/list" replace />,
+          },
+          {
+            path: "list",
+            element: <FeedbackListPage/>,
+          },
+          {
+            path: "analytic",
+            element: <h1>promotion analytic</h1>,
+          },
+        ],
+      },
+      {
+        path: "/payment",
+        element: <Outlet />,
+        children: [
+          {
+            path: "",
+            element: <Navigate to="/payment/list" replace />,
+          },
+          {
+            path: "list",
+            element: <PaymentListPage/>,
           },
           {
             path: "analytic",

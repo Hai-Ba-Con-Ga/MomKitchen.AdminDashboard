@@ -11,7 +11,11 @@
 
 // ==============================|| LOGO SVG ||============================== //
 
-const LogoMain = ({ reverse, ...others }: { reverse?: boolean }) => {
+const LogoMain = (
+//   { 
+//   reverse
+//  }: { reverse?: boolean }
+ ) => {
   // const theme = useTheme();
   return (
     /**

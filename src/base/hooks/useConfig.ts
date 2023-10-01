@@ -6,12 +6,13 @@ import { FontFamily, I18n, PresetColor, ThemeDirection, ThemeMode } from '@/type
 const useConfig = () => ({
     ...config,
     onChangeContainer: () => {},
-    onChangeLocalization: (lang: I18n) => {},
-    onChangeMode: (mode: ThemeMode) => {},
-    onChangePresetColor: (theme: PresetColor) => {},
-    onChangeDirection: (direction: ThemeDirection) => {},
-    onChangeMiniDrawer: (miniDrawer: boolean) => {},
-    onChangeFontFamily: (fontFamily: FontFamily) => {}
+    onChangeLocalization: (lang: I18n) => {console.log(lang)
+    },
+    onChangeMode: (mode: ThemeMode) => {console.log(mode)},
+    onChangePresetColor: (theme: PresetColor) => {console.log(theme)},
+    onChangeDirection: (direction: ThemeDirection) => {console.log(direction)},
+    onChangeMiniDrawer: (miniDrawer: boolean) => {console.log(miniDrawer)},
+    onChangeFontFamily: (fontFamily: FontFamily) => {console.log(fontFamily)}
 })
 
 export default useConfig;

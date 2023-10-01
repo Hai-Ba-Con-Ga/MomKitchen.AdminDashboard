@@ -1,12 +1,11 @@
 import { Order, OrderAdmin } from "@/types/@mk/entity/order";
-import { OrderStatus } from "@/types/@mk/enum/orderStatus";
 import { faker } from "@faker-js/faker";
-import { generateRandomMeal } from "./Meal";
 import { generateRandomCustomer } from "./Customer";
+import { generateRandomMeal } from "./Meal";
 
   
   // Define a function to generate a random order
-  function generateRandomOrder():Order {
+ export  function generateRandomOrder():Order {
     const customer = generateRandomCustomer()
     return {
       id: faker.number.int().toString()
@@ -30,7 +29,7 @@ import { generateRandomCustomer } from "./Customer";
       orderPayments: [], // You can populate this array with OrderPayment objects
     };
   }
-  function generateRandomOrderAdmin():OrderAdmin {
+ export function generateRandomOrderAdmin():OrderAdmin {
     const customer = generateRandomCustomer()
     return {
       id: faker.number.int({min:0,max: 1000}).toString()
@@ -57,5 +56,5 @@ import { generateRandomCustomer } from "./Customer";
   
   
   // Generate a list of 20 mock order objects
-  const mockOrders = Array.from({ length: 20 }, () => generateRandomOrder());
+  export const mockOrders = Array.from({ length: 20 }, () => generateRandomOrder());
   export function mockOrder():OrderAdmin[] {return Array.from({ length:faker.number.int({min:10,max: 50})  }, () => generateRandomOrderAdmin())}

@@ -228,7 +228,7 @@ const LoadingButton = forwardRef(
     return (
       <LoadingButtonStyle
         ref={ref}
-        variant={variant!}
+        variant={variant}
         shape={shape}
         theme={theme}
         loadingPosition={others.loadingPosition}

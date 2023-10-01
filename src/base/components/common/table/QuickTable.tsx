@@ -1,9 +1,10 @@
-import { ColumnDef, Row } from "@tanstack/react-table";
+import { ColumnDef, PaginationState, Row, SortingState } from "@tanstack/react-table";
 import ScrollX from "@ui/ScrollX";
 import {
   Dispatch,
   ReactElement,
   MouseEvent as ReactMouseEvent,
+  ReactNode,
   useEffect,
   useState,
 } from "react";
@@ -14,10 +15,13 @@ import TablePagination from "./TablePagination";
 interface Props<T> {
   data: T[];
   renderRowSubComponent?: (row: Row<T>) => ReactElement;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: ColumnDef<T, any>[];
   onPaginationChange?: (pagination: PaginationState) => void;
   onSearchKeywordChange?: (keyword: string) => void;
-  onSortByChange?: (sortBy: SortBy) => void;
+  onSortByChange?: (sortBy: SortingState) => void;
+  // TODO: fix this type later
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onRowSelectedChange?: (rows: any[]) => void;
   addButton?: {
     isShown: boolean;
@@ -32,15 +36,16 @@ interface Props<T> {
   columnVisibility?: {
     [key: string]: boolean;
   };
+  actionComponents?: ReactNode
 }
-export type PaginationState = {
-  pageIndex: number;
-  pageSize: number;
-};
-export type SortBy = {
-  colName: string;
-  isDesc: boolean;
-};
+// export type PaginationState = {
+//   pageIndex: number;
+//   pageSize: number;
+// };
+// export type SortBy = {
+//   colName: string;
+//   isDesc: boolean;
+// };
 function QuickTable<T>(props: Props<T>) {
   const {
     data,
@@ -57,12 +62,13 @@ function QuickTable<T>(props: Props<T>) {
       addButtonHandler: () => console.log,
     },
     filter,
+    actionComponents
   } = props;
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 25,
   });
-  const [sortBy, setSortBy] = useState<SortBy>();
+  const [sortBy, setSortBy] = useState<SortingState>();
   const [keyword, setKeyword] = useState<string>();
   const [rowSelected, setRowSelected] = useState();
   const goToPage = (page: number) => {
@@ -102,6 +108,7 @@ function QuickTable<T>(props: Props<T>) {
           },
         }}
         filter={filter}
+        actionComponents={actionComponents}
       />
       <BaseTableV8<T>
         columnVisibility={columnVisibility}
@@ -109,16 +116,19 @@ function QuickTable<T>(props: Props<T>) {
         columns={columns}
         isMultiSelection={true}
         rowSelected={rowSelected}
-        paging={{}}
+        paging={{
+
+        }}
         primaryKey="id"
         onSortBy={(colName, isDesc) => {
-          setSortBy({ colName, isDesc });
+          setSortBy([{id: colName, desc: isDesc}]);
         }}
         renderRowSubComponent={renderRowSubComponent}
         onRowSelect={(row) => {
           setRowSelected(row);
         }}
         data={data}
+
       />
       <TablePagination
         gotoPage={goToPage}

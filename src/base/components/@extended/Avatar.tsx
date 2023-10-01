@@ -18,7 +18,7 @@ interface AvatarStyleProps extends ExtendedStyleProps {
   type?: AvatarTypeProps;
 }
 
-function getColorStyle({ variant, theme, color, type }: AvatarStyleProps) {
+function getColorStyle({  theme, color, type }: AvatarStyleProps) {
   const colors = getColors(theme, color);
   const {  light, main, contrastText } = colors;
 
@@ -124,14 +124,17 @@ export interface Props extends AvatarProps {
   size?: SizeProps;
 }
 
-export default function Avatar({ variant = 'circular', children, color = 'primary', type, size = 'md', ...others }: Props) {
+export default function Avatar({ variant = 'circular', children, color = 'primary', 
+// type,
+ size = 'md', ...others }: Props) {
   const theme = useTheme();
 
   return (
     <AvatarStyle variant={variant} theme={theme} color={color} 
     // TODO : 16/09/23 cmt
+    // sizes=''
     // type={type}
-    // size={size} 
+    sizes={size} 
     {...others}>
       {children}
     </AvatarStyle>

@@ -4,7 +4,7 @@ import { FilterList } from "@mui/icons-material";
 import { Button, IconButton, useMediaQuery } from "@mui/material";
 import { Stack, useTheme } from "@mui/system";
 import { isEmpty } from "lodash";
-import { Dispatch, MouseEventHandler } from "react";
+import { Dispatch, MouseEventHandler, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -22,10 +22,11 @@ interface Props {
     isExpandFilterMenu: boolean;
     setIsExpandFilterMenu: Dispatch<boolean>;
   };
+  actionComponents?: ReactNode
 }
 
 const ListTableHeader = (props: Props) => {
-  const { search, additionButton = { isShown: false }, filter } = props;
+  const { search, additionButton = { isShown: false }, filter, actionComponents } = props;
   const theme = useTheme();
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -56,7 +57,7 @@ const ListTableHeader = (props: Props) => {
             size="small"
             aria-label="close"
             color="inherit"
-            onClick={(e) => {
+            onClick={() => {
               filter.setIsExpandFilterMenu(!filter.isExpandFilterMenu);
             }}
             sx={{ mt: 0.25 }}>
@@ -73,6 +74,7 @@ const ListTableHeader = (props: Props) => {
               setSortBy={setSortBy}
               allColumns={allColumns}
             /> */}
+            {actionComponents}
         {additionButton.isShown && (
           <Button
             variant="shadow"

@@ -2,7 +2,6 @@ import { Dish } from '@/types/@mk/entity/dish'
 import { Typography } from '@mui/material'
 import MainCard from '@ui/MainCard'
 import { Image } from '@ui/common/image'
-import React from 'react'
 
 type Props = {
     data : Dish

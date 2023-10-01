@@ -1,10 +1,8 @@
-import useAuth from '@/base/hooks/useAuth';
 import { Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import React from 'react'
 import { Link } from 'react-router-dom';
-import AuthWrapper from './sections/AuthWrapper';
 import AuthLogin from './sections/AuthLogin';
+import AuthWrapper from './sections/AuthWrapper';
 
 
 const LoginPage = () => {

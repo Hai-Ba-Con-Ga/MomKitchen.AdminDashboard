@@ -8,5 +8,5 @@ export interface PaymentType extends BaseEntity {
     name: string;
     description: string;
     status: PaymentTypeStatus;
-    orderPayments: OrderPayment[];
+    orderPayments?: OrderPayment[];
 }

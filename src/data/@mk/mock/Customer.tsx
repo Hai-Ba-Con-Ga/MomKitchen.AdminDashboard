@@ -1,6 +1,4 @@
-import CustomerList from "@/modules/customer/pages/list/list";
 import { CustomerAdmin } from "@/types/@mk/entity/customer";
-import { User } from "@/types/@mk/entity/user";
 import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
 import { faker } from "@faker-js/faker";
 import { generateRandomUser } from "./User";
