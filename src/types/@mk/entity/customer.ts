@@ -6,16 +6,16 @@ import { BaseEntity } from "../common/baseEntity";
 import { CustomerStatus } from "../enum/customerStatus";
 
 export interface Customer extends BaseEntity {
-  userId: string;
-  user: User;
+  userId?: string;
+  user?: User;
   status: CustomerStatus;
-  favouriteKitchens: FavouriteKitchen[];
-  feedbacks: Feedback[];
-  orders: Order[];
+  favouriteKitchens?: FavouriteKitchen[];
+  feedbacks?: Feedback[];
+  orders?: Order[];
 }
 
 export interface CustomerAdmin extends Customer {
-  order_quantity: number;
+  orderQuantity: number;
   spentMoney: number;
-  selection: boolean;
+  // selection: boolean;
 }

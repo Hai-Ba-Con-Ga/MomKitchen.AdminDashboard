@@ -13,8 +13,8 @@ export interface User extends BaseEntity {
   avatarUrl: string | null;
   fullName: string;
   roleId: string;
-  role: Role | null;
-  notifications: Notification[];
-  customer: Customer | null;
-  kitchen: Kitchen | null;
+  role?: Role | null;
+  notifications?: Notification[];
+  customer?: Customer | null;
+  kitchen?: Kitchen | null;
 }
