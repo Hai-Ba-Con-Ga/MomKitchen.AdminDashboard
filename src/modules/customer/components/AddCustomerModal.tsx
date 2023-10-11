@@ -1,39 +1,24 @@
+import { mockRole } from "@/data/@mk/mock/Role";
 import { User } from "@/types/@mk/entity/user";
-import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
-import { CameraOutlined, DeleteFilled } from "@ant-design/icons";
+import { DeleteFilled } from "@ant-design/icons";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Button,
   DialogActions,
   DialogContent,
   DialogTitle,
   Divider,
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  FormLabel,
   Grid,
   IconButton,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Switch,
-  TextField,
   Tooltip,
-  Typography,
 } from "@mui/material";
-import { Box, Stack, useTheme } from "@mui/system";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import Avatar from "@ui/@extended/Avatar";
-import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
-import { ChangeEvent, ReactNode, useEffect, useState } from "react";
-import { Controller, FormProvider, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { Box, Stack } from "@mui/system";
+import { useEffect } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import useCustomerForm, {
+  ManipulateCustomerForm,
+} from "../hook/useCustomerForm";
 import CustomerManipulateForm from "./form/CustomerManipulateForm";
-import useCustomerForm, { ManipulateCustomerForm } from "../hook/useCustomerForm";
-import { mockRole } from "@/data/@mk/mock/Role";
 
 interface AddCustomerModalProps {
   isOpen?: boolean;
@@ -42,24 +27,26 @@ interface AddCustomerModalProps {
   customer: User;
 }
 
-
 const AddCustomerModal = ({
   customer,
   onCancel,
 }: // isOpen,
 AddCustomerModalProps) => {
   const isCreating = !customer;
-  const defaultValue:ManipulateCustomerForm = !isCreating ? {
-    autoPassword: true,
-    birthday: customer?.birthday,
-    email: customer?.email,
-    phone: customer?.phone,
-    fullname: customer?.fullName,
-    status: customer?.customer.status,
-    role:  customer?.roleId
-  }: {autoPassword: true} 
+  const defaultValue: ManipulateCustomerForm = !isCreating
+    ? {
+        autoPassword: true,
+        birthday: customer?.birthday,
+        email: customer?.email,
+        phone: customer?.phone,
+        fullname: customer?.fullName,
+        status: customer?.customer.status,
+        role: customer?.roleId,
+      }
+    : { autoPassword: true };
+  console.log(defaultValue);
 
-  const {CustomerSchema, createCustomerHandler} = useCustomerForm()
+  const { CustomerSchema, createCustomerHandler } = useCustomerForm();
   const deleteHandler = () => {
     // dispatch(deleteCustomer(customer?.id)); - delete
     // dispatch(
@@ -126,32 +113,32 @@ AddCustomerModalProps) => {
   const methods = useForm<ManipulateCustomerForm>({
     mode: "all",
     resolver: yupResolver(CustomerSchema),
-    defaultValues:{
-      autoPassword:true
-    }
+    defaultValues: {
+      autoPassword: true,
+    },
   });
 
   const roles = mockRole; // TODO: load from be
-  useEffect(()=>{
-    console.log("Error =>",methods.formState?.errors);
-    
-  },[methods.formState.errors])
+  useEffect(() => {
+    console.log("Error =>", methods.formState?.errors);
+  }, [methods.formState.errors]);
 
   return (
     <>
-       <FormProvider {...methods}>
+      <FormProvider {...methods}>
         <Box
           component={"form"}
-          onSubmit={methods.handleSubmit( async (data) => {
+          onSubmit={methods.handleSubmit(async (data) => {
             console.log("Add customer data => ", data);
             const res = await createCustomerHandler(data);
+            console.log(res);
           })}>
           <DialogTitle>
             {customer ? "Edit Customer" : "New Customer"}
           </DialogTitle>
           <Divider />
           <DialogContent sx={{ p: 2.5 }}>
-            <CustomerManipulateForm roles={roles} isCreating={isCreating}/>
+            <CustomerManipulateForm roles={roles} isCreating={isCreating} />
           </DialogContent>
           <Divider />
           <DialogActions sx={{ p: 2.5 }}>
@@ -192,7 +179,7 @@ AddCustomerModalProps) => {
             </Grid>
           </DialogActions>
         </Box>
-       </FormProvider>
+      </FormProvider>
     </>
   );
 };

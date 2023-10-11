@@ -1,45 +1,46 @@
-import CustomerManipulateForm from '@/modules/customer/components/form/CustomerManipulateForm';
-import { Kitchen, KitchenAdmin } from '@/types/@mk/entity/kitchen';
-import { DeleteFilled } from '@ant-design/icons';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Tooltip } from '@mui/material';
-import { Button } from '@mui/material';
-import { DialogActions, DialogContent, DialogTitle, Divider, Grid } from '@mui/material';
-import { Box, Stack } from '@mui/system';
-import IconButton from '@ui/@extended/IconButton';
-import React from 'react'
-import { FormProvider, useForm } from 'react-hook-form';
+import { KitchenAdmin } from "@/types/@mk/entity/kitchen";
+import { DeleteFilled } from "@ant-design/icons";
+import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  Tooltip,
+} from "@mui/material";
+import { Box, Stack } from "@mui/system";
+import IconButton from "@ui/@extended/IconButton";
+import { FormProvider, useForm } from "react-hook-form";
 
 type Props = {
-    kitchen?: KitchenAdmin
+  kitchen?: KitchenAdmin;
   onCancel: () => void;
-
-}
+};
 
 const AddKitchenModal = (props: Props) => {
-    const {kitchen, onCancel} = props
-    const isCreating = !kitchen
-    const methods = useForm<any>({
-        mode: "all",
-        resolver: yupResolver(null),
-        defaultValues:{
-          autoPassword:true
-        }
-      });
-      const deleteHandler = ()=>{
-        console.log("TODO : Implement");
-      }
+  const { kitchen, onCancel } = props;
+  const isCreating = !kitchen;
+  const methods = useForm<any>({
+    mode: "all",
+    resolver: yupResolver(null),
+    defaultValues: {
+      autoPassword: true,
+    },
+  });
+  const deleteHandler = () => {
+    console.log("TODO : Implement");
+  };
   return (
     <>
-       <FormProvider {...methods}>
+      <FormProvider {...methods}>
         <Box
           component={"form"}
-          onSubmit={methods.handleSubmit( async (data) => {
+          onSubmit={methods.handleSubmit(async (data) => {
             console.log("Add customer data => ", data);
           })}>
-          <DialogTitle>
-            {kitchen ? "Edit kitchen" : "New kitchen"}
-          </DialogTitle>
+          <DialogTitle>{kitchen ? "Edit kitchen" : "New kitchen"}</DialogTitle>
           <Divider />
           <DialogContent sx={{ p: 2.5 }}>
             {/* <CustomerManipulateForm roles={roles} isCreating={isCreating}/> */}
@@ -83,9 +84,9 @@ const AddKitchenModal = (props: Props) => {
             </Grid>
           </DialogActions>
         </Box>
-       </FormProvider>
+      </FormProvider>
     </>
-  )
-}
+  );
+};
 
-export default AddKitchenModal
+export default AddKitchenModal;

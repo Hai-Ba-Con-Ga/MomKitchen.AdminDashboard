@@ -1,7 +1,15 @@
 import { MouseEvent, useCallback, useMemo, useState } from "react";
 
 // material-ui
-import { Button, Chip, Dialog, DialogContentText, Stack, Tooltip, Typography } from "@mui/material";
+import {
+  Button,
+  Chip,
+  Dialog,
+  DialogContentText,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 // third-party
@@ -33,7 +41,6 @@ import QuickTable from "@ui/common/table/QuickTable";
 import NumberFormat from "react-number-format";
 import AddCustomerModal from "../../components/AddCustomerModal";
 
-
 // ==============================|| REACT TABLE ||============================== //
 
 // ==============================|| CUSTOMER - LIST VIEW ||============================== //
@@ -61,7 +68,7 @@ const CustomerList = () => {
   const columns = useMemo<ColumnDef<CustomerAdmin>[]>(
     () => {
       const cols: ColumnDef<CustomerAdmin>[] = [
-        columnHelper.accessor("selection", {
+        columnHelper.accessor<any, any>("selection", {
           header: ({
             table: {
               getIsAllRowsSelected,
@@ -238,14 +245,11 @@ const CustomerList = () => {
     [theme]
   );
 
-  const renderRowSubComponent = useCallback(
-    (row) => {
-      console.log(row);
+  const renderRowSubComponent = useCallback((row) => {
+    console.log(row);
 
-      return <CustomerView data={row.original} />;
-    },
-    []
-  );
+    return <CustomerView data={row.original} />;
+  }, []);
 
   return (
     <MainCard content={false}>
@@ -288,37 +292,56 @@ const CustomerList = () => {
       </Dialog>
 
       {deleteConfirm && (
-        <Dialog open={deleteConfirm} onClose={()=>setDeleteConfirmation(false)} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-        <Box sx={{ p: 1, py: 1.5 , justifyContent: "center" }} justifyContent={"center"} display={"flex"} flexDirection={"column"}>
-          <DialogTitle id="alert-dialog-title">
-            <Box sx={{
-              placeItems: "center"
-            }} display="grid" > 
-              <BlockOutlined color="error" sx={{fontSize: "4rem"}}/>
-            </Box>
-            <DialogContentText sx={{
-              textAlign:"center",
-              fontWeight: "bold",
-              fontSize:"1.5rem"
-            }}  id="alert-dialog-description">
-            Are you sure you want to delete?
-            </DialogContentText>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              By deleting action, that user will not be able to use application no more.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button color="secondary" variant="outlined" onClick={()=>setDeleteConfirmation(false)}>
-              Cancel
-            </Button>
-            <Button color="error" variant="contained" onClick={()=>setDeleteConfirmation(false)}>
-              Delete
-            </Button>
-          </DialogActions>
-        </Box>
-      </Dialog>
+        <Dialog
+          open={deleteConfirm}
+          onClose={() => setDeleteConfirmation(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description">
+          <Box
+            sx={{ p: 1, py: 1.5, justifyContent: "center" }}
+            justifyContent={"center"}
+            display={"flex"}
+            flexDirection={"column"}>
+            <DialogTitle id="alert-dialog-title">
+              <Box
+                sx={{
+                  placeItems: "center",
+                }}
+                display="grid">
+                <BlockOutlined color="error" sx={{ fontSize: "4rem" }} />
+              </Box>
+              <DialogContentText
+                sx={{
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  fontSize: "1.5rem",
+                }}
+                id="alert-dialog-description">
+                Are you sure you want to delete?
+              </DialogContentText>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                By deleting action, that user will not be able to use
+                application no more.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                color="secondary"
+                variant="outlined"
+                onClick={() => setDeleteConfirmation(false)}>
+                Cancel
+              </Button>
+              <Button
+                color="error"
+                variant="contained"
+                onClick={() => setDeleteConfirmation(false)}>
+                Delete
+              </Button>
+            </DialogActions>
+          </Box>
+        </Dialog>
       )}
     </MainCard>
   );
