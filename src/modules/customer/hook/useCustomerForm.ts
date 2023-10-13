@@ -1,9 +1,8 @@
-import React from "react";
-import * as Yup from "yup";
-import useCustomerData from "./useCustomerData";
+import useAwsS3 from "@/base/hooks/useAwsS3";
 import { Customer } from "@/types/@mk/entity/customer";
 import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
-import useAwsS3 from "@/base/hooks/useAwsS3";
+import * as Yup from "yup";
+import useCustomerData from "./useCustomerData";
 
 export interface ManipulateCustomerForm {
   fullname?: string;
@@ -21,11 +20,11 @@ export interface ManipulateCustomerForm {
 const useCustomerForm = () => {
   const {
     createCustomer: {
-      mutateAsync: createCustomer,
+      // mutateAsync: createCustomer,
       isLoading: isCreateCustomer,
     },
   } = useCustomerData();
-  const {putObject} = useAwsS3();
+  const { putObject } = useAwsS3();
   const CustomerSchema = Yup.object().shape({
     fullname: Yup.string().max(255).required("Name is required"),
     phone: Yup.string()
@@ -69,7 +68,6 @@ const useCustomerForm = () => {
     status: Yup.string().required(),
   });
   const createCustomerHandler = async (formValues: ManipulateCustomerForm) => {
-   
     const {
       avatar,
       fullname: fullName,
@@ -80,11 +78,11 @@ const useCustomerForm = () => {
       role,
       status,
     } = formValues;
-    let objectPath = null
-    if(avatar){
+    let objectPath = null;
+    if (avatar) {
       objectPath = await putObject({
         object: avatar,
-        path : "customer/avatar/"
+        path: "customer/avatar/",
       });
       console.log("Uploaded object path => ", objectPath);
     }
@@ -101,7 +99,7 @@ const useCustomerForm = () => {
       status: CustomerStatus[status],
     };
     console.log("New customer => ", newCustomer);
-    
+
     // const res = await createCustomer(newCustomer);
     // return res;
   };

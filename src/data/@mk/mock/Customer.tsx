@@ -24,7 +24,7 @@ export function generateRandomCustomer(): CustomerAdmin {
     orders: [],
     order_quantity: faker.datatype.number({ min: 1, max: 10 }), // Adjust the range as needed
     spentMoney: faker.datatype.float({ min: 50, max: 1000, precision: 0.01 }), // Adjust the range as needed
-    selection: true,
+    // selection: true,
   };
 }
 
@@ -70,6 +70,6 @@ export const customer: CustomerAdmin[] = [
     orders: [], // You can populate this array with Order objects
     order_quantity: 5,
     spentMoney: 500.0,
-    selection: true,
+    // selection: true,
   },
 ];
