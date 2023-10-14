@@ -14,9 +14,12 @@ interface KitchenGetParams {
 }
 const KitchenApi = {
   getKitchens: (params: KitchenGetParams) => {
-    const endpoint = "/kitchens";
+    const endpoint = "/kitchen";
     return axiosClient.get<ResponseObject<KitchenAdmin[]>>(endpoint, {
-      params: { ...params },
+      params: { 
+       PageNumber: params.paging?.pageIndex+1 ?? 1,
+       PageSize: params.paging?.pageSize ?? 10
+       },
     });
   },
   getKitchenDetail: (id: number) => {

@@ -121,7 +121,7 @@ export const admin: NavItemType = {
     },
     {
       id: "area",
-      title: <FormattedMessage id="area" />,
+      title: <FormattedMessage id="Area" />,
       type: "item",
       icon: icons.ShopOutlined,
       url: "/area/list"
@@ -142,33 +142,33 @@ export const admin: NavItemType = {
       //   },
       // ],
     },
-    {
-      id: "feedback",
-      title: <FormattedMessage id="feedback" />,
-      type: "item",
-      icon: icons.ShopOutlined,
+    // {
+    //   id: "feedback",
+    //   title: <FormattedMessage id="feedback" />,
+    //   type: "item",
+    //   icon: icons.ShopOutlined,
 
-      // children: [
-      //   {
-      //     id: "feedback-list",
-      //     title: <FormattedMessage id="list" />,
-      //     type: "item",
-      //     icon: icons.TableOutlined,
-      //     url: "/feedback/list",
-      //   },
-      //   {
-      //     id: "feedback-analytics",
-      //     title: <FormattedMessage id="analytics" />,
-      //     type: "item",
-      //     url: "/feedback/analytic",
-      //     icon: icons.AreaChartOutlined,
-      //   },
-      // ],
-    },
+    //   // children: [
+    //   //   {
+    //   //     id: "feedback-list",
+    //   //     title: <FormattedMessage id="list" />,
+    //   //     type: "item",
+    //   //     icon: icons.TableOutlined,
+    //   //     url: "/feedback/list",
+    //   //   },
+    //   //   {
+    //   //     id: "feedback-analytics",
+    //   //     title: <FormattedMessage id="analytics" />,
+    //   //     type: "item",
+    //   //     url: "/feedback/analytic",
+    //   //     icon: icons.AreaChartOutlined,
+    //   //   },
+    //   // ],
+    // },
     {
       id: "payment",
-      title: <FormattedMessage id="payment" />,
-      type: "collapse",
+      title: <FormattedMessage id="Payment" />,
+      type: "item",
       icon: icons.ShopOutlined,
       url: "/payment/list",
       // children: [

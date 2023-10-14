@@ -10,11 +10,12 @@ const getToken = () => {
 
 const axiosClient = axios.create({
 	// baseURL: BASE_URL+"/"+import.meta.env.VITE_API_VERSION,
-	baseURL: "http://localhost:5000",
+	// baseURL: "http://localhost:5000",
+	baseURL: "http://momkitchen.wyvernpserver.tech/api/v1",
 	// withCredentials: true,
 	headers: {
 		"Content-Type": "application/json",
-		"Access-Control-Allow-Origin": "*",
+		// "Access-Control-Allow-Origin": "*",
 		Authorization: `Bearer ${getToken()}`,
 	},
 });
