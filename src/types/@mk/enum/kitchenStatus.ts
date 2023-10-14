@@ -1,4 +1,4 @@
 export enum KitchenStatus {
-    ACTIVE,
-    INACTIVE
+    ACTIVE = "ACTIVE",
+    INACTIVE = "INACTIVE"
 }

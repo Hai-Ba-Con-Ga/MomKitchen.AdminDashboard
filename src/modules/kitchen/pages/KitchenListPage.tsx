@@ -24,7 +24,7 @@ const KitchenListPage = () => {
     
     <QuickTable<KitchenAdmin>
       columns={columnsDef}
-      data={data}
+      data={data ?? []}
       onPaginationChange={(pagination) => {
         setPagination(pagination);
       }}

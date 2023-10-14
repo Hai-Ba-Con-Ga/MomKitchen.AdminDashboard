@@ -30,3 +30,30 @@ export interface KitchenAdmin extends Kitchen {
     noOfTray: number;
     rating: number;
 }
+
+export interface KitchenResponse {
+    id? : string;
+    name?: string;
+    address?: string;
+    status?:  KitchenStatus,
+    noOfDish : number;
+    noOfMeal: number;
+    noOfTray: number;
+    rating: number;
+    location: {
+        id: string;
+        lat: number;
+        lng: number;
+    },
+    owner :{
+        ownerId: string;
+        ownerName: string;
+        ownerAvatar: string;
+        ownerEmail: string;
+    },
+    area :{ 
+        areaId : string;
+        areaName: string;
+    }
+}
+
