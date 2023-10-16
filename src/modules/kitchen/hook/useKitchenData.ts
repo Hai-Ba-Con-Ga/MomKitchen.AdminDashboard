@@ -13,7 +13,7 @@ const [pagination, setPagination] = useState<PaginationState>({
   });
   const [sortState, setSortState] = useState<SortingState>([]);
   const [keyword, setKeyword] = useState<string>();
-  
+const [id, setId] = useState<string>();
    // Define the fetchKitchenDataFunction that fetches orders using the OrderApi
    const fetchKitchenDataFunction = async () => {
     try {
@@ -32,7 +32,7 @@ const [pagination, setPagination] = useState<PaginationState>({
   };
    // Define your initial query key, including dependencies like pagination, sorting, and keyword 
    // TODO: use debounce technique to prevent many calls at a short time
-   const queryKey = ['orders', pagination, sortState, keyword];
+   const queryKey = ['kitchens', pagination, sortState, keyword];
 
    // Fetch order data using React Query's useQuery hook
    const { data: kitchenData,
@@ -65,8 +65,13 @@ const [pagination, setPagination] = useState<PaginationState>({
    const deleteKitchen = useMutation(deleteKitchenFunction, {
      // You can specify onSuccess and onError callbacks here
    });
+   const getKitchenDetailFunction = async (id: string) => {
+    const response =  await KitchenApi.getKitchenDetail(id);
+    return response.data;
+   }
 
-  return { kitchenData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen };
+   const {data: kitchenDetail} = useQuery(["KitchenDetail",id],()=>getKitchenDetailFunction(id),{});
+  return { kitchenData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen,kitchenDetail, setId };
 }
 
 export default useKitchenData

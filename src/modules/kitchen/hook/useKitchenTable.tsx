@@ -54,6 +54,15 @@ const useKitchenTable = (props: Props) => {
           }),
           columnHelper.accessor("name", {
             header: "Kitchen Name",
+            cell: ({row})=>{
+             return  <Typography variant="subtitle1" color="CaptionText" sx={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              }}>
+              {row.original.name}
+            </Typography>
+            }
           }),
           columnHelper.accessor("owner", {
             header: "Owner",
@@ -80,13 +89,26 @@ const useKitchenTable = (props: Props) => {
           columnHelper.accessor("address", {
             header: "Address",
             enableSorting: false,
+            cell: ({ renderValue }) => (
+              <Typography
+              sx={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                }}
+                fontWeight="500"
+                textAlign={"left"}
+                variant="body2">
+                {renderValue()}
+              </Typography>
+            ),
           }),
           columnHelper.accessor("area.name", {
             header: "Area",
             cell: ({ renderValue }) => (
               <Typography
                 fontWeight="500"
-                textAlign={"center"}
+                textAlign={"left"}
                 variant="subtitle1">
                 {renderValue()}
               </Typography>

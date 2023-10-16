@@ -14,6 +14,11 @@ import AreaListPage from "@/modules/area/pages/AreaListPage";
 import FeedbackListPage from "@/modules/feedback/pages/FeedbackListPage";
 import PaymentListPage from "@/modules/payment/pages/PaymentListPage";
 import DashboardPage from "@/modules/dashboard/pages";
+import KitchenDetailPage from "@/modules/kitchen/pages/KitchenDetailPage";
+import KitchenProfile from "@/modules/kitchen/pages/KitchenProfile";
+import KitchenProfileMeal from "@/modules/kitchen/pages/KitchenProfileMeal";
+import KitchenProfileTray from "@/modules/kitchen/pages/KitchenProfileTray";
+import KitchenProfileDish from "@/modules/kitchen/pages/KitchenProfileDish";
 const routes: RouteObject[] = [
   {
     path: "/",
@@ -62,6 +67,28 @@ const routes: RouteObject[] = [
             path: "analytic",
             element: <h1>kitchen analytic</h1>,
           },
+          {
+            path: ":id",
+            element: <KitchenDetailPage/>,
+            children: [
+              {
+                path:"",
+                element : <KitchenProfile/>
+              },
+              {
+                path: "meals",
+                element: <KitchenProfileMeal/>
+              },
+              {
+                path: "trays",
+                element : <KitchenProfileTray/>
+              },
+              {
+                path: "dishes",
+                element: <KitchenProfileDish/>
+              }
+            ]
+          }
         ],
       },
       {

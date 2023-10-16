@@ -35,31 +35,31 @@ const KitchenApi = {
         noOfTray,
         rating,
         status,
-        locationId:location.id,
-        areaId: area.areaId, 
-        ownerId: owner.ownerId,
+        locationId:location?.id,
+        areaId: area?.areaId, 
+        ownerId: owner?.ownerId,
         area : {
-          name : area.areaName,
-          id: area.areaId,
+          name : area?.areaName,
+          id: area?.areaId,
         },
         location : {
-          id: location.id,
-          lat: location.lat,
-          lng: location.lng
+          id: location?.id,
+          lat: location?.lat,
+          lng: location?.lng
         },
         owner: {
-          fullName: owner.ownerName,
-          avatarUrl: owner.ownerAvatar,
-          id: owner.ownerId,
-          email: owner.ownerEmail
+          fullName: owner?.ownerName,
+          avatarUrl: owner?.ownerAvatar,
+          id: owner?.ownerId,
+          email: owner?.ownerEmail
         }
       }))
     }
 
     return mappedResponse;
   },
-  getKitchenDetail: (id: number) => {
-    const endpoint = "/kitchen";
+  getKitchenDetail: (id: string) => {
+    const endpoint = "/kitchen/"+id;
     return axiosClient.get<ResponseObject<KitchenAdmin>>(endpoint, {
       params: {
         id,

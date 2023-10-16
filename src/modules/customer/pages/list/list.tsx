@@ -129,6 +129,11 @@ const CustomerList = () => {
           header: "Contact",
           cell: ({ renderValue }) => (
             <NumberFormat
+            sx={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              }}
               displayType="text"
               format="+1 (###) ###-####"
               mask="_"
