@@ -35,23 +35,23 @@ const KitchenApi = {
         noOfTray,
         rating,
         status,
-        locationId:location.id,
-        areaId: area.areaId, 
-        ownerId: owner.ownerId,
+        locationId:location?.id ?? "TODO",
+        areaId: area?.areaId ?? "TODO", 
+        ownerId: owner?.ownerId ?? "TODO",
         area : {
-          name : area.areaName,
-          id: area.areaId,
+          name : area?.areaName ??"TODO",
+          id: area?.areaId??"TODO",
         },
         location : {
-          id: location.id,
-          lat: location.lat,
-          lng: location.lng
+          id: location?.id ?? "TODO",
+          lat: location?.lat ?? "TODO",
+          lng: location?.lng ?? "TODO"
         },
         owner: {
-          fullName: owner.ownerName,
-          avatarUrl: owner.ownerAvatar,
-          id: owner.ownerId,
-          email: owner.ownerEmail
+          fullName: owner?.ownerName ?? "TODO",
+          avatarUrl: owner?.ownerAvatar ?? "TODO",
+          id: owner?.ownerId ?? "TODO",
+          email: owner?.ownerEmail ?? "TODO"
         }
       }))
     }

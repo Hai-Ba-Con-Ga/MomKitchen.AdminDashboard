@@ -13,7 +13,7 @@ const [pagination, setPagination] = useState<PaginationState>({
   });
   const [sortState, setSortState] = useState<SortingState>([]);
   const [keyword, setKeyword] = useState<string>();
-  
+  const [totalRows, setTotalRows] = useState<number>(0);
    // Define the fetchKitchenDataFunction that fetches orders using the OrderApi
    const fetchKitchenDataFunction = async () => {
     try {
@@ -22,6 +22,7 @@ const [pagination, setPagination] = useState<PaginationState>({
         sort: sortState,     // Pass the sort state
         keyword,             // Pass the keyword
       });
+      setTotalRows(response?.totalCount ?? 0);
       // Return the data from the response
       return response?.data;
     }
@@ -66,7 +67,7 @@ const [pagination, setPagination] = useState<PaginationState>({
      // You can specify onSuccess and onError callbacks here
    });
 
-  return { kitchenData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen };
+  return { kitchenData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen, totalRows };
 }
 
 export default useKitchenData

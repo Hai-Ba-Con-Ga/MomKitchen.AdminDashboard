@@ -14,6 +14,9 @@ import AreaListPage from "@/modules/area/pages/AreaListPage";
 import FeedbackListPage from "@/modules/feedback/pages/FeedbackListPage";
 import PaymentListPage from "@/modules/payment/pages/PaymentListPage";
 import DashboardPage from "@/modules/dashboard/pages";
+import KitchenCreatePage from "@/modules/kitchen/pages/KitchenCreatePage";
+import OrderCreatePage from "@/modules/order/pages/create/OrderCreatePage";
+import AreaCreatePage from "@/modules/area/pages/AreaCreatePage";
 const routes: RouteObject[] = [
   {
     path: "/",
@@ -62,6 +65,10 @@ const routes: RouteObject[] = [
             path: "analytic",
             element: <h1>kitchen analytic</h1>,
           },
+          {
+            path: "create",
+            element: <KitchenCreatePage/>
+          }
         ],
       },
       {
@@ -80,6 +87,10 @@ const routes: RouteObject[] = [
             path: "analytic",
             element: <h1>order analytic</h1>,
           },
+          {
+            path: "create",
+            element: <OrderCreatePage/>
+          }
         ],
       },
       {
@@ -98,6 +109,10 @@ const routes: RouteObject[] = [
             path: "analytic",
             element: <h1>promotion analytic</h1>,
           },
+          {
+            path: "create",
+            element: <AreaCreatePage/>
+          }
         ],
       },
       {

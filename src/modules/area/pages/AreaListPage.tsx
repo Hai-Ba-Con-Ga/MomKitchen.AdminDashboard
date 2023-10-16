@@ -6,6 +6,7 @@ import QuickTable from '@ui/common/table/QuickTable';
 import { useMemo } from 'react';
 import useAreaData from '../hooks/useAreaData';
 import useAreaTable from '../hooks/useAreaTable';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -18,6 +19,7 @@ const AreaListPage = () => {
         
     });
     const {setPagination,setSortState,setKeyword} = useAreaData()
+    const nav = useNavigate();
   return (
     <MainCard content={false}>
     
@@ -32,8 +34,9 @@ const AreaListPage = () => {
         isShown: true,
         addButtonHandler: () => {
           // TODO : add action, nav page -> create/update
+          nav("/area/create")
         },
-        buttonContentLangKey: "Add order",
+        buttonContentLangKey: "New Area",
       }}
       onSearchKeywordChange={(q) => setKeyword(q)}
       onSortByChange={(sort) => setSortState(sort)}

@@ -8,23 +8,25 @@ import useKitchenData from '../hook/useKitchenData'
 import useKitchenTable from '../hook/useKitchenTable'
 import { Dialog } from '@mui/material'
 import AddKitchenModal from '../components/AddKitchenModal'
+import { useNavigate } from 'react-router-dom'
 
 const KitchenListPage = () => {
     const data = useMemo(()=>{
         return mockKitchenAdmin
     },[])
-    const [addToggle, setAddToggle] = useState<boolean>(false);
+    // const [addToggle, setAddToggle] = useState<boolean>(false);
     const {columnsDef} = useKitchenTable({
         handleEditClick: ()=>console.log("TODO: implement")
-        
     });
-    const {setPagination,setSortState,setKeyword} = useKitchenData()
+    const nav = useNavigate();
+    const {setPagination,setSortState,setKeyword, kitchenData, totalRows} = useKitchenData()
   return (
     <MainCard content={false}>
     
     <QuickTable<KitchenAdmin>
       columns={columnsDef}
       data={data ?? []}
+      totalRows={totalRows}
       onPaginationChange={(pagination) => {
         setPagination(pagination);
       }}
@@ -32,8 +34,8 @@ const KitchenListPage = () => {
       addButton={{
         isShown: true,
         addButtonHandler: () => {
-          // TODO : add action, nav page -> create/update
-          setAddToggle(true)
+         nav("/kitchen/create");
+
         },
         buttonContentLangKey: "Add Kitchen",
       }}
@@ -56,14 +58,14 @@ const KitchenListPage = () => {
         </>
       }
     />
-     {addToggle && <Dialog
+     {/* {addToggle && <Dialog
         maxWidth="sm"
         fullWidth
         onClose={()=>setAddToggle(false)}
         open={addToggle}
         sx={{ "& .MuiDialog-paper": { p: 0 } }}>
         {addToggle && <AddKitchenModal onCancel={()=>setAddToggle(false)}/>}
-      </Dialog>}
+      </Dialog>} */}
 
   </MainCard>
   )

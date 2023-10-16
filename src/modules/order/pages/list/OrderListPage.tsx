@@ -14,6 +14,7 @@ import QuickTable from "@ui/common/table/QuickTable";
 import { useEffect, useMemo, useState } from "react";
 import useOrderData from "../../hook/useOrderData";
 import useOrderTable from "../../hook/useOrderTable";
+import { useNavigate } from "react-router-dom";
 
 const OrderListPage = () => {
   const data = useMemo(
@@ -40,7 +41,7 @@ const OrderListPage = () => {
   useEffect(() => {
     console.log(orderData);
   }, [orderData]);
-
+  const nav = useNavigate();
   const [tabValue, setTabValue] = useState("all");
   return (
     <MainCard content={false}>
@@ -116,6 +117,7 @@ const OrderListPage = () => {
           isShown: true,
           addButtonHandler: () => {
             // TODO : add action, nav page -> create/update
+            nav("/order/create");
           },
           buttonContentLangKey: "Add order",
         }}
