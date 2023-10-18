@@ -2,6 +2,7 @@
 import { KitchenAdmin } from '@/types/@mk/entity/kitchen';
 import { KitchenStatus } from '@/types/@mk/enum/kitchenStatus';
 import { CloseOutlined, DeleteTwoTone, EditTwoTone, EyeTwoTone } from '@ant-design/icons';
+import { Delete } from '@mui/icons-material';
 import { Chip, Tooltip, Typography } from '@mui/material';
 import { Stack, useTheme } from '@mui/system';
 import { createColumnHelper } from '@tanstack/react-table';
@@ -10,17 +11,20 @@ import IconButton from '@ui/@extended/IconButton';
 import { IndeterminateCheckbox } from '@ui/third-party/ReactTable';
 import { MouseEvent, useMemo } from 'react';
 import NumberFormat from 'react-number-format';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     handleEditClick?: (kitchen: KitchenAdmin) => void;
+    handleDeleteClick?: (id: string) => void;
 }
 
 const useKitchenTable = (props: Props) => {
   
-    const { handleEditClick } = props;
+    const { handleEditClick, handleDeleteClick } = props;
     const theme = useTheme();
     const columnHelper = createColumnHelper<KitchenAdmin>();
     // const [orderDetail, setOrderDetail] = useState(null);
+    const nav = useNavigate();
     const columns = useMemo(
       () => {
         const cols = [
@@ -49,11 +53,29 @@ const useKitchenTable = (props: Props) => {
             ),
             enableSorting: false,
           }),
-          columnHelper.accessor("id", {
+          columnHelper.accessor("no", {
             header: "#",
+            cell: ({row})=>{
+              return  <Typography  color="CaptionText" sx={{
+               whiteSpace: 'nowrap',
+               overflow: 'hidden',
+               textOverflow: 'ellipsis',
+               }}>
+               KIT-{row.original.no}
+             </Typography>
+             }
           }),
           columnHelper.accessor("name", {
             header: "Kitchen Name",
+            cell: ({row})=>{
+             return  <Typography  color="CaptionText" sx={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              }}>
+              {row.original.name}
+            </Typography>
+            }
           }),
           columnHelper.accessor("owner", {
             header: "Owner",
@@ -80,13 +102,26 @@ const useKitchenTable = (props: Props) => {
           columnHelper.accessor("address", {
             header: "Address",
             enableSorting: false,
+            cell: ({ renderValue }) => (
+              <Typography
+              sx={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                }}
+                fontWeight="500"
+                textAlign={"left"}
+               >
+                {renderValue()}
+              </Typography>
+            ),
           }),
           columnHelper.accessor("area.name", {
             header: "Area",
             cell: ({ renderValue }) => (
               <Typography
                 fontWeight="500"
-                textAlign={"center"}
+                textAlign={"left"}
                 variant="subtitle1">
                 {renderValue()}
               </Typography>
@@ -183,7 +218,8 @@ const useKitchenTable = (props: Props) => {
                       color="secondary"
                       onClick={(e: MouseEvent) => {
                         e.stopPropagation();
-                        row.toggleExpanded();
+                        // row.toggleExpanded();
+                        nav(`/kitchen/${row.original.id}`)
                       }}>
                       {collapseIcon}
                     </IconButton>
@@ -203,8 +239,9 @@ const useKitchenTable = (props: Props) => {
                       color="error"
                       onClick={(e: MouseEvent) => {
                         e.stopPropagation();
+                        handleDeleteClick(row.original.id);
                       }}>
-                      <DeleteTwoTone rev={{}} color={theme.palette.error.main} />
+                      <Delete color={theme.palette.error.main}  />
                     </IconButton>
                   </Tooltip>
                 </Stack>

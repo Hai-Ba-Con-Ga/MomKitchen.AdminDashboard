@@ -26,8 +26,9 @@ const KitchenApi = {
     const mappedResponse:ResponseObject<KitchenAdmin[]> = {
       ...response.data,
       
-      data: response.data.data.map(({id, name,address,area, location, owner, noOfDish,noOfMeal,noOfTray,rating,status}) => ({
+      data: response.data.data.map(({no,id, name,address,area, location, owner, noOfDish,noOfMeal,noOfTray,rating,status}) => ({
         id,
+        no,
         address,
         name,
         noOfDish,
@@ -35,31 +36,31 @@ const KitchenApi = {
         noOfTray,
         rating,
         status,
-        locationId:location?.id ?? "TODO",
-        areaId: area?.areaId ?? "TODO", 
-        ownerId: owner?.ownerId ?? "TODO",
+        locationId:location?.id ,
+        areaId: area?.id , 
+        ownerId: owner?.ownerId,
         area : {
-          name : area?.areaName ??"TODO",
-          id: area?.areaId??"TODO",
+          name : area?.name ,
+          id: area?.id,
         },
         location : {
-          id: location?.id ?? "TODO",
-          lat: location?.lat ?? "TODO",
-          lng: location?.lng ?? "TODO"
+          id: location?.id ,
+          lat: location?.lat ,
+          lng: location?.lng 
         },
         owner: {
-          fullName: owner?.ownerName ?? "TODO",
-          avatarUrl: owner?.ownerAvatar ?? "TODO",
-          id: owner?.ownerId ?? "TODO",
-          email: owner?.ownerEmail ?? "TODO"
+          fullName: owner?.ownerName ,
+          avatarUrl: owner?.ownerAvatarUrl ,
+          id: owner?.ownerId ,
+          email: owner?.ownerEmail 
         }
       }))
     }
 
     return mappedResponse;
   },
-  getKitchenDetail: (id: number) => {
-    const endpoint = "/kitchen";
+  getKitchenDetail: (id: string) => {
+    const endpoint = "/kitchen/"+id;
     return axiosClient.get<ResponseObject<KitchenAdmin>>(endpoint, {
       params: {
         id,
@@ -70,8 +71,8 @@ const KitchenApi = {
     const endpoint = "/kitchen";
     return axiosClient.put(endpoint, kitchen);
   },
-  deleteKitchen: (id: number) => {
-    const endpoint = "/kitchen";
+  deleteKitchen: (id: string) => {
+    const endpoint = `/kitchen/${id}`;
     return axiosClient.delete(endpoint, {
       params: { id },
     });

@@ -17,6 +17,11 @@ import DashboardPage from "@/modules/dashboard/pages";
 import KitchenCreatePage from "@/modules/kitchen/pages/KitchenCreatePage";
 import OrderCreatePage from "@/modules/order/pages/create/OrderCreatePage";
 import AreaCreatePage from "@/modules/area/pages/AreaCreatePage";
+import KitchenDetailPage from "@/modules/kitchen/pages/KitchenDetailPage";
+import KitchenProfile from "@/modules/kitchen/pages/KitchenProfile";
+import KitchenProfileMeal from "@/modules/kitchen/pages/KitchenProfileMeal";
+import KitchenProfileTray from "@/modules/kitchen/pages/KitchenProfileTray";
+import KitchenProfileDish from "@/modules/kitchen/pages/KitchenProfileDish";
 const routes: RouteObject[] = [
   {
     path: "/",
@@ -68,6 +73,27 @@ const routes: RouteObject[] = [
           {
             path: "create",
             element: <KitchenCreatePage/>
+          },{
+            path: ":id",
+            element: <KitchenDetailPage/>,
+            children: [
+              {
+                path:"",
+                element : <KitchenProfile/>
+              },
+              {
+                path: "meals",
+                element: <KitchenProfileMeal/>
+              },
+              {
+                path: "trays",
+                element : <KitchenProfileTray/>
+              },
+              {
+                path: "dishes",
+                element: <KitchenProfileDish/>
+              }
+            ]
           }
         ],
       },

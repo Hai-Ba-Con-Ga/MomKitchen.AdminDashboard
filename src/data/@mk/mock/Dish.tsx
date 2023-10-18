@@ -13,7 +13,9 @@ export function generateRandomDish():Dish {
     updatedBy: 'admin',
     isDeleted: false,
     name: faker.lorem.words(2),
-    imageUrl: faker.image.food(),
+    imageUrl: faker.image.urlLoremFlickr({
+      category: "food"
+    }),
     description: faker.lorem.paragraph(),
     status:   faker.datatype.number({ min: 0, max: 1 }) === 0
     ? DishStatus.Active
@@ -25,6 +27,6 @@ export function generateRandomDish():Dish {
 }
 
 // Generate a list of 20 mock dish objects
-export const mockDishes =Array.from({ length: faker.number.int({ min: 2, max: 5}) }, () => generateRandomDish()) ;
+export const mockDishes =Array.from({ length: faker.number.int({ min: 3, max: 8}) }, () => generateRandomDish()) ;
 
 

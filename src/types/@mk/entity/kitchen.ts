@@ -33,6 +33,7 @@ export interface KitchenAdmin extends Kitchen {
 
 export interface KitchenResponse {
     id? : string;
+    no?: number;
     name?: string;
     address?: string;
     status?:  KitchenStatus,
@@ -48,12 +49,12 @@ export interface KitchenResponse {
     owner :{
         ownerId: string;
         ownerName: string;
-        ownerAvatar: string;
+        ownerAvatarUrl: string;
         ownerEmail: string;
     },
     area :{ 
-        areaId : string;
-        areaName: string;
+        id : string;
+        name: string;
     }
 }
 

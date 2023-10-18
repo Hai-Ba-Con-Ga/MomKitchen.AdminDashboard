@@ -40,6 +40,7 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import QuickTable from "@ui/common/table/QuickTable";
 import NumberFormat from "react-number-format";
 import AddCustomerModal from "../../components/AddCustomerModal";
+import useKitchenData from "@/modules/kitchen/hook/useKitchenData";
 
 // ==============================|| REACT TABLE ||============================== //
 
@@ -62,7 +63,6 @@ const CustomerList = () => {
     setAdd(!add);
     if (customer && !add) setCustomer(null);
   };
-
   const columnHelper = createColumnHelper<CustomerAdmin>();
 
   const columns = useMemo<ColumnDef<CustomerAdmin>[]>(
@@ -129,6 +129,11 @@ const CustomerList = () => {
           header: "Contact",
           cell: ({ renderValue }) => (
             <NumberFormat
+           style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+           }}
               displayType="text"
               format="+1 (###) ###-####"
               mask="_"
