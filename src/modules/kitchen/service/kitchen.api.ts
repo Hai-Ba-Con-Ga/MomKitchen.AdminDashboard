@@ -24,9 +24,9 @@ const KitchenApi = {
     });
 
     const mappedResponse:ResponseObject<KitchenAdmin[]> = {
-      ...response.data,
+      ...response?.data,
       
-      data: response.data.data.map(({no,id, name,address,area, location, owner, noOfDish,noOfMeal,noOfTray,rating,status}) => ({
+      data: response?.data?.data.map(({no,id, name,address,area, location, owner, noOfDish,noOfMeal,noOfTray,rating,status}) => ({
         id,
         no,
         address,
@@ -60,6 +60,8 @@ const KitchenApi = {
     return mappedResponse;
   },
   getKitchenDetail: (id: string) => {
+    console.log("id + ",id);
+    
     const endpoint = "/kitchen/"+id;
     return axiosClient.get<ResponseObject<KitchenAdmin>>(endpoint, {
       params: {

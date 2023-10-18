@@ -41,6 +41,7 @@ import QuickTable from "@ui/common/table/QuickTable";
 import NumberFormat from "react-number-format";
 import AddCustomerModal from "../../components/AddCustomerModal";
 import useKitchenData from "@/modules/kitchen/hook/useKitchenData";
+import ViewCustomerDetailModal from "../../components/modal/ViewDetailModal";
 
 // ==============================|| REACT TABLE ||============================== //
 
@@ -59,6 +60,8 @@ const CustomerList = () => {
   const [customer, setCustomer] = useState(null);
   const [add, setAdd] = useState<boolean>(false);
   const [deleteConfirm, setDeleteConfirmation] = useState<boolean>(false);
+  const [detailViewToggle, setDetailViewToggle] = useState<boolean>(false);
+  const [actionId, setActionId] = useState<string>()
   const handleAdd = () => {
     setAdd(!add);
     if (customer && !add) setCustomer(null);
@@ -207,7 +210,9 @@ const CustomerList = () => {
                     color="secondary"
                     onClick={(e: MouseEvent) => {
                       e.stopPropagation();
-                      row.toggleExpanded();
+                      // row.toggleExpanded();
+                      setCustomer(row.original);
+                      setDetailViewToggle(true);
                     }}>
                     {collapseIcon}
                   </IconButton>
@@ -291,9 +296,10 @@ const CustomerList = () => {
         maxWidth="sm"
         fullWidth
         onClose={handleAdd}
-        open={add}
+        open={add || detailViewToggle}
         sx={{ "& .MuiDialog-paper": { p: 0 } }}>
-        {add && <AddCustomerModal customer={customer} onCancel={handleAdd} />}
+        {add  && <AddCustomerModal customer={customer} onCancel={handleAdd} />}
+        {detailViewToggle && <ViewCustomerDetailModal customer={customer}  onCancel={()=>setDetailViewToggle(false)}/>}
       </Dialog>
 
       {deleteConfirm && (

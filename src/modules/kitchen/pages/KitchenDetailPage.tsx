@@ -29,7 +29,7 @@ const KitchenDetailPage = () => {
         <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
           <Tabs value={value} onChange={handleChange} variant="scrollable" scrollButtons="auto" aria-label="account profile tab">
             <Tab label="Profile" component={Link} to={`/kitchen/${id}/`} icon={<UserOutlined rev={{}} />} iconPosition="start" />
-            <Tab label="Meals" component={Link} to={`/kitchen/${id}/meals`} icon={<FileTextOutlined rev={{}} />} iconPosition="start" />
+            {/* <Tab label="Meals" component={Link} to={`/kitchen/${id}/meals`} icon={<FileTextOutlined rev={{}} />} iconPosition="start" /> */}
             <Tab label="Dishes" component={Link} to={`/kitchen/${id}/dishes`} icon={<FileTextOutlined rev={{}} />} iconPosition="start" />
             <Tab label="Trays" component={Link} to={`/kitchen/${id}/trays`} icon={<FileTextOutlined rev={{}} />} iconPosition="start" />
 

@@ -33,7 +33,7 @@ const KitchenProfileDish = () => {
       <Stack direction="row">
         <Swiper
           spaceBetween={50}
-          slidesPerView={4}
+          slidesPerView={3}
           direction="horizontal"
           onSlideChange={() => console.log("slide change")}
           onSwiper={(swiper) => console.log(swiper)}>

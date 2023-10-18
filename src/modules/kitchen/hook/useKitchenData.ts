@@ -1,8 +1,9 @@
 import { KitchenAdmin } from '@/types/@mk/entity/kitchen';
 import { PaginationState, SortingState } from '@tanstack/react-table';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import KitchenApi from '../service/kitchen.api';
+import UserApi from '../service/user.api';
 
 
 const useKitchenData = () => {
@@ -15,6 +16,7 @@ const [pagination, setPagination] = useState<PaginationState>({
   const [keyword, setKeyword] = useState<string>();
   const [totalRows, setTotalRows] = useState<number>(0);
   const [id, setId] = useState<string>();
+  const [ownerId, setOwnerId] = useState<string>();
    // Define the fetchKitchenDataFunction that fetches orders using the OrderApi
    const fetchKitchenDataFunction = async () => {
     try {
@@ -65,16 +67,31 @@ const [pagination, setPagination] = useState<PaginationState>({
       return response?.data; // Return any data indicating the success of deletion
    
   };
-   const deleteKitchen = useMutation(deleteKitchenFunction, {
-     // You can specify onSuccess and onError callbacks here
-   });
-   const getKitchenDetailFunction = async (id: string) => {
+  const deleteKitchen = useMutation(deleteKitchenFunction, {
+    // You can specify onSuccess and onError callbacks here
+  });
+  useEffect(()=>{
+    console.log("Effect",id);
+  },[id])
+   const getKitchenDetailFunction = async () => {
+    console.log("Id",id);
+    
     const response =  await KitchenApi.getKitchenDetail(id);
     return response.data;
    }
 
-   const {data: kitchenDetail} = useQuery(["KitchenDetail",id],()=>getKitchenDetailFunction(id),{});
-  return { kitchenData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen,kitchenDetail, setId, totalRows,refreshKitchenData };
+   const {data: kitchenDetail} = useQuery(["KitchenDetail",id],getKitchenDetailFunction,{});
+  useEffect(()=>{
+    console.log("Effect",ownerId);
+  },[ownerId])
+   const getOwnerDetailFunction = async () => {
+    
+    const response =  await UserApi.getUserDetail(ownerId);
+    return response?.data?.data;
+   }
+
+   const {data: ownerDetail} = useQuery(["KitchenDetail", ownerId],getOwnerDetailFunction,{});
+  return { kitchenData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen,kitchenDetail, setId, totalRows,refreshKitchenData, ownerDetail, setOwnerId };
 }
 
 export default useKitchenData

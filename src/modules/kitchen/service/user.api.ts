@@ -2,22 +2,23 @@ import axiosClient from "@/base/service/axiosClient";
 import { ResponseObject } from "@/base/service/response";
 import { Dish } from "@/types/@mk/entity/dish";
 import { KitchenAdmin, KitchenResponse } from "@/types/@mk/entity/kitchen";
+import { User } from "@/types/@mk/entity/user";
 import {
   PaginationState,
   SortingState
 } from "@tanstack/react-table";
 
-interface DishGetParams {
+interface UserGetParams {
   paging?: PaginationState;
   sort?: SortingState;
   keyword?: string;
   // filter :
 }
 
-const DishApi = {
-  getDishs: async (params: DishGetParams):Promise<ResponseObject<Dish[]>> => {
-    const endpoint = "/dish";
-     const response = await axiosClient.get<ResponseObject<Dish[]>>(endpoint, {
+const UserApi = {
+  getUsers: async (params: UserGetParams):Promise<ResponseObject<User[]>> => {
+    const endpoint = "/user";
+     const response = await axiosClient.get<ResponseObject<User[]>>(endpoint, {
       params: { 
         PageNumber: params.paging.pageIndex + 1 ?? 1,
         PageSize: params.paging?.pageSize ?? 10
@@ -28,23 +29,23 @@ const DishApi = {
 
     return response.data;
   },
-  getDishDetail: (id: string) => {
-    const endpoint = "/dish/"+id;
-    return axiosClient.get<ResponseObject<Dish>>(endpoint, {
+  getUserDetail: (id: string) => {
+    const endpoint = "/user/"+id;
+    return axiosClient.get<ResponseObject<User>>(endpoint, {
       params: {
         id,
       },
     });
   },
-  updateDish: (Dish: Dish) => {
-    const endpoint = "/dish";
-    return axiosClient.put(endpoint, Dish);
+  updateUser: (User: User) => {
+    const endpoint = "/user";
+    return axiosClient.put(endpoint, User);
   },
-  deleteDish: (id: number) => {
-    const endpoint = "/dish";
+  deleteUser: (id: number) => {
+    const endpoint = "/user";
     return axiosClient.delete(endpoint, {
       params: { id },
     });
   },
 };
-export default DishApi;
+export default UserApi;
