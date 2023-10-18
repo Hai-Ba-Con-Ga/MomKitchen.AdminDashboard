@@ -5,7 +5,7 @@
 [![Vulnerabilities](http://sonar.wyvernpserver.tech/api/project_badges/measure?project=Hai-Ba-Con-Ga_MomKitchen_AdminDashboard_AYp-PMhJ7n3XVSslcieL&metric=vulnerabilities&token=sqb_2246498cb5629a162d2a71b02bc386712b572175)](http://sonar.wyvernpserver.tech/dashboard?id=Hai-Ba-Con-Ga_MomKitchen_AdminDashboard_AYp-PMhJ7n3XVSslcieL)
 [![Maintainability Rating](http://sonar.wyvernpserver.tech/api/project_badges/measure?project=Hai-Ba-Con-Ga_MomKitchen_AdminDashboard_AYp-PMhJ7n3XVSslcieL&metric=sqale_rating&token=sqb_2246498cb5629a162d2a71b02bc386712b572175)](http://sonar.wyvernpserver.tech/dashboard?id=Hai-Ba-Con-Ga_MomKitchen_AdminDashboard_AYp-PMhJ7n3XVSslcieL)
 # CI
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Hai-Ba-Con-Ga/MomKitchen_AdminDashboard/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/Hai-Ba-Con-Ga/MomKitchen_AdminDashboard/tree/main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Hai-Ba-Con-Ga/MomKitchen.AdminDashboard/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/Hai-Ba-Con-Ga/MomKitchen.AdminDashboard/tree/main)
 # Welcome
 
 Welcome to the base React/Typscript project of  [MarineFox/xWyvernPx](https://github.com/xWyvernPx). It provides a solid foundation with essential tools and configurations to kickstart your React development.
