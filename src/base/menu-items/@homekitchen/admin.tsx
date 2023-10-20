@@ -24,6 +24,7 @@ const icons = {
   ForkOutlined,
   SnippetsOutlined,
   ShopOutlined,
+ 
 };
 
 // ==============================|| MENU ITEMS - APPLICATIONS ||============================== //
@@ -55,6 +56,7 @@ export const admin: NavItemType = {
       type: "item",
       icon: icons.SnippetsOutlined,
       url: "/order/list",
+      breadcrumbs: true,
 
       // children: [
       //   {
@@ -78,7 +80,7 @@ export const admin: NavItemType = {
       title: <FormattedMessage id="customer" />,
       type: "item",
       icon: icons.CustomerServiceOutlined,
-      url: "/customer/list"
+      url: "/customer/list",
       // children: [
       //   {
       //     id: "customer-list",

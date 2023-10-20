@@ -17,5 +17,10 @@ export interface Customer extends BaseEntity {
 export interface CustomerAdmin extends Customer {
   order_quantity: number;
   spentMoney: number;
+  no?: number;
+  email: string;
+  phone: string;
+  avatarUrl: string;
+  fullName: string;
   // selection: boolean;
 }

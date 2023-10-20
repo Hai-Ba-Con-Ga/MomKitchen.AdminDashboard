@@ -22,6 +22,7 @@ import KitchenProfile from "@/modules/kitchen/pages/KitchenProfile";
 import KitchenProfileMeal from "@/modules/kitchen/pages/KitchenProfileMeal";
 import KitchenProfileTray from "@/modules/kitchen/pages/KitchenProfileTray";
 import KitchenProfileDish from "@/modules/kitchen/pages/KitchenProfileDish";
+import OrderDetailPage from "@/modules/order/pages/detail/OrderDetailPage";
 const routes: RouteObject[] = [
   {
     path: "/",
@@ -82,10 +83,6 @@ const routes: RouteObject[] = [
                 element : <KitchenProfile/>
               },
               {
-                path: "meals",
-                element: <KitchenProfileMeal/>
-              },
-              {
                 path: "trays",
                 element : <KitchenProfileTray/>
               },
@@ -116,7 +113,12 @@ const routes: RouteObject[] = [
           {
             path: "create",
             element: <OrderCreatePage/>
-          }
+          },
+          {
+            path: ":id",
+            element: <OrderDetailPage/>
+          },
+
         ],
       },
       {
@@ -147,7 +149,7 @@ const routes: RouteObject[] = [
         children: [
           {
             path: "",
-            element: <Navigate to="/feedback/list" replace />,
+            element: <Navigate to="/feedback/list" replace />
           },
           {
             path: "list",

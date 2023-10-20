@@ -11,13 +11,13 @@ interface AreaGetParams {
   }
 const AreaApi = {
      getAreas: (params: AreaGetParams) => {
-    const endpoint = "/areas";
+    const endpoint = "/area";
     return axiosClient.get<ResponseObject<AreaAdmin[]>>(endpoint, {
       params: { ...params },
     });
   },
-  getAreaDetail: (id: number) => {
-    const endpoint = "/area";
+  getAreaDetail: (id: string) => {
+    const endpoint = "/area/"+id;
     return axiosClient.get<ResponseObject<AreaAdmin>>(endpoint, {
       params: {
         id,
@@ -28,8 +28,8 @@ const AreaApi = {
     const endpoint = "/area";
     return axiosClient.put(endpoint, area);
   },
-  deleteArea: (id: number) => {
-    const endpoint = "/area";
+  deleteArea: (id: string) => {
+    const endpoint = "/area/"+id;
     return axiosClient.delete(endpoint, {
       params: { id },
     });

@@ -41,6 +41,7 @@ export interface MainCardProps extends KeyedObject {
   elevation?: number;
   title?: ReactNode | string;
   modal?: boolean;
+  hoverStyle?: CSSProperties;
 }
 
 const MainCard = forwardRef(
@@ -61,6 +62,7 @@ const MainCard = forwardRef(
       sx = {},
       title,
       modal = false,
+      hoverStyle={},
       ...others
     }: MainCardProps,
     ref: Ref<HTMLDivElement>
@@ -88,7 +90,7 @@ const MainCard = forwardRef(
           : theme.palette.grey.A800,
           ":hover": {
             boxShadow: boxShadow ? shadow || theme.customShadows.z1 : "inherit",
-            
+            ...hoverStyle
           },
           ...(modal && {
             position: "absolute",
@@ -102,6 +104,7 @@ const MainCard = forwardRef(
               maxHeight: `calc(100vh - 200px)`,
             },
           }),
+          
           ...sx,
         }}>
         {/* card header and action */}

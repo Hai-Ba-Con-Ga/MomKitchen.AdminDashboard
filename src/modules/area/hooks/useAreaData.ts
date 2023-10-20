@@ -12,7 +12,7 @@ const [pagination, setPagination] = useState<PaginationState>({
   });
   const [sortState, setSortState] = useState<SortingState>([]);
   const [keyword, setKeyword] = useState<string>();
-  
+  const [id,setId] = useState<string>();
    // Define the fetchKitchenDataFunction that fetches orders using the OrderApi
    const fetchAreaDataFunction = async () => {
     try {
@@ -55,7 +55,7 @@ const [pagination, setPagination] = useState<PaginationState>({
      // You can specify onSuccess and onError callbacks here
    });
    // Define the deleteKitchenFunction to delete an order using the OrderApi
-  const deleteKitchenFunction = async (id: number) => {
+  const deleteKitchenFunction = async (id: string) => {
       const response = await AreaApi.deleteArea(id);
       // You can handle the success scenario here if needed
       return response?.data; // Return any data indicating the success of deletion
@@ -65,7 +65,7 @@ const [pagination, setPagination] = useState<PaginationState>({
      // You can specify onSuccess and onError callbacks here
    });
 
-  return { kitchenData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen };
+  return { kitchenData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen, setId };
 }
 
 export default useAreaData

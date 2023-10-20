@@ -40,7 +40,7 @@ AddCustomerModalProps) => {
         email: customer?.email,
         phone: customer?.phone,
         fullname: customer?.fullName,
-        status: customer?.customer.status,
+        status: customer?.customer?.status,
         role: customer?.roleId,
       }
     : { autoPassword: true };

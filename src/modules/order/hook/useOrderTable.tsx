@@ -52,6 +52,12 @@ const useOrderTable = (props: Props) => {
         }),
         columnHelper.accessor("id", {
           header: "#",
+          cell: ({ row }) => {
+            return (<Typography>
+             OD-{row.original?.no ? row.original?.no : row.original?.id}
+            </Typography>
+            )
+          },
         }),
         columnHelper.accessor("customer", {
           header: "Customer",
@@ -103,7 +109,7 @@ const useOrderTable = (props: Props) => {
           cell: ({ renderValue }) => (
             <Typography
               fontWeight="500"
-              textAlign={"center"}
+              textAlign={"right"}
               variant="subtitle1">
               {renderValue()}
             </Typography>
@@ -113,6 +119,11 @@ const useOrderTable = (props: Props) => {
           header: "totalPrice ",
           cell: ({ renderValue }) => (
             <NumberFormat
+            style={{
+              display: "block",
+              width: "100%",
+              textAlign: "right"
+            }}
               displayType="text"
               prefix="₫"
               defaultValue={renderValue()}
@@ -123,11 +134,39 @@ const useOrderTable = (props: Props) => {
           header: "Surcharge",
           cell: ({ renderValue }) => (
             <NumberFormat
+            style={{
+              display: "block",
+              width: "100%",
+              textAlign: "right"
+            }}
               displayType="text"
               prefix="₫"
               defaultValue={renderValue()}
             />
           ),
+        }),
+        columnHelper.accessor("createdDate", {
+          header: "Order Time",
+          cell: ({ renderValue }) => {
+            const parsedDate = new Date(renderValue());
+            const hours = parsedDate.getUTCHours();
+            const minutes = parsedDate.getUTCMinutes();
+
+            // Pad single-digit values with leading zeros
+            const day = parsedDate.getUTCDate();
+            const month = parsedDate.getUTCMonth() + 1; // Months are 0-indexed, so add 1.
+            const year = parsedDate.getUTCFullYear();
+
+            // Pad single-digit values with leading zeros
+            const formattedDay = day < 10 ? `0${day}` : day;
+            const formattedMonth = month < 10 ? `0${month}` : month;
+            const formattedYear = year;
+            const formattedHours = hours < 10 ? `0${hours}` : hours;
+            const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+            const formattedDateTime = `${formattedDay}-${formattedMonth}-${formattedYear} ${formattedHours}:${formattedMinutes}`;
+            return formattedDateTime;
+          },
         }),
         columnHelper.accessor("status", {
           header: "Status",
@@ -184,7 +223,7 @@ const useOrderTable = (props: Props) => {
             }
           },
         }),
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         columnHelper.accessor<any, any>("action", {
           header: "Actions",
           enableSorting: false,

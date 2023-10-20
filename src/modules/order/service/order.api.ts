@@ -19,8 +19,8 @@ const OrderApi = {
       params: { ...params },
     });
   },
-  getOrderDetail: (id: number) => {
-    const endpoint = "/order";
+  getOrderDetail: (id: string) => {
+    const endpoint = "/order/"+id;
     return axiosClient.get<ResponseObject<OrderAdmin>>(endpoint, {
       params: {
         id,
@@ -31,8 +31,8 @@ const OrderApi = {
     const endpoint = "/order";
     return axiosClient.put(endpoint, order);
   },
-  deleteOrder: (id: number) => {
-    const endpoint = "/order";
+  deleteOrder: (id: string) => {
+    const endpoint = "/order/"+id;
     return axiosClient.delete(endpoint, {
       params: { id },
     });

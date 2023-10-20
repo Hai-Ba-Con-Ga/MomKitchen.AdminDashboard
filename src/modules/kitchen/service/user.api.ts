@@ -12,6 +12,7 @@ interface UserGetParams {
   paging?: PaginationState;
   sort?: SortingState;
   keyword?: string;
+  roleName?: "Customer" | "Kitchen" | "Admin"
   // filter :
 }
 
@@ -21,8 +22,9 @@ const UserApi = {
      const response = await axiosClient.get<ResponseObject<User[]>>(endpoint, {
       params: { 
         PageNumber: params.paging.pageIndex + 1 ?? 1,
-        PageSize: params.paging?.pageSize ?? 10
-
+        PageSize: params.paging?.pageSize ?? 10,
+        searchKey: params?.keyword ?? "",
+        roleName : params?.roleName ?? null
        },
     });
 

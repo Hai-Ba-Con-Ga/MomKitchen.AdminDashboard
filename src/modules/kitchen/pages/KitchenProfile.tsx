@@ -27,6 +27,11 @@ import Avatar from "@ui/@extended/Avatar";
 import LinearWithLabel from "@ui/@extended/Progress/LinearWithLabel";
 import { useLocation, useParams } from "react-router-dom";
 import useKitchenData from "../hook/useKitchenData";
+import FeedbackCard from "../components/card/FeedbackCard";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 const KitchenProfile = () => {
   const matchDownMD = useMediaQuery((theme: Theme) =>
@@ -58,6 +63,10 @@ const KitchenProfile = () => {
                   </Stack>
                   <Stack spacing={2.5} alignItems="center">
                     <Avatar
+                      sx={{
+                        width:"10rem",
+                        height:"10rem"
+                      }}
                       alt="Avatar 1"
                       size="xl"
                       src={"https://source.unsplash.com/random"}
@@ -170,10 +179,8 @@ const KitchenProfile = () => {
                   <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
-                        <Typography color="secondary">
-                          {ownerDetail?.fullName}
-                        </Typography>
-                        <Typography>Anshan Handgun</Typography>
+                        <Typography color="secondary">Fullname</Typography>
+                        <Typography>{ownerDetail?.fullName}</Typography>
                       </Stack>
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -190,9 +197,8 @@ const KitchenProfile = () => {
                       <Stack spacing={0.5}>
                         <Typography color="secondary">Phone</Typography>
                         <Typography>
-                          (+1-876){" "}
                           <NumberFormat
-                            value={8654239581}
+                            value={ownerDetail?.phone}
                             displayType="text"
                             type="text"
                             format="#### ### ###"
@@ -203,7 +209,9 @@ const KitchenProfile = () => {
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
                         <Typography color="secondary">Country</Typography>
-                        <Typography>New York</Typography>
+                        <Typography>
+                          {kitchenDetail?.data?.area?.name}
+                        </Typography>
                       </Stack>
                     </Grid>
                   </Grid>
@@ -213,7 +221,7 @@ const KitchenProfile = () => {
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
                         <Typography color="secondary">Email</Typography>
-                        <Typography>anshan.dh81@gmail.com</Typography>
+                        <Typography>{ownerDetail?.email}</Typography>
                       </Stack>
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -227,17 +235,64 @@ const KitchenProfile = () => {
                 <ListItem>
                   <Stack spacing={0.5}>
                     <Typography color="secondary">Address</Typography>
-                    <Typography>
-                      Street 110-B Kalians Bag, Dewan, M.P. New York
-                    </Typography>
+                    <Typography>{kitchenDetail?.data?.address}</Typography>
                   </Stack>
                 </ListItem>
               </List>
             </MainCard>
           </Grid>
         </Grid>
-        <Grid>
-          <Typography>Feedback</Typography>
+        <Grid mt={3}>
+          <MainCard title="Feedback">
+            <List sx={{ py: 0 }}>
+              <Swiper
+              style={{paddingBottom: "2rem"}}
+              pagination={{
+                dynamicBullets: true,
+              }}
+              modules={[Pagination]}
+                spaceBetween={50}
+                slidesPerView={3}
+                autoplay
+                direction="horizontal"
+                onSlideChange={() => console.log("slide change")}
+                onSwiper={(swiper) => console.log(swiper)}>
+                <SwiperSlide>
+                  <FeedbackCard
+                    avatarUrl="https://source.unsplash.com/random"
+                    content="Hihi"
+                    customerName="Phong"
+                    rating={3.5}
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <FeedbackCard
+                    avatarUrl="https://source.unsplash.com/random"
+                    content="Hihi"
+                    customerName="Phong"
+                    rating={3.5}
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <FeedbackCard
+                    avatarUrl="https://source.unsplash.com/random"
+                    content="Hihi"
+                    customerName="Phong"
+                    rating={3.5}
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <FeedbackCard
+                    avatarUrl="https://source.unsplash.com/random"
+                    content="Hihi"
+                    customerName="Phong"
+                    rating={3.5}
+                  />
+                </SwiperSlide>
+              </Swiper>
+              {/* <FeedbackCard avatarUrl="https://source.unsplash.com/random" content="Hihi" customerName="Phong" rating={3.5}/> */}
+            </List>
+          </MainCard>
         </Grid>
       </Grid>
     </Grid>

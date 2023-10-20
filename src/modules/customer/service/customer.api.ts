@@ -15,13 +15,17 @@ interface CustomerGetParams {
 }
 const CustomerApi = {
   getCustomers: (params: CustomerGetParams) => {
-    const endpoint = "/customers";
+    const endpoint = "/customer";
     return axiosClient.get<ResponseObject<CustomerAdmin[]>>(endpoint, {
-      params: { ...params },
+      params: { 
+        PageNumber: params.paging.pageIndex + 1 ?? 1,
+        PageSize: params.paging?.pageSize ?? 10
+
+       },
     });
   },
-  getCustomerDetail: (id: number) => {
-    const endpoint = "/customer";
+  getCustomerDetail: (id: string) => {
+    const endpoint = "/customer/"+id;
     return axiosClient.get<ResponseObject<CustomerAdmin>>(endpoint, {
         params: {
             id,
@@ -37,8 +41,8 @@ createCustomer: (customer : Customer) => {
     const endpoint = "/customer";
     return axiosClient.put(endpoint, customer);
   },
-  deleteCustomer: (id: number) => {
-    const endpoint = "/customer";
+  deleteCustomer: (id: string) => {
+    const endpoint = "/customer/"+id;
     return axiosClient.delete(endpoint, {
       params: { id },
     });

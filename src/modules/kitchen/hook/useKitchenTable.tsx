@@ -128,7 +128,7 @@ const useKitchenTable = (props: Props) => {
             ),
           }),
           columnHelper.accessor("noOfDish", {
-            header: "Number of dishes",
+            header: "No of dishes",
             cell: ({ renderValue }) => (
               <NumberFormat
                 displayType="text"
@@ -138,7 +138,7 @@ const useKitchenTable = (props: Props) => {
             ),
           }),
           columnHelper.accessor("noOfTray", {
-            header: "Number of trays",
+            header: "No of trays",
             cell: ({ renderValue }) => (
               <NumberFormat
                 displayType="text"
@@ -148,7 +148,7 @@ const useKitchenTable = (props: Props) => {
             ),
           }),
           columnHelper.accessor("noOfMeal", {
-            header: "Number of meals",
+            header: "No of meals",
             cell: ({ renderValue }) => (
               <NumberFormat
                 displayType="text"

@@ -20,6 +20,7 @@ import { Box, Stack, alpha, useTheme } from "@mui/system";
 import {
   Cell,
   ColumnDef,
+  Header,
   Table as ReactTableType,
   Row,
   SortDirection,
@@ -256,7 +257,7 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
                       direction="row"
                       spacing={1}
                       alignItems="center"
-                      // justifyContent="space-between"
+                      justifyContent={"inherit"}
                       // sx={{ display: 'inline-flex' }}
                     >
                       <TableHeadCell>
@@ -320,25 +321,40 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
                         ? alpha(theme.palette.primary.lighter, 0.85)
                         : "inherit",
                     }}>
-                    {row.getVisibleCells().map((cell: Cell<T,any>, ceIdx: number) => {
-                      if (isRowSpanned) {
-                        if (cell.getValue()?.rowSpan) {
-                          if (cell.getValue().isRowSpanned) {
-                            return null;
+                    {row
+                      .getVisibleCells()
+                      .map((cell: Cell<T, any>, ceIdx: number) => {
+                        if (isRowSpanned) {
+                          if (cell.getValue()?.rowSpan) {
+                            if (cell.getValue().isRowSpanned) {
+                              return null;
+                            } else {
+                              return (
+                                <TableCell
+                                  sx={{
+                                    "&.MuiTableCell-root:first-of-type ": {
+                                      padding: 1,
+                                      pl: "24px !important", // fix wrong display first-type on rowspanned
+                                    },
+                                    // ...(ceIdx != 0 && { borderLeft: `1px solid ${theme.palette.divider}` }), //only border right and left on spanned cell
+                                    // ...(ceIdx + 1 < row.getVisibleCells().length && { borderRight: `1px solid ${theme.palette.divider}` }),
+                                    position: "relative",
+                                  }}
+                                  rowSpan={cell.getValue()?.rowSpan}
+                                  key={ceIdx}>
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext()
+                                  )}
+                                </TableCell>
+                              );
+                            }
                           } else {
                             return (
                               <TableCell
-                                sx={{
-                                  "&.MuiTableCell-root:first-of-type ": {
-                                    padding: 1,
-                                    pl: "24px !important", // fix wrong display first-type on rowspanned
-                                  },
-                                  // ...(ceIdx != 0 && { borderLeft: `1px solid ${theme.palette.divider}` }), //only border right and left on spanned cell
-                                  // ...(ceIdx + 1 < row.getVisibleCells().length && { borderRight: `1px solid ${theme.palette.divider}` }),
-                                  position: "relative",
-                                }}
-                                rowSpan={cell.getValue()?.rowSpan}
-                                key={ceIdx}>
+                                key={ceIdx}
+                                sx={{ position: "relative" }} // to display child absolute
+                              >
                                 {flexRender(
                                   cell.column.columnDef.cell,
                                   cell.getContext()
@@ -346,29 +362,16 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
                               </TableCell>
                             );
                           }
-                        } else {
-                          return (
-                            <TableCell
-                              key={ceIdx}
-                              sx={{ position: "relative" }} // to display child absolute
-                            >
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext()
-                              )}
-                            </TableCell>
-                          );
                         }
-                      }
-                      return (
-                        <TableCell sx={{ position: "relative" }} key={ceIdx}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      );
-                    })}
+                        return (
+                          <TableCell sx={{ position: "relative" }} key={ceIdx}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        );
+                      })}
                   </TableRow>
                   {row.getIsExpanded() &&
                     renderRowSubComponent &&
@@ -393,3 +396,57 @@ const TableHeadCell = styled(Box)({
   textTransform: "capitalize",
   whiteSpace: "nowrap",
 });
+
+export function BaseTableHeader({
+  header,
+  align,
+}: {
+  header: Header<any, any>;
+  align: "center" | "left" | "right";
+}) {
+  const alignMap = {
+    left: "flex-start",
+    right: "flex-end",
+    center: "center",
+  };
+  const theme = useTheme();
+  return (
+    <Stack
+      direction="row"
+      spacing={1}
+      alignItems="center"
+      justifyContent={alignMap[align]}
+      // sx={{ display: 'inline-flex' }}
+    >
+      <TableHeadCell>
+        {flexRender(header.column.columnDef.header, header.getContext())}
+      </TableHeadCell>
+      {header.column.getCanSort() && (
+        <Stack spacing={0.5} sx={{ color: "secondary.light" }}>
+          <ArrowDropUpOutlined
+            fontSize="small"
+            style={{
+              // fontSize: '1.525rem',
+              color:
+                header.column.getCanSort() &&
+                header.column.getIsSorted() === "asc"
+                  ? theme.palette.text.secondary
+                  : "inherit",
+            }}
+          />
+          <ArrowDropDownOutlined
+            fontSize="small"
+            style={{
+              // fontSize: '1.525rem',
+              marginTop: "-14px",
+              color:
+                header.column.getIsSorted() === "desc"
+                  ? theme.palette.text.secondary
+                  : "inherit",
+            }}
+          />
+        </Stack>
+      )}
+    </Stack>
+  );
+}
