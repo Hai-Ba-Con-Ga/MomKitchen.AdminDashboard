@@ -19,7 +19,7 @@ import OrderCreatePage from "@/modules/order/pages/create/OrderCreatePage";
 import AreaCreatePage from "@/modules/area/pages/AreaCreatePage";
 import KitchenDetailPage from "@/modules/kitchen/pages/KitchenDetailPage";
 import KitchenProfile from "@/modules/kitchen/pages/KitchenProfile";
-import KitchenProfileMeal from "@/modules/kitchen/pages/KitchenProfileMeal";
+// import KitchenProfileMeal from "@/modules/kitchen/pages/KitchenProfileMeal";
 import KitchenProfileTray from "@/modules/kitchen/pages/KitchenProfileTray";
 import KitchenProfileDish from "@/modules/kitchen/pages/KitchenProfileDish";
 import OrderDetailPage from "@/modules/order/pages/detail/OrderDetailPage";

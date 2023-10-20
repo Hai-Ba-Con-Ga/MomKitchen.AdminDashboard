@@ -5,6 +5,7 @@ import { Kitchen } from "./kitchen";
 import { BaseEntity } from "../common/baseEntity";
 
 export interface User extends BaseEntity {
+  [x: string]: any;
   email: string;
   password?: string;
   credential?: string;

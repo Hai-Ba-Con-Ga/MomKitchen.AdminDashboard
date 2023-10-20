@@ -1,7 +1,6 @@
 import axiosClient from "@/base/service/axiosClient";
 import { ResponseObject } from "@/base/service/response";
 import { Dish } from "@/types/@mk/entity/dish";
-import { KitchenAdmin, KitchenResponse } from "@/types/@mk/entity/kitchen";
 import {
   PaginationState,
   SortingState

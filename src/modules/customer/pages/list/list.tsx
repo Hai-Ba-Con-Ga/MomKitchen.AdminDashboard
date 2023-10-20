@@ -24,7 +24,6 @@ import MainCard from "@/base/components/MainCard";
 import { IndeterminateCheckbox } from "@/base/components/third-party/ReactTable";
 
 // assets
-import { mockCustomers } from "@/data/@mk/mock/Customer";
 import { CustomerAdmin } from "@/types/@mk/entity/customer";
 import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
 import {
@@ -40,10 +39,8 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import QuickTable from "@ui/common/table/QuickTable";
 import NumberFormat from "react-number-format";
 import AddCustomerModal from "../../components/AddCustomerModal";
-import useKitchenData from "@/modules/kitchen/hook/useKitchenData";
 import ViewCustomerDetailModal from "../../components/modal/ViewDetailModal";
 import useCustomerData from "../../hook/useCustomerData";
-import { BaseTableHeader } from "@ui/common/table/BaseTableV8";
 
 // ==============================|| REACT TABLE ||============================== //
 
@@ -104,7 +101,7 @@ const CustomerList = () => {
           enableSorting: false,
         }),
         columnHelper.accessor("id", {
-          header: ({ header }) => {
+          header: () => {
             return "#";
           },
           cell: ({ row }) => (
@@ -253,6 +250,7 @@ const CustomerList = () => {
                   <IconButton
                     color="error"
                     onClick={(e: MouseEvent) => {
+                      setActionId(row.original?.id)
                       setDeleteConfirmation(true);
                       e.stopPropagation();
                     }}>

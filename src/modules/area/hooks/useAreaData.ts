@@ -12,8 +12,12 @@ const [pagination, setPagination] = useState<PaginationState>({
   });
   const [sortState, setSortState] = useState<SortingState>([]);
   const [keyword, setKeyword] = useState<string>();
-  const [id,setId] = useState<string>();
-   // Define the fetchKitchenDataFunction that fetches orders using the OrderApi
+  const [
+    id
+    ,setId] = useState<string>();
+   console.log(id);
+   
+    // Define the fetchKitchenDataFunction that fetches orders using the OrderApi
    const fetchAreaDataFunction = async () => {
     try {
       const response = await AreaApi.getAreas({

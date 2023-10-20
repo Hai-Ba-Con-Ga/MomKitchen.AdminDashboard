@@ -1,20 +1,15 @@
-import { Box, Stack } from "@mui/system";
-import React, { useState } from "react";
-import DishCard from "../components/card/DishCard";
-import AddSkeletonCard from "../components/card/AddSkeletonCard";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 import { mockDishes } from "@/data/@mk/mock/Dish";
-import { Button, DialogContentText, Typography } from "@mui/material";
-import { Dialog } from "@mui/material";
-import { DialogTitle } from "@mui/material";
-import { BlockOutlined } from "@mui/icons-material";
-import { DialogContent } from "@mui/material";
-import { DialogActions } from "@mui/material";
 import { Dish } from "@/types/@mk/entity/dish";
+import { BlockOutlined } from "@mui/icons-material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/system";
 import { isEmpty } from "lodash";
+import { useState } from "react";
+import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import AddSkeletonCard from "../components/card/AddSkeletonCard";
+import DishCard from "../components/card/DishCard";
 import DishAddForm from "../components/form/DishAddForm";
-const mockData = [{}, {}, {}];
 const KitchenProfileDish = () => {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [deleteId, setDeleteId] = useState<string>();
@@ -145,6 +140,9 @@ const KitchenProfileDish = () => {
                 variant="contained"
                 onClick={() => {
                   //TODO : delete dish
+                  
+                  console.log("TODO delete with delete id", deleteId);
+                  
                   setDeleteConfirmation(false)}}>
                 Delete
               </Button>

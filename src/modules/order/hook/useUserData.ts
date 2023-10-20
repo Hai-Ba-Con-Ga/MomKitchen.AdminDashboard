@@ -1,7 +1,7 @@
 import UserApi from '@/modules/kitchen/service/user.api';
 import { PaginationState, SortingState } from '@tanstack/react-table';
-import React, { useState } from 'react'
-import { useMutation, useQuery } from 'react-query';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
 
 
 const useUserData = () => {

@@ -1,36 +1,22 @@
-import React, { ReactNode, useState } from "react";
-import MainCard from "@ui/MainCard";
+import { Add, Edit } from "@mui/icons-material";
 import {
-  Card,
   FormControl,
-  IconButton,
   MenuItem,
-  TextField,
-  useTheme,
+  Stack
 } from "@mui/material";
-import { Chip } from "@mui/material";
-import { Stack } from "@mui/material";
-import { Add, Download, Edit, Print, Share } from "@mui/icons-material";
+import MainCard from "@ui/MainCard";
+import { ReactNode, useState } from "react";
 
-import Avatar from "@ui/@extended/Avatar";
-import { Typography } from "@mui/material";
-import Logo from "@/assets/images/logo.png";
-import { Grid } from "@mui/material";
-import { Button } from "@mui/material";
-import { InputLabel } from "@mui/material";
-import { Select } from "@mui/material";
-import { OutlinedInput } from "@mui/material";
-import { OrderStatus } from "@/types/@mk/enum/orderStatus";
-import { ListItemText } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
-import { Controller, useForm } from "react-hook-form";
-import { FormHelperText } from "@mui/material";
-import { Customer, CustomerAdmin } from "@/types/@mk/entity/customer";
+import { CustomerAdmin } from "@/types/@mk/entity/customer";
 import { KitchenAdmin } from "@/types/@mk/entity/kitchen";
+import { OrderStatus } from "@/types/@mk/enum/orderStatus";
+import { Button, FormHelperText, InputLabel, ListItemText, OutlinedInput, Select, Typography } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
 import { isEmpty } from "lodash";
+import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import SearchCustomerModal from "../../components/Modal/SearchCustomerModal";
 import SearchKitchenModal from "../../components/Modal/SearchKitchenModal";
-import { useNavigate } from "react-router-dom";
 
 const OrderCreatePage = () => {
   const fontSizeCommon = "1rem";

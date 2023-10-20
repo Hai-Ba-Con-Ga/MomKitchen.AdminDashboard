@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom'
-import useKitchenData from '../hook/useKitchenData'
-import MainCard from '@ui/MainCard'
+import { FileTextOutlined, UserOutlined } from '@ant-design/icons'
+import { Tab, Tabs } from '@mui/material'
 import { Box } from '@mui/system'
-import { Tabs } from '@mui/material'
-import { Tab } from '@mui/material'
-import { ContainerOutlined, FileTextOutlined, LockOutlined, SettingOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons'
+import MainCard from '@ui/MainCard'
+import React, { useState } from 'react'
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom'
 
 
 

@@ -1,10 +1,6 @@
-import { CardContent, ToggleButton } from '@mui/material';
-import { Typography } from '@mui/material';
-import { Rating } from '@mui/material';
-import { CardMedia } from '@mui/material';
+import { CardContent, Rating, Typography } from '@mui/material';
 import Avatar from '@ui/@extended/Avatar';
 import MainCard from '@ui/MainCard';
-import React from 'react'
 
 type Props = {
     customerName?: string;

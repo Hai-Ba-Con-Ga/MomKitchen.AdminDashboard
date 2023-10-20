@@ -1,25 +1,16 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
-import useOrderData from '../../hook/useOrderData';
-import MainCard from '@ui/MainCard';
-import { Card, IconButton, useMediaQuery, useTheme } from '@mui/material';
-import { Chip } from '@mui/material';
-import { Stack } from '@mui/material';
 import { Download, Edit, Print, Share } from '@mui/icons-material';
+import { Chip, IconButton, Stack, useMediaQuery, useTheme } from '@mui/material';
+import MainCard from '@ui/MainCard';
+// import { useParams } from 'react-router-dom';
 
-import Avatar from '@ui/@extended/Avatar';
-import { Typography } from '@mui/material';
-import Logo from "@/assets/images/logo.png"
-import { Grid } from '@mui/material';
-import { Button } from '@mui/material';
-import { List } from '@mui/material';
-import { ListItem } from '@mui/material';
-import { Box } from '@mui/material';
+import Logo from "@/assets/images/logo.png";
 import { mockDishes } from '@/data/@mk/mock/Dish';
+import { Box, Button, Grid, List, ListItem, Typography } from '@mui/material';
+import Avatar from '@ui/@extended/Avatar';
 import OrderDishCard from '../../components/OrderDishCard';
 
 const OrderDetailPage = () => {
-    const {id} = useParams();
+    // const {id} = useParams();
     const theme = useTheme();
   const matchDownMD = useMediaQuery(theme.breakpoints.down("md"));
 

@@ -1,43 +1,28 @@
-import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { CustomerAdmin } from "@/types/@mk/entity/customer";
+import {
+  BugFilled,
+  ClockCircleFilled,
+  MobileFilled,
+  TwitterCircleFilled,
+  WarningFilled
+} from "@ant-design/icons";
 import {
   Button,
-  Chip,
   DialogActions,
   DialogContent,
   DialogTitle,
   Divider,
   Grid,
-  IconButton,
+  Link,
   List,
-  TableRow,
-  Tooltip,
+  ListItem,
+  Typography
 } from "@mui/material";
 import { Box, Stack, useTheme } from "@mui/system";
-import { Customer, CustomerAdmin } from "@/types/@mk/entity/customer";
-import {
-  BugFilled,
-  ClockCircleFilled,
-  DeleteFilled,
-  EnvironmentOutlined,
-  LinkOutlined,
-  MailOutlined,
-  MobileFilled,
-  PhoneOutlined,
-  TwitterCircleFilled,
-  WarningFilled,
-} from "@ant-design/icons";
-import CustomerView from "../CustomerView";
-import { TableCell } from "@mui/material";
-import MainCard from "@ui/MainCard";
 import Avatar from "@ui/@extended/Avatar";
-import { Typography } from "@mui/material";
-import { ListItem } from "@mui/material";
-import { ListItemIcon } from "@mui/material";
-import { ListItemSecondaryAction } from "@mui/material";
+import MainCard from "@ui/MainCard";
 import NumberFormat from "react-number-format";
-import { Link } from "@mui/material";
-import { calculateAge } from "@/base/utils/common";
+import { Link as RouterLink } from "react-router-dom";
 
 import { useMediaQuery } from "@mui/material";
 type Props = {

@@ -1,19 +1,10 @@
-import React from 'react'
-import {
-    DeleteTwoTone,
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import { CardContent, Stack } from "@mui/material";
-import { Typography } from "@mui/material";
-import { Divider } from "@mui/material";
-import { useTheme } from "@mui/material";
-import { ToggleButtonGroup } from "@mui/material";
-import { ToggleButton } from "@mui/material";
-import { CardMedia } from "@mui/material";
-import MainCard from "@ui/MainCard";
 import { Tray } from '@/types/@mk/entity/tray';
+import {
+  DeleteTwoTone,
+  EditOutlined
+} from "@ant-design/icons";
+import { CardContent, CardMedia, Divider, ToggleButton, ToggleButtonGroup, Typography, useTheme } from "@mui/material";
+import MainCard from "@ui/MainCard";
 type Props = {
     tray?: Tray,
     onEdit : (dish:Tray)=>void;

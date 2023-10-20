@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
 
-type Props = {}
 
-const useKitchenDetailData = (props: Props) => {
-const [id, setId] = useState<string>();
+// type Props = {}
+
+const useKitchenDetailData = () => {
+// const [id, setId] = useState<string>();
   return (
   {
     

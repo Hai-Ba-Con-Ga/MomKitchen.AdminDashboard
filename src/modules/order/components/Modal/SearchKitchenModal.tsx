@@ -1,34 +1,18 @@
-import React, { useEffect } from "react";
+import { KitchenAdmin } from "@/types/@mk/entity/kitchen";
 import {
+  Box,
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
+  DialogTitle,
   Divider,
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  FormLabel,
   Grid,
   InputLabel,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Switch,
-  TextField,
-  Tooltip,
-  Typography,
+  Stack,
+  TextField
 } from "@mui/material";
-import { FormProvider } from "react-hook-form";
-import { Box } from "@mui/material";
-import { DialogTitle } from "@mui/material";
-import { IconButton } from "@mui/material";
-import { DeleteFilled } from "@ant-design/icons";
-import { Stack } from "@mui/material";
-import { Button } from "@mui/material";
-import { CustomerAdmin } from "@/types/@mk/entity/customer";
-import { KitchenAdmin } from "@/types/@mk/entity/kitchen";
-import { KitchenCard } from "../Card/UserCard";
+import { useEffect } from "react";
 import useUserData from "../../hook/useUserData";
 type Props = {
   open: boolean;
@@ -37,8 +21,8 @@ type Props = {
 };
 
 const SearchKitchenModal = (props: Props) => {
-  const { open, onClose, onSelectKitchen } = props;
-  const {userData,setPagination,setRoleName,setKeyword, refetchData} = useUserData();
+  const { open, onClose } = props;
+  const {setPagination,setRoleName, refetchData} = useUserData();
   useEffect(()=>{
     setPagination({
       pageIndex:1,
@@ -46,7 +30,7 @@ const SearchKitchenModal = (props: Props) => {
     })
     setRoleName("Admin");
     refetchData();
-  },[])
+  },[refetchData,setRoleName,setPagination])
   return (
     <Dialog
       open={open}

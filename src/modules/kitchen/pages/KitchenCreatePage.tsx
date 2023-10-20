@@ -1,61 +1,15 @@
 import { mockRole } from "@/data/@mk/mock/Role";
 import CustomerManipulateForm from "@/modules/customer/components/form/CustomerManipulateForm";
-import { UploadOutlined } from "@ant-design/icons";
-import { Autocomplete, AutocompleteInputChangeReason, Button, MenuItem, Switch } from "@mui/material";
-import { Typography } from "@mui/material";
-import { Grid, InputLabel, TextField } from "@mui/material";
+import { Autocomplete, Button, Grid, InputLabel, Switch, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import MainCard from "@ui/MainCard";
 import { debounce } from "lodash";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const KitchenCreatePage = () => {
-  const prices = [
-    {
-      value: "1",
-      label: "$ 100",
-    },
-    {
-      value: "2",
-      label: "$ 200",
-    },
-    {
-      value: "3",
-      label: "$ 300",
-    },
-    {
-      value: "4",
-      label: "$ 400",
-    },
-  ];
 
-  const quantities = [
-    {
-      value: "one",
-      label: "1",
-    },
-    {
-      value: "two",
-      label: "2",
-    },
-    {
-      value: "three",
-      label: "3",
-    },
-  ];
-
-  const statuss = [
-    {
-      value: "in stock",
-      label: "In Stock",
-    },
-    {
-      value: "out of stock",
-      label: "Out of Stock",
-    },
-  ];
   const nav = useNavigate();
   const [areaOptions,setAreaOptions] = useState<{areaId: string, areaName: string}[]>([]);
   const [areaKeyword, setAreaKeyword] = useState("");
@@ -71,6 +25,9 @@ const KitchenCreatePage = () => {
   }
   useEffect(()=>{
     fetchNewArea(areaKeyword);
+  //TODO remove
+    setAreaOptions(null);
+
   },[areaKeyword])
   const methods = useForm<any>({
     mode: "all",

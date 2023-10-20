@@ -1,7 +1,7 @@
 
 import { KitchenAdmin } from '@/types/@mk/entity/kitchen';
 import { KitchenStatus } from '@/types/@mk/enum/kitchenStatus';
-import { CloseOutlined, DeleteTwoTone, EditTwoTone, EyeTwoTone } from '@ant-design/icons';
+import { CloseOutlined, EditTwoTone, EyeTwoTone } from '@ant-design/icons';
 import { Delete } from '@mui/icons-material';
 import { Chip, Tooltip, Typography } from '@mui/material';
 import { Stack, useTheme } from '@mui/system';

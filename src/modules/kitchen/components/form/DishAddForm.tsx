@@ -1,15 +1,10 @@
 import { Dish } from '@/types/@mk/entity/dish'
 import { CameraOutlined } from '@ant-design/icons'
-import { InputLabel, TextField } from '@mui/material'
-import { FormHelperText } from '@mui/material'
-import { FormControl } from '@mui/material'
-import { FormLabel, Grid, Typography } from '@mui/material'
+import { FormLabel, Grid, InputLabel, TextField, Typography } from '@mui/material'
 import { Box, Stack, useTheme } from '@mui/system'
-import { DatePicker } from '@mui/x-date-pickers'
 import Avatar from '@ui/@extended/Avatar'
-import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
-import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { ChangeEvent, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 type Props = {
     dish?: Dish
@@ -17,7 +12,10 @@ type Props = {
 
 const DishAddForm = ({dish}: Props) => {
     const theme = useTheme();
+    
     const {register, formState : {errors}, control, setValue} = useForm();
+    console.log(control, dish);
+    
     const [selectedImage, setSelectedImage] = useState<File | undefined>(
         undefined
       );

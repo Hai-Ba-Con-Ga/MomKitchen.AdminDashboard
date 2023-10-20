@@ -1,36 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { CustomerAdmin } from "@/types/@mk/entity/customer";
 import {
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
+  DialogTitle,
   Divider,
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  FormLabel,
   Grid,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Switch,
-  TextField,
-  Tooltip,
-  Typography,
+  Stack,
+  TextField
 } from "@mui/material";
-import { FormProvider } from "react-hook-form";
-import { Box } from "@mui/material";
-import { DialogTitle } from "@mui/material";
-import { IconButton } from "@mui/material";
-import { DeleteFilled } from "@ant-design/icons";
-import { Stack } from "@mui/material";
-import { Button } from "@mui/material";
-import { CustomerAdmin } from "@/types/@mk/entity/customer";
-import useUserData from "../../hook/useUserData";
 import { debounce } from "lodash";
+import { useEffect, useState } from "react";
+import useUserData from "../../hook/useUserData";
 import { CustomerCard } from "../Card/UserCard";
-import { List } from "@mui/material";
 type Props = {
   open: boolean;
   onClose: () => void;
@@ -61,7 +44,7 @@ const SearchCustomerModal = (props: Props) => {
   );
   useEffect(() => {
     handleChangeKeyword();
-  }, [keyword]);
+  }, [keyword, handleChangeKeyword]);
   const [selectCustomer, setSelectCustomer] = useState<any>();
   return (
     <Dialog

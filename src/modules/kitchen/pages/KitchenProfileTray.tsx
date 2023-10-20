@@ -1,22 +1,15 @@
-import React, { useState } from 'react'
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { mockDishes } from "@/data/@mk/mock/Dish";
-import { Button, DialogContentText, Stack, Typography } from "@mui/material";
-import { Dialog } from "@mui/material";
-import { DialogTitle } from "@mui/material";
-import { BlockOutlined } from "@mui/icons-material";
-import { DialogContent } from "@mui/material";
-import { DialogActions } from "@mui/material";
-import { Dish } from "@/types/@mk/entity/dish";
-import { isEmpty } from "lodash";
-import { Box } from '@mui/system';
-import DishCard from '../components/card/DishCard';
-import AddSkeletonCard from '../components/card/AddSkeletonCard';
-import { Tray } from '@/types/@mk/entity/tray';
-import DishAddForm from '../components/form/DishAddForm';
-import TrayCard from '../components/card/TrayCard';
 import { mockTrays } from '@/data/@mk/mock/Tray';
+import { Tray } from '@/types/@mk/entity/tray';
+import { BlockOutlined } from "@mui/icons-material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, Typography } from "@mui/material";
+import { Box } from '@mui/system';
+import { isEmpty } from "lodash";
+import { useState } from 'react';
+import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import AddSkeletonCard from '../components/card/AddSkeletonCard';
+import TrayCard from '../components/card/TrayCard';
+import DishAddForm from '../components/form/DishAddForm';
 
 const KitchenProfileTray = () => {
 
@@ -149,6 +142,8 @@ const KitchenProfileTray = () => {
               variant="contained"
               onClick={() => {
                 //TODO : delete dish
+                console.log("TODO Delete with delete id" , deleteId);
+                
                 setDeleteConfirmation(false)}}>
               Delete
             </Button>

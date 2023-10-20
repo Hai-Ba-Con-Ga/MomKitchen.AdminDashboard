@@ -1,37 +1,34 @@
-import React, { useEffect } from "react";
-import { Theme } from "@mui/material/styles";
 import {
-  useMediaQuery,
   Chip,
   Divider,
   Grid,
-  Link,
   List,
   ListItem,
   ListItemIcon,
   ListItemSecondaryAction,
   Stack,
   Typography,
+  useMediaQuery
 } from "@mui/material";
+import { Theme } from "@mui/material/styles";
+import { useEffect } from "react";
 
 // third-party
-import NumberFormat from "react-number-format";
 import {
   AimOutlined,
-  EnvironmentOutlined,
   MailOutlined,
-  PhoneOutlined,
+  PhoneOutlined
 } from "@ant-design/icons";
-import MainCard from "@ui/MainCard";
 import Avatar from "@ui/@extended/Avatar";
-import LinearWithLabel from "@ui/@extended/Progress/LinearWithLabel";
-import { useLocation, useParams } from "react-router-dom";
-import useKitchenData from "../hook/useKitchenData";
-import FeedbackCard from "../components/card/FeedbackCard";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from 'swiper/modules';
+import MainCard from "@ui/MainCard";
+import NumberFormat from "react-number-format";
+import { useParams } from "react-router-dom";
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from "swiper/react";
+import FeedbackCard from "../components/card/FeedbackCard";
+import useKitchenData from "../hook/useKitchenData";
 
 const KitchenProfile = () => {
   const matchDownMD = useMediaQuery((theme: Theme) =>

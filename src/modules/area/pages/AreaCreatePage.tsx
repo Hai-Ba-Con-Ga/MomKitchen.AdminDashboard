@@ -1,14 +1,11 @@
-import { Button, Typography } from '@mui/material';
-import { Autocomplete, Grid, InputLabel, Switch, TextField } from '@mui/material';
+import { Button, Grid, InputLabel, TextField } from '@mui/material';
 import { Stack } from '@mui/system';
 import MainCard from '@ui/MainCard';
-import React from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-type Props = {}
 
-const AreaCreatePage = (props: Props) => {
+const AreaCreatePage = () => {
     const methods = useForm();
     const nav = useNavigate();
   return (
