@@ -1,5 +1,6 @@
 import { mockRole } from "@/data/@mk/mock/Role";
 import CustomerManipulateForm from "@/modules/customer/components/form/CustomerManipulateForm";
+import useUserData from "@/modules/order/hook/useUserData";
 import { Autocomplete, Button, Grid, InputLabel, Switch, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import MainCard from "@ui/MainCard";
@@ -13,22 +14,34 @@ const KitchenCreatePage = () => {
   const nav = useNavigate();
   const [areaOptions,setAreaOptions] = useState<{areaId: string, areaName: string}[]>([]);
   const [areaKeyword, setAreaKeyword] = useState("");
+  const [userKeyword, setUserKeyword] = useState<string>("");
   const [isCreateNewUser, setIsCreateNewUser] = useState(false); 
+  const {setKeyword, setRoleName, userData} = useUserData();
 //   const handleCancel = () => {
 //     nav(-1);
 //   };
   const fetchNewArea = debounce((keyword)=>{
-    return ""
+    return []
+  },400)
+  const fetchNewUser = debounce((keyword)=>{
+    setKeyword(keyword)
   },400)
   const handleAutoAreaInputChange = (event: React.SyntheticEvent<Element, Event>, value: string)=> {
     setAreaKeyword(value);
   }
+  const handleAutoUserInputChange = (event: React.SyntheticEvent<Element, Event>, value: string)=> {
+    setUserKeyword(value);
+  }
   useEffect(()=>{
-    fetchNewArea(areaKeyword);
+    // fetchNewArea(areaKeyword);
   //TODO remove
-    setAreaOptions(null);
-
+    setAreaOptions([]);
   },[areaKeyword])
+  useEffect(()=>{
+    console.log(userKeyword);
+    
+    fetchNewUser(userKeyword);
+  },[userKeyword])
   const methods = useForm<any>({
     mode: "all",
     // resolver: yupResolver(CustomerSchema),
@@ -79,7 +92,8 @@ const KitchenCreatePage = () => {
                   options={areaOptions}
                   sx={{  }}
                   onInputChange={handleAutoAreaInputChange}
-                  renderInput={(params) => <TextField value={areaKeyword} onChange={(e)=> setAreaKeyword(e.target.value)} {...params} />}
+                  filterOptions={(x) => x}
+                  renderInput={(params) => <TextField value={areaKeyword}  {...params} />}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -121,11 +135,12 @@ const KitchenCreatePage = () => {
                     <InputLabel sx={{ mb: 1 }}></InputLabel>
                     <Autocomplete
                       disablePortal
-                      id="auto-area"
-                      options={areaOptions}
+                      id="auto-customer"
+                      options={userData?.data ?? []}
                       sx={{}}
-                      onInputChange={handleAutoAreaInputChange}
-                      renderInput={(params) => <TextField value={areaKeyword}  {...params} />}
+                      onInputChange={handleAutoUserInputChange}
+                      inputValue={userKeyword}
+                      renderInput={(params) => <TextField {...params} />}
                     />
                   </Grid>
               }

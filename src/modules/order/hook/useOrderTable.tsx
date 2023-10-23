@@ -5,7 +5,7 @@ import {
   EditTwoTone,
   EyeTwoTone,
 } from "@ant-design/icons";
-import { Chip, IconButton, Tooltip, Typography } from "@mui/material";
+import { Box, Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import { Stack, useTheme } from "@mui/system";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import Avatar from "@ui/@extended/Avatar";
@@ -13,16 +13,20 @@ import { IndeterminateCheckbox } from "@ui/third-party/ReactTable";
 import { MouseEvent, useCallback, useMemo } from "react";
 import NumberFormat from "react-number-format";
 import OrderViewInline from "../components/OrderViewInline";
+import { Delete } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   handleEditClick: (order: OrderAdmin) => void;
+  handleDelete:(id: string ) => void;
 };
 
 const useOrderTable = (props: Props) => {
-  const { handleEditClick } = props;
+  const { handleEditClick, handleDelete } = props;
   const theme = useTheme();
   const columnHelper = createColumnHelper<OrderAdmin>();
   // const [orderDetail, setOrderDetail] = useState(null);
+  const nav = useNavigate();
   const columns = useMemo(
     () => {
       const cols = [
@@ -47,13 +51,18 @@ const useOrderTable = (props: Props) => {
               indeterminate={false}
               checked={row.getIsSelected()}
             />
+
           ),
           enableSorting: false,
         }),
         columnHelper.accessor("id", {
           header: "#",
           cell: ({ row }) => {
-            return (<Typography>
+            return (<Typography variant="subtitle2" sx={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              }}>
              OD-{row.original?.no ? row.original?.no : row.original?.id}
             </Typography>
             )
@@ -165,7 +174,11 @@ const useOrderTable = (props: Props) => {
             const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
             const formattedDateTime = `${formattedDay}-${formattedMonth}-${formattedYear} ${formattedHours}:${formattedMinutes}`;
-            return formattedDateTime;
+            return <Typography variant="subtitle2" sx={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              }}>{formattedDateTime}</Typography> ;
           },
         }),
         columnHelper.accessor("status", {
@@ -250,7 +263,8 @@ const useOrderTable = (props: Props) => {
                     color="secondary"
                     onClick={(e: MouseEvent) => {
                       e.stopPropagation();
-                      row.toggleExpanded();
+                      nav(`/order/${row.original?.id}`)
+                      // row.toggleExpanded();
                     }}>
                     {collapseIcon}
                   </IconButton>
@@ -269,9 +283,10 @@ const useOrderTable = (props: Props) => {
                   <IconButton
                     color="error"
                     onClick={(e: MouseEvent) => {
+                      handleDelete(row.original?.id);
                       e.stopPropagation();
                     }}>
-                    <DeleteTwoTone rev={{}} color={theme.palette.error.main} />
+                    <Delete  color={theme.palette.error.main} />
                   </IconButton>
                 </Tooltip>
               </Stack>

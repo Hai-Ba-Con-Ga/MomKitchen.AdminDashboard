@@ -7,28 +7,32 @@ import { useMemo } from 'react';
 import useAreaData from '../hooks/useAreaData';
 import useAreaTable from '../hooks/useAreaTable';
 import { useNavigate } from 'react-router-dom';
+import HereMap from '@ui/common/map/HereMap';
 
 
 
 const AreaListPage = () => {
-    const data = useMemo(()=>{
-        return mockAreaAdmin;
-    },[])
+    // const data = useMemo(()=>{
+    //     return mockAreaAdmin;
+    // },[])
     const {columnsDef} = useAreaTable({
         handleEditClick: ()=>console.log("TODO: implement")
         
     });
-    const {setPagination,setSortState,setKeyword} = useAreaData()
+    const {setPagination,setSortState,setKeyword, areaData} = useAreaData()
     const nav = useNavigate();
   return (
     <MainCard content={false}>
     
     <QuickTable<AreaAdmin>
       columns={columnsDef}
-      data={data}
+      data={areaData?.data??[]}
       onPaginationChange={(pagination) => {
         setPagination(pagination);
       }}
+      renderRowSubComponent={()=><>
+      <HereMap/>
+      </>}
       onRowSelectedChange={(rows) => console.log(rows)}
       addButton={{
         isShown: true,

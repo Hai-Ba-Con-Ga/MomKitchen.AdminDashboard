@@ -93,10 +93,12 @@ const CustomerList = () => {
             />
           ),
           cell: ({ row }) => (
+            <Box display={"flex"} justifyContent="center">
             <IndeterminateCheckbox
               indeterminate={false}
               checked={row.getIsSelected()}
-            />
+              />
+              </Box>
           ),
           enableSorting: false,
         }),

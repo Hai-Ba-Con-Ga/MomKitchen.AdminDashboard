@@ -1,8 +1,9 @@
 import { OrderAdmin } from "@/types/@mk/entity/order";
-import { PaginationState, SortingState } from "@tanstack/react-table";
-import { useState } from "react";
+import { PaginationState, SortingState, FilterFnOption } from "@tanstack/react-table";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import OrderApi from "../service/order.api";
+import { FilterState } from "@/types/common/pagination/FilterState";
 
 
 const useOrderData = (enable?:boolean) => {
@@ -14,6 +15,11 @@ const useOrderData = (enable?:boolean) => {
   const [sortState, setSortState] = useState<SortingState>([]);
   const [keyword, setKeyword] = useState<string>();
   const [id,setId] = useState<string>();
+  const [filter, setFilter] = useState<FilterState>({});
+  useEffect(()=>{
+    console.log(filter);
+  },[filter])
+
    // Define the fetchOrderDataFunction that fetches orders using the OrderApi
    const fetchOrderDataFunction = async () => {
     try {
@@ -84,7 +90,7 @@ const useOrderData = (enable?:boolean) => {
      // You can specify onSuccess and onError callbacks here
    });
 
-  return { orderData, setSortState, setKeyword, setPagination, updateOrder, deleteOrder, setId, orderDetailData};
+  return { orderData, setSortState, setKeyword, setPagination, updateOrder, deleteOrder, setId, orderDetailData, setFilter};
 };
 
 export default useOrderData;

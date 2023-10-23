@@ -26,6 +26,9 @@ dependencies:
   '@fullcalendar/common':
     specifier: ^5.11.5
     version: 5.11.5
+  '@here/maps-api-for-javascript':
+    specifier: ^1.47.0
+    version: 1.47.0
   '@hookform/resolvers':
     specifier: ^3.3.1
     version: 3.3.1(react-hook-form@7.43.9)
@@ -3167,6 +3170,10 @@ packages:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
       graphql: 16.8.0
+    dev: false
+
+  /@here/maps-api-for-javascript@1.47.0:
+    resolution: {integrity: sha1-EvQYNY/BSwEFWJ1x7ceAy3yi9u8=, tarball: https://repo.platform.here.com/artifactory/api/npm/maps-api-for-javascript/-/@here/maps-api-for-javascript-1.47.0.tgz}
     dev: false
 
   /@hookform/resolvers@3.3.1(react-hook-form@7.43.9):

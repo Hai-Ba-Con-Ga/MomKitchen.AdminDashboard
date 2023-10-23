@@ -1,6 +1,6 @@
 import UserApi from '@/modules/kitchen/service/user.api';
 import { PaginationState, SortingState } from '@tanstack/react-table';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
 
@@ -32,7 +32,6 @@ const useUserData = () => {
   };
   
  
- 
    // Define your initial query key, including dependencies like pagination, sorting, and keyword 
    // use debounce technique to prevent many calls at a short time
    const queryKey = ['users', pagination, sortState, keyword, roleName];
@@ -45,6 +44,9 @@ const useUserData = () => {
     onError:(err) => console.log("error at hook",err),
     enabled: false
    });
+  //  useEffect(()=>{
+  //   refetchData()
+  // },[keyword])
  
    
 //   // Define the updateOrderFunction to update an order using the OrderApi

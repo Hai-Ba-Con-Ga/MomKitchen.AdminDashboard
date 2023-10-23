@@ -1,10 +1,14 @@
 import { mockDishes } from "@/data/@mk/mock/Dish";
 import { mockOrder } from "@/data/@mk/mock/Order";
 import {
+  Button,
   Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
   Tab,
   Tabs,
-  Typography
+  Typography,
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -15,6 +19,10 @@ import { useEffect, useMemo, useState } from "react";
 import useOrderData from "../../hook/useOrderData";
 import useOrderTable from "../../hook/useOrderTable";
 import { useNavigate } from "react-router-dom";
+import { DialogTitle } from "@mui/material";
+import { BlockOutlined } from "@mui/icons-material";
+import { DialogContentText } from "@mui/material";
+import { FilterOps } from "@/types/common/pagination/FilterState";
 
 const OrderListPage = () => {
   const data = useMemo(
@@ -25,24 +33,69 @@ const OrderListPage = () => {
       }),
     []
   );
+  const [confirmationToggle, setConfirmationToggle] = useState(false);
+  const [actionId, setActionId] = useState<string>();
   const {
     setSortState,
+    setFilter,
     setKeyword,
     setPagination,
     orderData,
-    // deleteOrder,
+    deleteOrder: { mutateAsync: deleteOrderFunc },
     // updateOrder,
   } = useOrderData();
   const { columnsDef, renderRowSubComponent } = useOrderTable({
     handleEditClick: () => {
       // TODO implement
     },
+    handleDelete: async (id) => {
+      setActionId(actionId);
+      setConfirmationToggle(true);
+    },
   });
   useEffect(() => {
     console.log(orderData);
   }, [orderData]);
+
   const nav = useNavigate();
   const [tabValue, setTabValue] = useState("all");
+  const [rangeDate, setRangeDate] = useState<{
+    from: string,
+    to : string
+  }>({
+    from : null,
+    to: null
+  });
+  useEffect(() => {
+    setFilter((prev) => ({
+      ...prev,
+      tab: {
+        field: "tab",
+        op: FilterOps.EQUAL,
+        value: tabValue,
+      },
+    }));
+  }, [tabValue, setFilter]);
+  useEffect(()=>{
+    setFilter((prev) => ({
+      ...prev,
+      from: {
+        field: "from",
+        op: FilterOps.EQUAL,
+        value: rangeDate.from,
+      },
+    }));
+  },[rangeDate.from,setFilter])
+  useEffect(()=>{
+    setFilter((prev) => ({
+      ...prev,
+      to: {
+        field: "to",
+        op: FilterOps.EQUAL,
+        value: rangeDate.to,
+      },
+    }));
+  },[rangeDate.to,setFilter])
   return (
     <MainCard content={false}>
       <Box
@@ -60,49 +113,39 @@ const OrderListPage = () => {
           <Tab
             label={
               <Stack direction={"row"} gap={1}>
-                <Typography  fontWeight={600}>All</Typography>
-                <Chip
-                  color="primary"
-                  label="1"
-                  size="small"
-                  variant="light"
-
-                />
+                <Typography fontWeight={600}>All</Typography>
+                <Chip color="primary" label="1" size="small" variant="light" />
               </Stack>
             }
             value={"all"}
           />
-          <Tab  label={
+          <Tab
+            label={
               <Stack direction={"row"} gap={1}>
-                <Typography fontWeight={600} >Unpaid</Typography>
-                <Chip
-                  color="warning"
-                  label="1"
-                  size="small"
-                  variant="light"
-
-                />
+                <Typography fontWeight={600}>Unpaid</Typography>
+                <Chip color="warning" label="1" size="small" variant="light" />
               </Stack>
-            } value="unpaid" />
-          <Tab label={<Stack direction={"row"} gap={1}>
-                <Typography fontWeight={600} >Cancel</Typography>
-                <Chip
-                  color="error"
-                  label="1"
-                  size="small"
-                  variant="light"
-
-                />
-              </Stack>} value="cancel" />
-          <Tab  label={<Stack direction={"row"} gap={1}>
-                <Typography fontWeight={600} >Complete</Typography>
-                <Chip
-                  color="success"
-                  label="1"
-                  size="small"
-                  variant="light"
-                />
-              </Stack>}  value="complete" />
+            }
+            value="unpaid"
+          />
+          <Tab
+            label={
+              <Stack direction={"row"} gap={1}>
+                <Typography fontWeight={600}>Cancel</Typography>
+                <Chip color="error" label="1" size="small" variant="light" />
+              </Stack>
+            }
+            value="cancel"
+          />
+          <Tab
+            label={
+              <Stack direction={"row"} gap={1}>
+                <Typography fontWeight={600}>Complete</Typography>
+                <Chip color="success" label="1" size="small" variant="light" />
+              </Stack>
+            }
+            value="complete"
+          />
         </Tabs>
       </Box>
       <QuickTable
@@ -126,21 +169,77 @@ const OrderListPage = () => {
         actionComponents={
           <>
             <DatePicker
-              // value={value}
+              value={rangeDate.from}
               onChange={(val) => {
-                console.log(typeof val);
+                setRangeDate({...rangeDate, from : val.toString()})
+
               }}
             />
             <DatePicker
-              // value={value}
+              value={rangeDate.to}
               onChange={(val) => {
-                console.log(typeof val);
+                setRangeDate({...rangeDate, to : val.toString()})
               }}
             />
           </>
         }
       />
       <Snackbar />
+      {confirmationToggle && (
+        <Dialog
+          open={confirmationToggle}
+          onClose={() => setConfirmationToggle(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description">
+          <Box
+            sx={{ p: 1, py: 1.5, justifyContent: "center" }}
+            justifyContent={"center"}
+            display={"flex"}
+            flexDirection={"column"}>
+            <DialogTitle id="alert-dialog-title">
+              <Box
+                sx={{
+                  placeItems: "center",
+                }}
+                display="grid">
+                <BlockOutlined color="error" sx={{ fontSize: "4rem" }} />
+              </Box>
+              <DialogContentText
+                sx={{
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  fontSize: "1.5rem",
+                }}
+                id="alert-dialog-description">
+                Are you sure you want to delete?
+              </DialogContentText>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                By deleting action, that user will not be able to use
+                application no more.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                color="secondary"
+                variant="outlined"
+                onClick={() => setConfirmationToggle(false)}>
+                Cancel
+              </Button>
+              <Button
+                color="error"
+                variant="contained"
+                onClick={async () => {
+                  await deleteOrderFunc(actionId);
+                  setConfirmationToggle(false);
+                }}>
+                Delete
+              </Button>
+            </DialogActions>
+          </Box>
+        </Dialog>
+      )}
     </MainCard>
   );
 };

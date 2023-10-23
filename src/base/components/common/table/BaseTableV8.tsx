@@ -257,7 +257,7 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
                       direction="row"
                       spacing={1}
                       alignItems="center"
-                      justifyContent={"inherit"}
+                      justifyContent={"center"}
                       // sx={{ display: 'inline-flex' }}
                     >
                       <TableHeadCell>

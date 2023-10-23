@@ -38,7 +38,7 @@ const [pagination, setPagination] = useState<PaginationState>({
    const queryKey = ['orders', pagination, sortState, keyword];
 
    // Fetch order data using React Query's useQuery hook
-   const { data: kitchenData,
+   const { data: areaData,
     //  isLoading, error
      } = useQuery(queryKey, fetchAreaDataFunction,{
     onError:(err) => console.log("error at hook",err)
@@ -69,7 +69,7 @@ const [pagination, setPagination] = useState<PaginationState>({
      // You can specify onSuccess and onError callbacks here
    });
 
-  return { kitchenData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen, setId };
+  return { areaData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen, setId };
 }
 
 export default useAreaData

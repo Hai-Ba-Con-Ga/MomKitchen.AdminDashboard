@@ -11,7 +11,7 @@ import {
   SnippetsOutlined,
   ShopOutlined,
 } from "@ant-design/icons";
-
+import { Map, Payment } from "@mui/icons-material";
 // type
 import { NavItemType } from "@/types/menu";
 
@@ -24,7 +24,8 @@ const icons = {
   ForkOutlined,
   SnippetsOutlined,
   ShopOutlined,
- 
+  Map,
+  Payment
 };
 
 // ==============================|| MENU ITEMS - APPLICATIONS ||============================== //
@@ -102,7 +103,7 @@ export const admin: NavItemType = {
       id: "kitchen",
       title: <FormattedMessage id="kitchen" />,
       type: "item",
-      icon: icons.ForkOutlined,
+      icon: icons.ShopOutlined,
       url: "/kitchen/list"
       // children: [
       //   {
@@ -125,7 +126,7 @@ export const admin: NavItemType = {
       id: "area",
       title: <FormattedMessage id="Area" />,
       type: "item",
-      icon: icons.ShopOutlined,
+      icon: icons.Map,
       url: "/area/list"
       // children: [
       //   {
@@ -171,7 +172,7 @@ export const admin: NavItemType = {
       id: "payment",
       title: <FormattedMessage id="Payment" />,
       type: "item",
-      icon: icons.ShopOutlined,
+      icon: icons.Payment,
       url: "/payment/list",
       // children: [
       //   {

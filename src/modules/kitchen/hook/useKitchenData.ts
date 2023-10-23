@@ -80,7 +80,7 @@ const [pagination, setPagination] = useState<PaginationState>({
     return response.data;
    }
 
-   const {data: kitchenDetail} = useQuery(["KitchenDetail",id],getKitchenDetailFunction,{});
+   const {data: kitchenDetail, isLoading: isLoadingDetail} = useQuery(["KitchenDetail",id],getKitchenDetailFunction,{});
   useEffect(()=>{
     console.log("Effect",ownerId);
   },[ownerId])
@@ -91,7 +91,9 @@ const [pagination, setPagination] = useState<PaginationState>({
    }
 
    const {data: ownerDetail} = useQuery(["KitchenDetail", ownerId],getOwnerDetailFunction,{});
-  return { kitchenData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen,kitchenDetail, setId, totalRows,refreshKitchenData, ownerDetail, setOwnerId };
+  return { kitchenData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen,kitchenDetail, setId, totalRows,refreshKitchenData, ownerDetail, setOwnerId, detailState: {
+    isLoadingDetail
+  } };
 }
 
 export default useKitchenData

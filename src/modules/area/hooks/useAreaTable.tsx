@@ -5,6 +5,7 @@ import {
   EditTwoTone,
   EyeTwoTone,
 } from "@ant-design/icons";
+import { Typography } from "@mui/material";
 import { Tooltip } from "@mui/material";
 import { Stack, useTheme } from "@mui/system";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -52,6 +53,15 @@ const useAreaTable = (props: Props) => {
         }),
         columnHelper.accessor("id", {
           header: "#",
+          cell: ({row})=>{
+            return  <Typography  color="CaptionText" sx={{
+             whiteSpace: 'nowrap',
+             overflow: 'hidden',
+             textOverflow: 'ellipsis',
+             }}>
+             AREA-{row.original.no}
+           </Typography>
+           }
         }),
         columnHelper.accessor("name", {
           header: "Area Name",
@@ -63,7 +73,7 @@ const useAreaTable = (props: Props) => {
           ),
         }),
         columnHelper.accessor("createdDate", {
-          header: "Status",
+          header: "CreatedDate",
         }),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         columnHelper.accessor<any, any>("action", {
