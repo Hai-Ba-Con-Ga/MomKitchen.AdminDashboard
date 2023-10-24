@@ -10,6 +10,12 @@ const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 25,
   });
+  const [kitchenPagination, setKitchenPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 25,
+  });
+  const [totalRows, setTotalRows] = useState<number>(0);
+  const [totalKitchenRows, setTotalKitchenRows] = useState<number>(0);
   const [sortState, setSortState] = useState<SortingState>([]);
   const [keyword, setKeyword] = useState<string>();
   const [
@@ -25,6 +31,7 @@ const [pagination, setPagination] = useState<PaginationState>({
         sort: sortState,     // Pass the sort state
         keyword,             // Pass the keyword
       });
+      setTotalRows(response?.totalCount ?? 0);
       // Return the data from the response
       return response?.data;
     }
@@ -35,7 +42,7 @@ const [pagination, setPagination] = useState<PaginationState>({
   };
    // Define your initial query key, including dependencies like pagination, sorting, and keyword 
    // TODO: use debounce technique to prevent many calls at a short time
-   const queryKey = ['orders', pagination, sortState, keyword];
+   const queryKey = ['areas', pagination, sortState, keyword];
 
    // Fetch order data using React Query's useQuery hook
    const { data: areaData,
@@ -44,6 +51,29 @@ const [pagination, setPagination] = useState<PaginationState>({
     onError:(err) => console.log("error at hook",err)
     
    });
+   const fetchAreaKitchenDataFunction = async () => {
+    try {
+      const response = await AreaApi.getKitchenInArea(id,{
+        paging: kitchenPagination, // Pass the pagination state
+      });
+      // Return the data from the response
+      setTotalKitchenRows(response?.totalCount ?? 0);
+      return response?.data;
+    }
+    catch(e){
+      console.log(e);
+      throw e
+    }
+  };
+ 
+
+  // Fetch order data using React Query's useQuery hook
+  const { data: areaKitchenData,
+   //  isLoading, error
+    } = useQuery(['kitchenarea', kitchenPagination, id], fetchAreaKitchenDataFunction,{
+   onError:(err) => console.log("error at hook",err)
+   
+  });
  
    // Define your mutation functions for creating, updating, and deleting orders
   //  const createOrder = useMutation(createOrderFunction, {
@@ -69,7 +99,7 @@ const [pagination, setPagination] = useState<PaginationState>({
      // You can specify onSuccess and onError callbacks here
    });
 
-  return { areaData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen, setId };
+  return { areaData, setSortState, setKeyword, setPagination, updateKitchen, deleteKitchen, setId,areaKitchenData,setKitchenPagination,totalKitchenRows, totalRows };
 }
 
 export default useAreaData

@@ -1,7 +1,9 @@
 import UserApi from '@/modules/kitchen/service/user.api';
+import { CustomerAdmin } from '@/types/@mk/entity/customer';
+import { User } from '@/types/@mk/entity/user';
 import { PaginationState, SortingState } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 
 
 const useUserData = () => {
@@ -50,14 +52,21 @@ const useUserData = () => {
  
    
 //   // Define the updateOrderFunction to update an order using the OrderApi
-//   const updateOrderFunction = async (order: OrderAdmin) => {
-//       const response = await OrderApi.updateOrder(order);
-//       // You can handle the success scenario here if needed
-//       return response.data; // Return the updated order data
-//   };
-//    const updateOrder = useMutation(updateOrderFunction, {
-//      // You can specify onSuccess and onError callbacks here
-//    });
+  const updateUserFunction = async (user: User) => {
+      const response = await UserApi.updateUser(user);
+      // You can handle the success scenario here if needed
+      return response.data; // Return the updated order data
+  };
+   const updateUser = useMutation(updateUserFunction, {
+     // You can specify onSuccess and onError callbacks here
+   });
+   const createCustomerFunction = async (customer: CustomerAdmin) => {
+    const response = await UserApi.createCustomer(customer);
+    return response.data
+   }
+   const createCustomer = useMutation(createCustomerFunction, {
+    // You can specify onSuccess and onError callbacks here
+  });
 //    // Define the deleteOrderFunction to delete an order using the OrderApi
 //   const deleteOrderFunction = async (id: string) => {
 //       const response = await OrderApi.deleteOrder(id);
@@ -71,7 +80,8 @@ const useUserData = () => {
 
   return { 
     userData, setSortState, setKeyword, setPagination,
-    setRoleName, refetchData, keyword
+    setRoleName, refetchData, keyword,
+    updateUser,createCustomer,
     //  updateOrder, deleteOrder, setId, orderDetailData
     };
 }

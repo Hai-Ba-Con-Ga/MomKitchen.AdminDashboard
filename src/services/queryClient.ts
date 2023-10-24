@@ -4,10 +4,10 @@ const queryClientConf: QueryClientConfig = {
   defaultOptions: {
     queries: {
       // onError: queryErrorHandler,
-      staleTime: 600000, // 10 minutes
-      cacheTime: 900000, // default cacheTime is 5 minutes; doesn't make sense for staleTime to exceed cacheTime
+      staleTime: 0, // 10 minutes
+      cacheTime: 0, // default cacheTime is 5 minutes; doesn't make sense for staleTime to exceed cacheTime
       // retry: 0,
-      refetchOnMount: false,
+      refetchOnMount: true,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       useErrorBoundary: true,

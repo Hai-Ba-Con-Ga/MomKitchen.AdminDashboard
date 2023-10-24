@@ -3,7 +3,7 @@ import { HttpStatusCode } from "axios";
 interface ResponseObject<T> {
     pageNumber : number,
     pageSize: number,
-    totalCount
+    totalCount: number,
     data : T,
     message: string,
     statusCode : HttpStatusCode

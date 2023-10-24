@@ -35,14 +35,22 @@ const DishApi = {
       },
     });
   },
-  updateDish: (Dish: Dish) => {
+  createDish: (dish: Dish) => {
     const endpoint = "/dish";
-    return axiosClient.put(endpoint, Dish);
+    return axiosClient.post(endpoint, dish);
   },
-  deleteDish: (id: number) => {
+  updateDish: (dish: Dish) => {
+    const endpoint = "/dish";
+    return axiosClient.put(endpoint, dish,{
+      params: {
+        dishId: dish?.id
+      }
+    });
+  },
+  deleteDish: (id: string) => {
     const endpoint = "/dish";
     return axiosClient.delete(endpoint, {
-      params: { id },
+      params: { dishId:id },
     });
   },
 };

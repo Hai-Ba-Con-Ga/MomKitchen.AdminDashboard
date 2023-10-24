@@ -1,4 +1,4 @@
-import { Customer } from "@/types/@mk/entity/customer";
+import { Customer, CustomerAdmin } from "@/types/@mk/entity/customer";
 import { Role } from "@/types/@mk/entity/role";
 import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
 import { CameraOutlined } from "@ant-design/icons";
@@ -25,15 +25,16 @@ import { ChangeEvent, ReactNode, useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { ManipulateCustomerForm } from "../../hook/useCustomerForm";
 type Props = {
-  customer?: Customer;
+  customer?: CustomerAdmin;
   isCreating?: boolean;
   roles: Role[];
   layout?: "split" | "stack"
 };
+import dayjs from "dayjs"
 // const roles = []; // TODO: load from be
 
 const CustomerManipulateForm = (props: Props) => {
-  const { isCreating = true, roles, layout = "split" } = props;
+  const { isCreating = true, layout = "split", customer } = props;
   const theme = useTheme();
   const {
     control,
@@ -46,7 +47,7 @@ const CustomerManipulateForm = (props: Props) => {
     undefined
   );
 
-  const [avatar, setAvatar] = useState<string | undefined>();
+  const [avatar, setAvatar] = useState<string | undefined>(customer?.avatarUrl??null);
   useEffect(() => {
     if (selectedImage) {
       setAvatar(URL.createObjectURL(selectedImage));
@@ -276,7 +277,7 @@ const CustomerManipulateForm = (props: Props) => {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid item xs={12}>
+        {isCreating &&  <Grid item xs={12}>
             <Stack spacing={1.25}>
               <InputLabel htmlFor="customer-orderStatus">Status</InputLabel>
               <FormControl fullWidth>
@@ -325,8 +326,8 @@ const CustomerManipulateForm = (props: Props) => {
                 )}
               </FormControl>
             </Stack>
-          </Grid>
-          <Grid item xs={12}>
+          </Grid>}
+          {/* <Grid item xs={12}>
             <Stack spacing={1.25}>
               <InputLabel htmlFor="customer-orderStatus">Role</InputLabel>
               <FormControl fullWidth>
@@ -368,7 +369,7 @@ const CustomerManipulateForm = (props: Props) => {
                 )}
               </FormControl>
             </Stack>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             {/* <Stack
             direction="row"

@@ -22,6 +22,8 @@ const [totalRows, setTotalRows] = useState<number> (0);
         keyword, // Pass the keyword
       });
       if(response?.data?.totalCount >= 0) {
+        console.log("setTotalCount" ,response?.data?.totalCount  );
+        
         setTotalRows(response?.data?.totalCount);
       }
       // Return the data from the response
@@ -38,6 +40,7 @@ const [totalRows, setTotalRows] = useState<number> (0);
   // Fetch order data using React Query's useQuery hook
   const {
     data: customerData,
+    refetch: refreshCustomerData
     //  isLoading, error
   } = useQuery(queryKey, fetchCustomerDataFunction, {
     onError: (err) => console.log("error at hook", err),
@@ -73,16 +76,26 @@ const [totalRows, setTotalRows] = useState<number> (0);
   const deleteCustomer = useMutation(deleteCustomerFunction, {
     // You can specify onSuccess and onError callbacks here
   });
+  
+  const statusUpdateFunction = async(customer: CustomerAdmin) => {
+    const response = await CustomerApi.updateStatusCustomer(customer.id, customer.status)
+    return response?.data
+  }
+  const statusUpdate =  useMutation(statusUpdateFunction, {
+
+  })
 
   return {
     customerData,
     setSortState,
     setKeyword,
     setPagination,
+    refreshCustomerData,
     updateCustomer,
     deleteCustomer,
     createCustomer,
-    totalRows
+    totalRows,
+    statusUpdate
   };
 };
 

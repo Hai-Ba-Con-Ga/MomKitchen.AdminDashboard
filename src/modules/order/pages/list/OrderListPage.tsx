@@ -23,16 +23,17 @@ import { DialogTitle } from "@mui/material";
 import { BlockOutlined } from "@mui/icons-material";
 import { DialogContentText } from "@mui/material";
 import { FilterOps } from "@/types/common/pagination/FilterState";
+import { OrderAdmin } from "@/types/@mk/entity/order";
 
 const OrderListPage = () => {
-  const data = useMemo(
-    () =>
-      mockOrder().map((order) => {
-        order.meal?.tray?.dishies?.push(...mockDishes);
-        return order;
-      }),
-    []
-  );
+  // const data = useMemo(
+  //   () =>
+  //     mockOrder().map((order) => {
+  //       order.meal?.tray?.dishies?.push(...mockDishes);
+  //       return order;
+  //     }),
+  //   []
+  // );
   const [confirmationToggle, setConfirmationToggle] = useState(false);
   const [actionId, setActionId] = useState<string>();
   const {
@@ -41,8 +42,10 @@ const OrderListPage = () => {
     setKeyword,
     setPagination,
     orderData,
+    refreshOrderData,
     deleteOrder: { mutateAsync: deleteOrderFunc },
     // updateOrder,
+    totalRows
   } = useOrderData();
   const { columnsDef, renderRowSubComponent } = useOrderTable({
     handleEditClick: () => {
@@ -53,6 +56,9 @@ const OrderListPage = () => {
       setConfirmationToggle(true);
     },
   });
+  useEffect(()=>{
+    refreshOrderData()
+  },[])
   useEffect(() => {
     console.log(orderData);
   }, [orderData]);
@@ -148,9 +154,10 @@ const OrderListPage = () => {
           />
         </Tabs>
       </Box>
-      <QuickTable
+      <QuickTable<OrderAdmin>
+        totalRows={totalRows}
         columns={columnsDef}
-        data={data}
+        data={orderData}
         renderRowSubComponent={renderRowSubComponent}
         onPaginationChange={(pagination) => {
           setPagination(pagination);

@@ -52,6 +52,7 @@ const useKitchenTable = (props: Props) => {
               />
             ),
             enableSorting: false,
+            size: 50
           }),
           columnHelper.accessor("no", {
             header: "#",
@@ -63,6 +64,9 @@ const useKitchenTable = (props: Props) => {
                }}>
                KIT-{row.original.no}
              </Typography>
+             },
+             meta: {
+              align: "left"
              }
           }),
           columnHelper.accessor("name", {
@@ -75,6 +79,9 @@ const useKitchenTable = (props: Props) => {
               }}>
               {row.original.name}
             </Typography>
+            },
+            meta: {
+              align: "left"
             }
           }),
           columnHelper.accessor("owner", {
@@ -98,6 +105,10 @@ const useKitchenTable = (props: Props) => {
                 </Stack>
               );
             },
+            enableSorting: false,
+            meta: {
+              align: "left"
+            }
           }),
           columnHelper.accessor("address", {
             header: "Address",
@@ -115,6 +126,9 @@ const useKitchenTable = (props: Props) => {
                 {renderValue()}
               </Typography>
             ),
+            meta: {
+              align: "left"
+            }
           }),
           columnHelper.accessor("area.name", {
             header: "Area",
@@ -126,21 +140,35 @@ const useKitchenTable = (props: Props) => {
                 {renderValue()}
               </Typography>
             ),
+            meta: {
+              align: "left"
+            }
           }),
           columnHelper.accessor("noOfDish", {
             header: "No of dishes",
             cell: ({ renderValue }) => (
               <NumberFormat
+                style={{
+                  display: "block",
+                  textAlign : "right"
+                }}
                 displayType="text"
                 prefix=""
                 defaultValue={renderValue()}
               />
             ),
+            meta: {
+              align: "right"
+            }
           }),
           columnHelper.accessor("noOfTray", {
             header: "No of trays",
             cell: ({ renderValue }) => (
               <NumberFormat
+              style={{
+                display: "block",
+                textAlign : "right"
+              }}
                 displayType="text"
 
                 defaultValue={renderValue()}
@@ -151,6 +179,10 @@ const useKitchenTable = (props: Props) => {
             header: "No of meals",
             cell: ({ renderValue }) => (
               <NumberFormat
+              style={{
+                display: "block",
+                textAlign : "right"
+              }}
                 displayType="text"
                 defaultValue={renderValue()}
               />

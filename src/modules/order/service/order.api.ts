@@ -13,19 +13,20 @@ interface OrderGetParams {
   // filter :
 }
 const OrderApi = {
-  getOrders: (params: OrderGetParams) => {
-    const endpoint = "/orders";
-    return axiosClient.get<ResponseObject<OrderAdmin[]>>(endpoint, {
+  getOrders: async (params: OrderGetParams) => {
+    const endpoint = "/order";
+    const res =  await axiosClient.get<ResponseObject<OrderAdmin[]>>(endpoint, {
       params: { ...params },
     });
+    return res.data
   },
-  getOrderDetail: (id: string) => {
+  getOrderDetail: async (id: string) => {
     const endpoint = "/order/"+id;
-    return axiosClient.get<ResponseObject<OrderAdmin>>(endpoint, {
+    return (await axiosClient.get<ResponseObject<OrderAdmin>>(endpoint, {
       params: {
         id,
       },
-    });
+    })).data?.data;
   },
   updateOrder: (order: OrderAdmin) => {
     const endpoint = "/order";

@@ -12,7 +12,7 @@ export interface Kitchen extends BaseEntity {
     name: string;
     address: string;
     status: KitchenStatus;
-    locationId: string;
+    locationId?: string;
     location?: Location;
     ownerId: string;
     owner?: User;

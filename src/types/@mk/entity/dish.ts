@@ -10,6 +10,6 @@ export interface Dish extends BaseEntity {
     description: string | null;
     status: DishStatus;
     kitchenId: string;
-    kitchen: Kitchen;
-    trays: Tray[];
+    kitchen?: Kitchen;
+    trays?: Tray[];
 }

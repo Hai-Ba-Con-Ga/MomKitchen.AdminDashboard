@@ -1,6 +1,7 @@
 import axiosClient from "@/base/service/axiosClient";
 import { ResponseObject } from "@/base/service/response";
 import { Customer, CustomerAdmin } from "@/types/@mk/entity/customer";
+import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
 
 import {
   PaginationState,
@@ -47,5 +48,13 @@ createCustomer: (customer : Customer) => {
       params: { id },
     });
   },
+  updateStatusCustomer :  async (customerId: string, status : string) => {
+
+    const endpoint = "/customer/"+customerId;
+    const result  = await axiosClient.put(endpoint, {
+      status: status == "ACTIVE" ? "INACTIVE" : "ACTIVE"
+    });
+    return result;
+  }
 };
 export default CustomerApi;

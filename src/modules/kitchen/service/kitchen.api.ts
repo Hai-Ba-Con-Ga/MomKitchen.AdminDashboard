@@ -1,10 +1,14 @@
 import axiosClient from "@/base/service/axiosClient";
 import { ResponseObject } from "@/base/service/response";
-import { KitchenAdmin, KitchenResponse } from "@/types/@mk/entity/kitchen";
+import { Dish } from "@/types/@mk/entity/dish";
+import { Kitchen, KitchenAdmin, KitchenResponse } from "@/types/@mk/entity/kitchen";
+import { Meal } from "@/types/@mk/entity/meal";
+import { Tray } from "@/types/@mk/entity/tray";
 import {
   PaginationState,
   SortingState
 } from "@tanstack/react-table";
+import axios from "axios";
 
 interface KitchenGetParams {
   paging?: PaginationState;
@@ -56,7 +60,8 @@ const KitchenApi = {
         }
       }))
     }
-
+    console.log("at api call", mappedResponse);
+    
     return mappedResponse;
   },
   getKitchenDetail: (id: string) => {
@@ -79,5 +84,54 @@ const KitchenApi = {
       params: { id },
     });
   },
+  getKitchenDish: (id:string, params: KitchenGetParams) => {
+    const endpoint = `/kitchen/${id}/dishes`; 
+    const response = axiosClient.get<ResponseObject<Dish[]>>(endpoint, {
+      params: { 
+        PageNumber: params.paging.pageIndex + 1 ?? 1,
+        PageSize: params.paging?.pageSize ?? 10
+       },
+    });
+    return response;
+  },
+  getKitchenTray: (id:string, params: KitchenGetParams) => {
+    const endpoint = `/kitchen/${id}/trays`; 
+    const response = axiosClient.get<ResponseObject<Tray[]>>(endpoint, {
+      params: { 
+        PageNumber: params.paging.pageIndex + 1 ?? 1,
+        PageSize: params.paging?.pageSize ?? 10
+       },
+    });
+    return response;
+  },
+  getKitchenMeal: (id:string, params: KitchenGetParams) => {
+    const endpoint = `/kitchen/${id}/meals`; 
+    const response = axiosClient.get<ResponseObject<Meal[]>>(endpoint, {
+      params: { 
+        PageNumber: params.paging.pageIndex + 1 ?? 1,
+        PageSize: params.paging?.pageSize ?? 10
+       },
+    });
+    return response;
+  },
+  createKitchen :async (kitchen:Kitchen)=>{
+    const endpoint = "/kitchen";
+    const addressEndpoint = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${kitchen.location?.lat}%2C${kitchen.location?.lng}&lang=en-US&apiKey=7h1jyg35V5JfNIgPA8m1XEN39K9giRbtrfNj8nJ5kd4`
+    const address = (await axios.get(addressEndpoint)).data;
+    console.log("ADDRESS", address);
+    let addressString = "Unknown";
+    if(address){
+      addressString = address?.items?.[0]?.title??"Unknown"
+    }
+    const res = await axiosClient.post(endpoint, {
+      name : kitchen?.name,
+      address: addressString,
+      status: "ACTIVE",
+      location : kitchen?.location,
+      ownerId : kitchen?.ownerId,
+      areaId : kitchen?.areaId
+    })
+    return res.data
+  }
 };
 export default KitchenApi;

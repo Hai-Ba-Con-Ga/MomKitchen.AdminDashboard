@@ -15,6 +15,7 @@ const useOrderData = (enable?:boolean) => {
   const [sortState, setSortState] = useState<SortingState>([]);
   const [keyword, setKeyword] = useState<string>();
   const [id,setId] = useState<string>();
+  const [totalRows, setTotalRows] = useState<number>(0);
   const [filter, setFilter] = useState<FilterState>({});
   useEffect(()=>{
     console.log(filter);
@@ -29,6 +30,15 @@ const useOrderData = (enable?:boolean) => {
         keyword,             // Pass the keyword
       });
       // Return the data from the response
+      if(response?.totalCount >= 0){
+        setTotalRows(response?.totalCount ?? 0);
+      }
+      if(response?.data){
+        const rawOrders = response.data
+        const orders = await Promise.all(rawOrders?.map((order)=>OrderApi.getOrderDetail(order?.id)))
+        return orders
+        
+      }
       return response?.data;
     }
     catch(e){
@@ -40,7 +50,7 @@ const useOrderData = (enable?:boolean) => {
     try {
       const response = await OrderApi.getOrderDetail(id);
       // Return the data from the response
-      return response?.data;
+      return response;
     }
     catch(e){
       console.log(e);
@@ -60,6 +70,7 @@ const useOrderData = (enable?:boolean) => {
 
    // Fetch order data using React Query's useQuery hook
    const { data: orderData,
+    refetch: refreshOrderData
     //  isLoading, error
      } = useQuery(queryKey, fetchOrderDataFunction,{
     onError:(err) => console.log("error at hook",err),
@@ -90,7 +101,7 @@ const useOrderData = (enable?:boolean) => {
      // You can specify onSuccess and onError callbacks here
    });
 
-  return { orderData, setSortState, setKeyword, setPagination, updateOrder, deleteOrder, setId, orderDetailData, setFilter};
+  return { orderData, setSortState, setKeyword, setPagination, updateOrder, deleteOrder, setId, orderDetailData, setFilter, totalRows, refreshOrderData};
 };
 
 export default useOrderData;

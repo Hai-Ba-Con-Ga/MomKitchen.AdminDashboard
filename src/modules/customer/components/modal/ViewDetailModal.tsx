@@ -25,16 +25,30 @@ import NumberFormat from "react-number-format";
 import { Link as RouterLink } from "react-router-dom";
 
 import { useMediaQuery } from "@mui/material";
+import useCustomerData from "../../hook/useCustomerData";
+import { toast } from "react-toastify";
 type Props = {
   customer?: CustomerAdmin;
   onCancel?: () => void;
+  updateCallback: ()=> void
 };
 
-const ViewCustomerDetailModal = ({ customer, onCancel }: Props) => {
+const ViewCustomerDetailModal = ({ customer, onCancel, updateCallback }: Props) => {
   const theme = useTheme();
   const matchDownMD = useMediaQuery(theme.breakpoints.down("md"));
+  const {statusUpdate: {mutateAsync}} = useCustomerData();
+  const handleStatusUpdate = async () => {
+   const data =  await mutateAsync(customer)
+   if(data?.data){
+    toast.success("Update customer successfully!")
+  }else {
+    toast.error("Update customer failed! Try again later")
+   }
+   
+    updateCallback();
+}
   return (
-    <Box>
+    <>
       <DialogTitle>Customer Detail</DialogTitle>
       <Divider />
       <DialogContent sx={{ p: 2.5 }}>
@@ -53,9 +67,9 @@ const ViewCustomerDetailModal = ({ customer, onCancel }: Props) => {
           />
           <Stack spacing={0.5} alignItems="center">
             <Typography variant="h5">{customer.fullName}</Typography>
-            <Typography color="secondary">
+            {/* <Typography color="secondary">
               {customer.user?.role?.name}
-            </Typography>
+            </Typography> */}
           </Stack>
         </Stack>
         <Grid sx={{ "&:hover": { bgcolor: `transparent !important` } }}>
@@ -83,11 +97,11 @@ const ViewCustomerDetailModal = ({ customer, onCancel }: Props) => {
                           <Grid item xs={12} md={6}>
                             <Stack spacing={0.5}>
                               <Typography color="secondary">
-                                Father Name
+                                Email
                               </Typography>
                               <Typography>
-                                Mr. {customer.fullName?.split(" ")?.[0]}{" "}
-                                {customer.fullName?.split(" ")?.[1]}
+                                {customer.email}
+                               
                               </Typography>
                             </Stack>
                           </Grid>
@@ -97,33 +111,45 @@ const ViewCustomerDetailModal = ({ customer, onCancel }: Props) => {
                         <Grid container spacing={3}>
                           <Grid item xs={12} md={6}>
                             <Stack spacing={0.5}>
-                              <Typography color="secondary">Country</Typography>
-                              <Typography>{"Vietnam"}</Typography>
-                            </Stack>
+                          <Typography color="secondary">Birthday</Typography>
+                          <Typography>{customer?.birthday}</Typography>
+                        </Stack>
                           </Grid>
                           <Grid item xs={12} md={6}>
                             <Stack spacing={0.5}>
                               <Typography color="secondary">
-                                Zip Code
+                                Phone Number
                               </Typography>
                               <Typography>
                                 <NumberFormat
                                   displayType="text"
-                                  format="### ###"
+                                  format="### ### ####"
                                   mask="_"
-                                  defaultValue={customer.phone}
+                                  defaultValue={customer?.phone}
                                 />
                               </Typography>
                             </Stack>
                           </Grid>
                         </Grid>
                       </ListItem>
-                      <ListItem>
-                        <Stack spacing={0.5}>
-                          <Typography color="secondary">Address</Typography>
-                          <Typography>{"Customer Address"}</Typography>
+                     
+                      <ListItem divider={!matchDownMD}>
+                        <Grid container spacing={3}>
+                          <Grid item xs={12} md={6}>
+                          <Stack spacing={0.5}>
+                          <Typography color="secondary">Total Spent</Typography>
+                          <Typography>{customer?.spentMoney ?? 0}đ</Typography>
                         </Stack>
+                          </Grid>
+                          <Grid item xs={12} md={6}>
+                          <Stack spacing={0.5}>
+                          <Typography color="secondary">Number of order</Typography>
+                          <Typography>{customer?.orderQuantity ?? 0}đ</Typography>
+                        </Stack>
+                          </Grid>
+                        </Grid>
                       </ListItem>
+                     
                     </List>
                   </MainCard>
                   <MainCard title="Recent Order">
@@ -332,11 +358,26 @@ const ViewCustomerDetailModal = ({ customer, onCancel }: Props) => {
                 }}>
                 Close
               </Button>
+             {customer?.status == "ACTIVE" ?
+             <Button
+               variant="contained"
+                color="error"
+                onClick={handleStatusUpdate}>
+                Ban this account
+              </Button> : 
+                 <Button
+                 variant="contained"
+                  color="info"
+                  onClick={handleStatusUpdate}>
+                  Unban this account
+                </Button> 
+              }
             </Stack>
           </Grid>
         </Grid>
       </DialogActions>
-    </Box>
+    </>
+
   );
 };
 

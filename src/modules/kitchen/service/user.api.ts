@@ -1,10 +1,12 @@
 import axiosClient from "@/base/service/axiosClient";
 import { ResponseObject } from "@/base/service/response";
+import { CustomerAdmin } from "@/types/@mk/entity/customer";
 import { User } from "@/types/@mk/entity/user";
 import {
   PaginationState,
   SortingState
 } from "@tanstack/react-table";
+import { Endpoint } from "aws-sdk";
 
 interface UserGetParams {
   paging?: PaginationState;
@@ -38,7 +40,7 @@ const UserApi = {
     });
   },
   updateUser: (User: User) => {
-    const endpoint = "/user";
+    const endpoint = "/user/"+User.id;
     return axiosClient.put(endpoint, User);
   },
   deleteUser: (id: number) => {
@@ -47,5 +49,16 @@ const UserApi = {
       params: { id },
     });
   },
+  createCustomer : (customer: CustomerAdmin )=> {
+    const endpoint = "/user";
+    return axiosClient.post(endpoint,{
+      email : customer?.email,
+      fullName : customer?.email,
+      "avatarUrl": customer?.avatarUrl?? null,
+      "phone": customer?.phone,
+      "roleName": "Customer",
+      "birthday": customer?.birthday
+    });
+  }
 };
 export default UserApi;

@@ -10,6 +10,6 @@ export interface Area extends BaseEntity {
 }
 
 export interface AreaAdmin extends Area {
-    noOfKitchen: number;
+    noOfKitchens: number;
    
 }

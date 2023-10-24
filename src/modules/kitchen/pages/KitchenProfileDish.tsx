@@ -4,13 +4,19 @@ import { BlockOutlined } from "@mui/icons-material";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { isEmpty } from "lodash";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import AddSkeletonCard from "../components/card/AddSkeletonCard";
 import DishCard from "../components/card/DishCard";
 import DishAddForm from "../components/form/DishAddForm";
+import DeleteConfirmDialog from "@ui/common/dialogs/DeleteConfirmDialog";
+import useDishData from "../hook/useDishData";
+import useKitchenData from "../hook/useKitchenData";
+import { useParams } from "react-router-dom";
+import { toast, useToast } from "react-toastify";
 const KitchenProfileDish = () => {
+  const {id} = useParams();
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [deleteId, setDeleteId] = useState<string>();
   const [addToggle, setAddToggle] = useState(false);
@@ -23,6 +29,14 @@ const KitchenProfileDish = () => {
     setDeleteId(id);
     setDeleteConfirmation(true);
   }
+  const {deleteDish: {mutateAsync : deleteDishFunc}} = useDishData()
+  const {setIdGetDish, kitchenDish, refreshKitchenDishData} = useKitchenData();
+
+  useEffect(()=>{
+    setIdGetDish(id)
+    setTimeout(()=>refreshKitchenDishData())
+    
+  },[id,setIdGetDish])
   return (
     <Box component="div">
       <Stack direction="row">
@@ -32,13 +46,7 @@ const KitchenProfileDish = () => {
           direction="horizontal"
           onSlideChange={() => console.log("slide change")}
           onSwiper={(swiper) => console.log(swiper)}>
-          {mockDishes.map((dish, i) => (
             <SwiperSlide>
-              <DishCard dish={dish} key={i} onEdit={handleEditDish} onDelete={handleDeleteDish} />
-            </SwiperSlide>
-          ))}
-
-          <SwiperSlide>
             <AddSkeletonCard
               onClick={() => {
                 setAddToggle(true);
@@ -48,108 +56,28 @@ const KitchenProfileDish = () => {
               }
             />
           </SwiperSlide>
+          {kitchenDish?.data?.map((dish, i) => (
+            <SwiperSlide>
+              <DishCard dish={dish} key={i} onEdit={handleEditDish} onDelete={handleDeleteDish} />
+            </SwiperSlide>
+          ))}
+
+          
         </Swiper>
-        {addToggle && (<Dialog
+        { <Dialog
           open={addToggle}
-          onClose={() => {setAddToggle(false); setEditDish(null)}
+          onClose={() => { setEditDish(null);setAddToggle(false);}
           }
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description">
-          <Box
-            sx={{ p: 1, py: 1.5, justifyContent: "center" }}
-            justifyContent={"center"}
-            display={"flex"}
-            flexDirection={"column"}>
-            <DialogTitle id="alert-dialog-title">
-              <DialogContentText
-                sx={{
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  fontSize: "1.5rem",
-                }}
-                id="alert-dialog-description">
-               {isEmpty(editDish) ? "Add new dish" :"Update dish"}
-              </DialogContentText>
-            </DialogTitle>
-            <DialogContent>
-              <DishAddForm/>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                color="secondary"
-                variant="outlined"
-                onClick={() => setAddToggle(false)}>
-                Cancel
-              </Button>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={() => {
-                  //TODO : delete dish
-                  setDeleteConfirmation(false)}}>
-                Save
-              </Button>
-            </DialogActions>
-          </Box>
-        </Dialog>)}
-        {deleteConfirmation &&  (
-        <Dialog
-          open={deleteConfirmation}
-          onClose={() => setDeleteConfirmation(false)
-          }
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description">
-          <Box
-            sx={{ p: 1, py: 1.5, justifyContent: "center" }}
-            justifyContent={"center"}
-            display={"flex"}
-            flexDirection={"column"}>
-            <DialogTitle id="alert-dialog-title">
-              <Box
-                sx={{
-                  placeItems: "center",
-                }}
-                display="grid">
-                <BlockOutlined color="error" sx={{ fontSize: "4rem" }} />
-              </Box>
-              <DialogContentText
-                sx={{
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  fontSize: "1.5rem",
-                }}
-                id="alert-dialog-description">
-                Are you sure you want to delete?
-              </DialogContentText>
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                By deleting action, that user will not be able to use
-                application no more.
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                color="secondary"
-                variant="outlined"
-                onClick={() => setDeleteConfirmation(false)}>
-                Cancel
-              </Button>
-              <Button
-                color="error"
-                variant="contained"
-                onClick={() => {
-                  //TODO : delete dish
-                  
-                  console.log("TODO delete with delete id", deleteId);
-                  
-                  setDeleteConfirmation(false)}}>
-                Delete
-              </Button>
-            </DialogActions>
-          </Box>
-        </Dialog>)
-        }
+              <DishAddForm onCancel={()=>{setAddToggle(false); setEditDish(null);}} dish={editDish} onSuccessCallback={()=> refreshKitchenDishData()} kitchenId={id}/>
+        </Dialog>}
+      <DeleteConfirmDialog isOpen={deleteConfirmation} onCancel={()=> setDeleteConfirmation(false)} onConfirm={async()=>{
+          await deleteDishFunc(deleteId);
+          await refreshKitchenDishData();
+          setDeleteConfirmation(false);
+          toast.success("Delete successfully!")
+        }} deleteConfirmContent="Delete permanently this dish from kitchen ? "/>
       </Stack>
     </Box>
   );

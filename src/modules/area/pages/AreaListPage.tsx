@@ -3,11 +3,13 @@ import { AreaAdmin } from '@/types/@mk/entity/area';
 import { DatePicker } from '@mui/x-date-pickers';
 import MainCard from '@ui/MainCard';
 import QuickTable from '@ui/common/table/QuickTable';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import useAreaData from '../hooks/useAreaData';
 import useAreaTable from '../hooks/useAreaTable';
 import { useNavigate } from 'react-router-dom';
 import HereMap from '@ui/common/map/HereMap';
+import { Box, Dialog } from '@mui/material';
+import ViewAreaDetail from '../component/ViewAreaDetail';
 
 
 
@@ -15,24 +17,35 @@ const AreaListPage = () => {
     // const data = useMemo(()=>{
     //     return mockAreaAdmin;
     // },[])
-    const {columnsDef} = useAreaTable({
-        handleEditClick: ()=>console.log("TODO: implement")
-        
+    const [viewDetail, setViewDetail] = useState<{
+      isShown: boolean;
+      detailArea: AreaAdmin;
+    }>({
+      isShown: false,
+      detailArea: null,
     });
-    const {setPagination,setSortState,setKeyword, areaData} = useAreaData()
+    const [viewDetailToggle, setViewDetailToggle] = useState<boolean>(false); 
+    const {columnsDef} = useAreaTable({
+        handleEditClick: ()=>console.log("TODO: implement"),
+        handleViewClick: (area)=>{
+          setViewDetail({isShown: true,detailArea: area})
+          setViewDetailToggle(true)
+        },
+        handleDeleteClick: ()=> console.log("TODO: implement")
+      });
+    
+    const {setPagination,setSortState,setKeyword, areaData,totalRows} = useAreaData()
     const nav = useNavigate();
   return (
     <MainCard content={false}>
     
     <QuickTable<AreaAdmin>
       columns={columnsDef}
-      data={areaData?.data??[]}
+      data={areaData??[]}
       onPaginationChange={(pagination) => {
         setPagination(pagination);
       }}
-      renderRowSubComponent={()=><>
-      <HereMap/>
-      </>}
+      totalRows={totalRows}
       onRowSelectedChange={(rows) => console.log(rows)}
       addButton={{
         isShown: true,
@@ -61,6 +74,28 @@ const AreaListPage = () => {
         </>
       }
     />
+                  <Dialog
+                    open={viewDetail.isShown}
+                    onClose={() =>
+                      setViewDetail({
+                        isShown: false,
+                        detailArea: null,
+                      })
+                    }
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description">
+                    {
+                      <ViewAreaDetail
+                      area={viewDetail.detailArea}
+                        onCancel={() =>
+                          setViewDetail({
+                            isShown: false,
+                            detailArea: null,
+                          })
+                        }
+                      />
+                    }
+                  </Dialog>
   </MainCard>
   )
 }

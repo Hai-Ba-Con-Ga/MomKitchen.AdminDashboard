@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 
 type Props = {
   handleEditClick: (order: OrderAdmin) => void;
-  handleDelete:(id: string ) => void;
+  handleDelete: (id: string) => void;
 };
 
 const useOrderTable = (props: Props) => {
@@ -38,34 +38,42 @@ const useOrderTable = (props: Props) => {
               getToggleAllRowsSelectedHandler,
             },
           }) => (
-            <IndeterminateCheckbox
-              {...{
-                checked: getIsAllRowsSelected(),
-                indeterminate: getIsSomeRowsSelected(),
-                onChange: getToggleAllRowsSelectedHandler(),
-              }}
-            />
+            <Box >
+              <IndeterminateCheckbox
+                {...{
+                  checked: getIsAllRowsSelected(),
+                  indeterminate: getIsSomeRowsSelected(),
+                  onChange: getToggleAllRowsSelectedHandler(),
+                }}
+              />
+            </Box>
           ),
           cell: ({ row }) => (
             <IndeterminateCheckbox
               indeterminate={false}
               checked={row.getIsSelected()}
             />
-
           ),
           enableSorting: false,
+          size: 50,
+          meta: {
+            align : "left"
+          }
         }),
         columnHelper.accessor("id", {
           header: "#",
           cell: ({ row }) => {
-            return (<Typography variant="subtitle2" sx={{
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              }}>
-             OD-{row.original?.no ? row.original?.no : row.original?.id}
-            </Typography>
-            )
+            return (
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}>
+                OD-{row.original?.no ? row.original?.no : row.original?.id}
+              </Typography>
+            );
           },
         }),
         columnHelper.accessor("customer", {
@@ -89,21 +97,22 @@ const useOrderTable = (props: Props) => {
               </Stack>
             );
           },
+          meta : {align: "left"}
         }),
         columnHelper.accessor("meal", {
-          header: "Tray",
+          header: "Meal",
           enableSorting: false,
           cell: ({ row }) => {
             return (
               <Stack direction="row" spacing={1.5} alignItems="center">
-                <Avatar
+                {/* <Avatar
                   alt="Meal"
                   size="sm"
                   src={row.original.meal?.tray?.imgUrl}
-                />
+                /> */}
                 <Stack spacing={0}>
                   <Typography variant="subtitle1">
-                    {row.original.meal?.tray?.name.toUpperCase()}
+                    {row.original.meal?.name.toUpperCase()}
                   </Typography>
                   {/* <Typography variant="caption" color="textSecondary">
                     {row.original.customer?.user?.email}
@@ -112,6 +121,8 @@ const useOrderTable = (props: Props) => {
               </Stack>
             );
           },
+          size: 350,
+          meta : {align: "left"}
         }),
         columnHelper.accessor("totalQuantity", {
           header: "Total Quantity",
@@ -128,31 +139,34 @@ const useOrderTable = (props: Props) => {
           header: "totalPrice ",
           cell: ({ renderValue }) => (
             <NumberFormat
-            style={{
-              display: "block",
-              width: "100%",
-              textAlign: "right"
-            }}
+              style={{
+                display: "block",
+                width: "100%",
+                textAlign: "right",
+              }}
               displayType="text"
               prefix="₫"
               defaultValue={renderValue()}
             />
           ),
+          meta : {align: "right"}
         }),
         columnHelper.accessor("surcharge", {
           header: "Surcharge",
           cell: ({ renderValue }) => (
             <NumberFormat
-            style={{
-              display: "block",
-              width: "100%",
-              textAlign: "right"
-            }}
+              style={{
+                display: "block",
+                width: "100%",
+                textAlign: "right",
+              }}
               displayType="text"
               prefix="₫"
               defaultValue={renderValue()}
             />
           ),
+          meta : {align: "right"}
+
         }),
         columnHelper.accessor("createdDate", {
           header: "Order Time",
@@ -174,19 +188,27 @@ const useOrderTable = (props: Props) => {
             const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
             const formattedDateTime = `${formattedDay}-${formattedMonth}-${formattedYear} ${formattedHours}:${formattedMinutes}`;
-            return <Typography variant="subtitle2" sx={{
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              }}>{formattedDateTime}</Typography> ;
+            return (
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}>
+                {formattedDateTime}
+              </Typography>
+            );
           },
+          meta : {align: "left"}
+
         }),
         columnHelper.accessor("status", {
           header: "Status",
           cell: ({ renderValue }) => {
             // TODO: order status migrate
             switch (renderValue()) {
-              case 100:
+              case 0:
                 return (
                   <Chip
                     color="error"
@@ -263,7 +285,7 @@ const useOrderTable = (props: Props) => {
                     color="secondary"
                     onClick={(e: MouseEvent) => {
                       e.stopPropagation();
-                      nav(`/order/${row.original?.id}`)
+                      nav(`/order/${row.original?.id}`);
                       // row.toggleExpanded();
                     }}>
                     {collapseIcon}
@@ -286,7 +308,7 @@ const useOrderTable = (props: Props) => {
                       handleDelete(row.original?.id);
                       e.stopPropagation();
                     }}>
-                    <Delete  color={theme.palette.error.main} />
+                    <Delete color={theme.palette.error.main} />
                   </IconButton>
                 </Tooltip>
               </Stack>

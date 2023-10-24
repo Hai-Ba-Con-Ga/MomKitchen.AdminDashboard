@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useMemo, useState } from "react";
+import { MouseEvent, useCallback, useEffect, useMemo, useState } from "react";
 
 // material-ui
 import {
@@ -58,10 +58,14 @@ const CustomerList = () => {
   const {
     customerData: data,
     setPagination,
+    refreshCustomerData,
     setSortState,
     deleteCustomer: {mutateAsync : mutateDelete},
     totalRows
   } = useCustomerData();
+  useEffect(()=>{
+    refreshCustomerData()
+  },[])
   const [customer, setCustomer] = useState(null);
   const [add, setAdd] = useState<boolean>(false);
   const [deleteConfirm, setDeleteConfirmation] = useState<boolean>(false);
@@ -107,13 +111,17 @@ const CustomerList = () => {
             return "#";
           },
           cell: ({ row }) => (
-            <Typography textAlign={"center"}>
+            <Typography  sx={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              }} textAlign={"center"}>
               CUS-{row?.original?.no}
             </Typography>
           ),
         }),
         columnHelper.accessor("user.fullName", {
-          header: "Customer Name",
+          header: "Customer",
           cell: ({ row }) => {
             return (
               <Stack direction="row" spacing={1.5} alignItems="center">
@@ -133,6 +141,9 @@ const CustomerList = () => {
               </Stack>
             );
           },
+          meta: {
+            align : "left"
+          }
         }),
         // columnHelper.accessor("user.avatarUrl", {
         //   header: "Avatar",
@@ -141,6 +152,9 @@ const CustomerList = () => {
         // }),
         columnHelper.accessor("email", {
           header: "Email",
+          meta: {
+            align : "left"
+          }
         }),
         columnHelper.accessor("phone", {
           header: "Contact",
@@ -157,12 +171,18 @@ const CustomerList = () => {
               defaultValue={renderValue()}
             />
           ),
+          meta: {
+            align : "left"
+          }
         }),
-        columnHelper.accessor("order_quantity", {
+        columnHelper.accessor("orderQuantity", {
           header: "Order",
           cell: ({ renderValue }) => (
             <Typography textAlign={"right"}>{renderValue() ?? 0}</Typography>
           ),
+          meta: {
+            align : "right"
+          }
         }),
         columnHelper.accessor("spentMoney", {
           header: "Spent",
@@ -175,12 +195,15 @@ const CustomerList = () => {
               suffix="đ"
             />
           ),
+          meta: {
+            align : "right"
+          }
         }),
         columnHelper.accessor("status", {
           header: "Status",
           cell: ({ row }) => {
             return (
-              <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
+              <Box display={"flex"} justifyContent={"flex-start"} alignItems={"center"}>
                 {row.original.status == CustomerStatus.INACTIVE ? (
                   <Chip
                     color="error"
@@ -239,8 +262,8 @@ const CustomerList = () => {
                     color="primary"
                     onClick={(e: MouseEvent) => {
                       e.stopPropagation();
-                      setCustomer(null);
-                      handleAdd();
+                      setCustomer(row.original);
+                      setAdd(true)
                     }}>
                     <EditTwoTone
                       rev={{}}
@@ -315,14 +338,25 @@ const CustomerList = () => {
       <Dialog
         maxWidth="sm"
         fullWidth
-        onClose={ add ? handleAdd : ()=>setDetailViewToggle(false)}
+        onClose={()=>{setDetailViewToggle(false); setAdd(false); setCustomer(null)}}
         open={add || detailViewToggle}
         sx={{ "& .MuiDialog-paper": { p: 0 } }}>
-        {add && <AddCustomerModal customer={customer} onCancel={handleAdd} />}
+        {add && <AddCustomerModal customer={customer} onManipulateCallback={()=>{
+          setAdd(false); setCustomer(null);refreshCustomerData();
+        }} onCancel={()=>{
+          setAdd(false); setCustomer(null);
+        }} />}
         {detailViewToggle && (
           <ViewCustomerDetailModal
+          updateCallback={()=> {
+            refreshCustomerData();
+            setDetailViewToggle(false)
+            setCustomer(null);
+          }}
             customer={customer}
-            onCancel={() => setDetailViewToggle(false)}
+            onCancel={() => {
+              setCustomer(null);
+              setDetailViewToggle(false)}}
           />
         )}
       </Dialog>

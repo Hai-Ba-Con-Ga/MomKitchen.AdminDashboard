@@ -57,6 +57,11 @@ interface BaseTableV8Props<T> {
     [key: string]: boolean;
   };
 }
+const alignMetaMap = {
+  left : "flex-start",
+  center : "center",
+  right : "flex-end"
+}
 function BaseTableV8<T>(props: BaseTableV8Props<T>) {
   const {
     columns = [],
@@ -257,7 +262,7 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
                       direction="row"
                       spacing={1}
                       alignItems="center"
-                      justifyContent={"center"}
+                      justifyContent={alignMetaMap[header.column.columnDef.meta?.align?? "center"]}
                       // sx={{ display: 'inline-flex' }}
                     >
                       <TableHeadCell>

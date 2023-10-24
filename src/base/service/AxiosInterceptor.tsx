@@ -48,10 +48,6 @@ const AxiosInterceptor: React.FC<PropsWithChildren<{ key?: string }>> = ({
       }
       console.log("RES IN INTERCEPTOR", response.data);
       
-      //TODO: remove this later, mocking data total count
-      if(response.data?.totalCount){
-        response.data.totalCount = 100;
-      }
       return response;
     };
 

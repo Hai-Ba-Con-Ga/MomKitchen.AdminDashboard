@@ -14,7 +14,7 @@ import TablePagination from "./TablePagination";
 
 interface Props<T> {
   data: T[];
-  totalRows?: number;
+  totalRows: number;
   renderRowSubComponent?: (row: Row<T>) => ReactElement;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: ColumnDef<T, any>[];
