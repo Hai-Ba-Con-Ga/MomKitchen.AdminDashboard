@@ -1,36 +1,22 @@
-import React, { useEffect } from 'react'
 import {
-    BugFilled,
-    ClockCircleFilled,
-    MobileFilled,
-    TwitterCircleFilled,
-    WarningFilled
-  } from "@ant-design/icons";
-  import {
-    Button,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Divider,
-    Grid,
-    Link,
-    List,
-    ListItem,
-    Typography
-  } from "@mui/material";
-  import { Box, Stack, useTheme } from "@mui/system";
-  import Avatar from "@ui/@extended/Avatar";
-  import MainCard from "@ui/MainCard";
-  import NumberFormat from "react-number-format";
-  import { Link as RouterLink } from "react-router-dom";
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  Typography
+} from "@mui/material";
+import { Stack } from "@mui/system";
+import { useEffect } from 'react';
   
-  import { useMediaQuery } from "@mui/material";
-import HereMap from '@ui/common/map/HereMap';
+  import useKitchenTable from '@/modules/kitchen/hook/useKitchenTable';
 import { AreaAdmin } from '@/types/@mk/entity/area';
-import useAreaData from '../hooks/useAreaData';
-import QuickTable from '@ui/common/table/QuickTable';
-import useKitchenTable from '@/modules/kitchen/hook/useKitchenTable';
 import { KitchenAdmin } from '@/types/@mk/entity/kitchen';
+// import { useMediaQuery } from "@mui/material";
+import HereMap from '@ui/common/map/HereMap';
+import QuickTable from '@ui/common/table/QuickTable';
+import useAreaData from '../hooks/useAreaData';
 
 interface Props {
     onCancel: ()=> void;
@@ -38,8 +24,8 @@ interface Props {
 }
 
 const ViewAreaDetail = ({onCancel, area}:Props) => {
-    const theme = useTheme();
-    const matchDownMD = useMediaQuery(theme.breakpoints.down("md"));
+    // const theme = useTheme();
+    // const matchDownMD = useMediaQuery(theme.breakpoints.down("md"));
     const {columnsDef} = useKitchenTable({
       handleDeleteClick: ()=>{"deleteclick"},
       handleEditClick: ()=>{

@@ -2,7 +2,7 @@ import UserApi from '@/modules/kitchen/service/user.api';
 import { CustomerAdmin } from '@/types/@mk/entity/customer';
 import { User } from '@/types/@mk/entity/user';
 import { PaginationState, SortingState } from '@tanstack/react-table';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 
 

@@ -3,10 +3,7 @@ import useAreaData from "@/modules/area/hooks/useAreaData";
 import CustomerManipulateForm from "@/modules/customer/components/form/CustomerManipulateForm";
 import useUserData from "@/modules/order/hook/useUserData";
 import { AreaAdmin } from "@/types/@mk/entity/area";
-import { User } from "@/types/@mk/entity/user";
-import { Box } from "@mui/material";
-import { FormHelperText } from "@mui/material";
-import { Autocomplete, Button, Grid, InputLabel, Switch, TextField, Typography } from "@mui/material";
+import { Autocomplete, Box, Button, Grid, InputLabel, Switch, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import MainCard from "@ui/MainCard";
 import HereMapSelect from "@ui/common/map/HereMapSelect";
@@ -33,7 +30,9 @@ const KitchenCreatePage = () => {
   const [isCreateNewUser, setIsCreateNewUser] = useState(false); 
   const [selectedArea, setSelectedArea] = useState<AreaOptions>(null);
   const [selectedUser, setSelectedUser] = useState<UserOptions>(null);
-  const {setKeyword, setRoleName, userData, keyword,refetchData} = useUserData();
+  const {setKeyword,
+    //  setRoleName,
+     userData, keyword,refetchData} = useUserData();
   const {createKitchenHandler} = useKitchenForm()
   const [position, setPosition] = useState<{lat:number, lng: number}>();
 
@@ -41,14 +40,14 @@ const KitchenCreatePage = () => {
     mode: "all",
     // resolver: yupResolver(CustomerSchema),
   });
-  const { setError,setValue,register,formState: {errors}} = methods
+  const { setValue} = methods
   const {areaData} = useAreaData();
 //   const handleCancel = () => {
 //     nav(-1);
 //   };
-  const fetchNewArea = debounce((keyword)=>{
-    return []
-  },400)
+  // const fetchNewArea = debounce((keyword)=>{
+  //   return []
+  // },400)
   const fetchNewUser = debounce((keyword)=>{
     setKeyword(keyword)
   },1000)
@@ -65,10 +64,10 @@ const KitchenCreatePage = () => {
   },[areaKeyword])
   useEffect(()=>{    
     fetchNewUser(userKeyword);
-  },[userKeyword])
+  },[userKeyword, fetchNewUser])
   useEffect(()=>{
     refetchData();
-  },[keyword]);
+  },[keyword, refetchData]);
   useEffect(()=>{
     setUserOptions(userData?.map(user=>({userId: user?.id, email: user?.email, name : user?.fullName, label: user?.fullName,phone: user?.phone}))??[])
   },[userData])
@@ -84,7 +83,7 @@ const KitchenCreatePage = () => {
     if(selectedUser){
       setValue("userId", selectedUser.userId)
     }
-  },[selectedUser])
+  },[selectedUser,setValue])
 
   useEffect(()=>{
     if(selectedArea){

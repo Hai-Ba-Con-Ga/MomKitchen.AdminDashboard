@@ -28,7 +28,7 @@ const DishCard = ({dish,onEdit, onDelete }:Props) => {
         image={dish?.imageUrl ?? "https://source.unsplash.com/random"}
         alt="green iguana"
       />
-      <CardContent>
+      <CardContent sx={{flex:"1 1 auto"}}>
         <Typography variant="h5" color="textSecondary" gutterBottom>
           {dish.name}
         </Typography>

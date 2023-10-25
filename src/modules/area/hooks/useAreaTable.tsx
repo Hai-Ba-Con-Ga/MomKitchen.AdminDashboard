@@ -5,15 +5,13 @@ import {
   EditTwoTone,
   EyeTwoTone,
 } from "@ant-design/icons";
-import { Box, Dialog, Typography } from "@mui/material";
-import { Tooltip } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import { Stack, useTheme } from "@mui/system";
 import { createColumnHelper } from "@tanstack/react-table";
 import IconButton from "@ui/@extended/IconButton";
 import { IndeterminateCheckbox } from "@ui/third-party/ReactTable";
-import { MouseEvent, useMemo, useState } from "react";
+import { MouseEvent, useMemo } from "react";
 import NumberFormat from "react-number-format";
-import ViewAreaDetail from "../component/ViewAreaDetail";
 
 type Props = {
   handleEditClick?: (area: AreaAdmin) => void;

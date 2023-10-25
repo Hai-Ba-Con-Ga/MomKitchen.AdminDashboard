@@ -21,6 +21,7 @@ const FeedbackListPage = () => {
     <MainCard content={false}>
     
     <QuickTable<Feedback>
+      totalRows={mockFeedbacks.length}
       columns={columnsDef}
       data={data}
       onPaginationChange={(pagination) => {

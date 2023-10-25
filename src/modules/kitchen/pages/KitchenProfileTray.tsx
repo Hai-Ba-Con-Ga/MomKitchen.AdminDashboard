@@ -74,13 +74,13 @@ const KitchenProfileTray = () => {
             </DialogContentText>
           </DialogTitle>
           <DialogContent>
-            <DishAddForm/>
+            <DishAddForm onCancel={()=>{setAddToggle(false); setEditTray(null)}}/>
           </DialogContent>
           <DialogActions>
             <Button
               color="secondary"
               variant="outlined"
-              onClick={() => setAddToggle(false)}>
+              onClick={() => {setAddToggle(false); setEditTray(null)}}>
               Cancel
             </Button>
             <Button

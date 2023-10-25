@@ -1,10 +1,10 @@
 import { OrderAdmin } from "@/types/@mk/entity/order";
 import {
   CloseOutlined,
-  DeleteTwoTone,
   EditTwoTone,
-  EyeTwoTone,
+  EyeTwoTone
 } from "@ant-design/icons";
+import { Delete } from "@mui/icons-material";
 import { Box, Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import { Stack, useTheme } from "@mui/system";
 import { Row, createColumnHelper } from "@tanstack/react-table";
@@ -12,9 +12,8 @@ import Avatar from "@ui/@extended/Avatar";
 import { IndeterminateCheckbox } from "@ui/third-party/ReactTable";
 import { MouseEvent, useCallback, useMemo } from "react";
 import NumberFormat from "react-number-format";
-import OrderViewInline from "../components/OrderViewInline";
-import { Delete } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import OrderViewInline from "../components/OrderViewInline";
 
 type Props = {
   handleEditClick: (order: OrderAdmin) => void;

@@ -1,22 +1,12 @@
 import { KitchenAdmin } from "@/types/@mk/entity/kitchen";
-import { BlockOutlined } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import MainCard from "@ui/MainCard";
+import DeleteConfirmDialog from "@ui/common/dialogs/DeleteConfirmDialog";
 import QuickTable from "@ui/common/table/QuickTable";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useKitchenData from "../hook/useKitchenData";
 import useKitchenTable from "../hook/useKitchenTable";
-import DeleteConfirmDialog from "@ui/common/dialogs/DeleteConfirmDialog";
 
 const KitchenListPage = () => {
   // const data = useMemo(()=>{

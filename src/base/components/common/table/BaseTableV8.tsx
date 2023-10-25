@@ -262,6 +262,8 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
                       direction="row"
                       spacing={1}
                       alignItems="center"
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment     
+                      // @ts-ignore
                       justifyContent={alignMetaMap[header.column.columnDef.meta?.align?? "center"]}
                       // sx={{ display: 'inline-flex' }}
                     >

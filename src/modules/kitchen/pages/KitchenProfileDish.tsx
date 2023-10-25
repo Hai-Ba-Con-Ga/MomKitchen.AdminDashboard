@@ -1,20 +1,17 @@
-import { mockDishes } from "@/data/@mk/mock/Dish";
 import { Dish } from "@/types/@mk/entity/dish";
-import { BlockOutlined } from "@mui/icons-material";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material";
+import { Dialog, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
-import { isEmpty } from "lodash";
+import DeleteConfirmDialog from "@ui/common/dialogs/DeleteConfirmDialog";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import AddSkeletonCard from "../components/card/AddSkeletonCard";
 import DishCard from "../components/card/DishCard";
 import DishAddForm from "../components/form/DishAddForm";
-import DeleteConfirmDialog from "@ui/common/dialogs/DeleteConfirmDialog";
 import useDishData from "../hook/useDishData";
 import useKitchenData from "../hook/useKitchenData";
-import { useParams } from "react-router-dom";
-import { toast, useToast } from "react-toastify";
 const KitchenProfileDish = () => {
   const {id} = useParams();
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
@@ -36,7 +33,7 @@ const KitchenProfileDish = () => {
     setIdGetDish(id)
     setTimeout(()=>refreshKitchenDishData())
     
-  },[id,setIdGetDish])
+  },[id,setIdGetDish, refreshKitchenDishData])
   return (
     <Box component="div">
       <Stack direction="row">

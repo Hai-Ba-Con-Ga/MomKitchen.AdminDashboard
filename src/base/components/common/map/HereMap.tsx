@@ -1,7 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import H from '@here/maps-api-for-javascript';
-import { Box, useTheme } from '@mui/material';
 import { AreaAdmin } from '@/types/@mk/entity/area';
+import H from '@here/maps-api-for-javascript';
+import { useEffect, useRef } from 'react';
 type Props = {
     apikey?: string;
     area?: AreaAdmin
@@ -9,7 +8,6 @@ type Props = {
 
 const HereMap = (props: Props) => {
   const {area} = props;
-  const theme = useTheme();
     const mapRef = useRef(null);
     const map = useRef(null);
     const platform = useRef(null)
@@ -49,9 +47,9 @@ const HereMap = (props: Props) => {
             });
       
             // Add panning and zooming behavior to the map
-            const behavior = new H.mapevents.Behavior(
-              new H.mapevents.MapEvents(newMap)
-            );
+            // const behavior = new H.mapevents.Behavior(
+            //   new H.mapevents.MapEvents(newMap)
+            // );
             const linePoints = area?.boundaries?.reduce((prev, cur)=>[...prev, cur.lat, cur.lng, 100],[]);
             if(area?.boundaries?.length >=3 ){
               linePoints.push(area.boundaries[0].lat)

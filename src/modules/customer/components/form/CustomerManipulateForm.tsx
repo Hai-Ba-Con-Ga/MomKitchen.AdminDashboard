@@ -1,4 +1,4 @@
-import { Customer, CustomerAdmin } from "@/types/@mk/entity/customer";
+import { CustomerAdmin } from "@/types/@mk/entity/customer";
 import { Role } from "@/types/@mk/entity/role";
 import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
 import { CameraOutlined } from "@ant-design/icons";
@@ -30,7 +30,6 @@ type Props = {
   roles: Role[];
   layout?: "split" | "stack"
 };
-import dayjs from "dayjs"
 // const roles = []; // TODO: load from be
 
 const CustomerManipulateForm = (props: Props) => {

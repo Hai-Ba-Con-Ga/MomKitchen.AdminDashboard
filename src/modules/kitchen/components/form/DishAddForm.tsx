@@ -19,12 +19,13 @@ type Props = {
 
 const DishAddForm = ({dish,kitchenId, onCancel, onSuccessCallback}: Props) => {
     const theme = useTheme();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const formRef = useRef<any>();
     const isCreate = !dish;
-    const {register, formState : {errors}, control, setValue, handleSubmit} = useForm<DishAddForm>({
+    const {register, formState : {errors}, setValue, handleSubmit} = useForm<DishAddForm>({
     
     });
-    const {createDishHandler, isCreatingDish,updateDishHandler} = useDishForm();
+    const {createDishHandler,updateDishHandler} = useDishForm();
     
     const [selectedImage, setSelectedImage] = useState<File | undefined>(
         undefined
@@ -39,7 +40,7 @@ const DishAddForm = ({dish,kitchenId, onCancel, onSuccessCallback}: Props) => {
       }, [selectedImage, setValue]);
       useEffect(()=>{
         setValue("kitchenId", kitchenId)
-      },[kitchenId])
+      },[kitchenId, setValue])
   return (
     <>
     <DialogTitle id="alert-dialog-title">

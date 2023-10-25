@@ -1,9 +1,9 @@
 import { OrderAdmin } from "@/types/@mk/entity/order";
-import { PaginationState, SortingState, FilterFnOption } from "@tanstack/react-table";
+import { FilterState } from "@/types/common/pagination/FilterState";
+import { PaginationState, SortingState } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import OrderApi from "../service/order.api";
-import { FilterState } from "@/types/common/pagination/FilterState";
 
 
 const useOrderData = (enable?:boolean) => {

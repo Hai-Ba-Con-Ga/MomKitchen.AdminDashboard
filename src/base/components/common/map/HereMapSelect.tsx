@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import H from '@here/maps-api-for-javascript';
-import { Box, useTheme } from '@mui/material';
 import { AreaAdmin } from '@/types/@mk/entity/area';
+import H from '@here/maps-api-for-javascript';
 import { debounce } from 'lodash';
+import { useEffect, useRef, useState } from 'react';
 type Props = {
     apikey?: string;
     area? : AreaAdmin;
@@ -10,7 +9,7 @@ type Props = {
 }
 
 const HereMapSelect = (props: Props) => {
-    const theme = useTheme();
+    // const theme = useTheme();
       const mapRef = useRef(null);
       const map = useRef(null);
       const platform = useRef(null)

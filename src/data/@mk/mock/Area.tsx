@@ -49,7 +49,7 @@ export function generateRandomArea(): Area {
       createdBy: null,
       updatedBy: 'admin',
       isDeleted: false,
-      noOfKitchen: faker.number.int({min:0, max:20})
+      noOfKitchens: faker.number.int({min:0, max:20})
     };
   }
   export const mockAreas = Array.from({ length: 20 }, () => generateRandomArea());

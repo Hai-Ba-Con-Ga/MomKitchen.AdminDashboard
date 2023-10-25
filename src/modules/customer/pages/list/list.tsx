@@ -71,10 +71,10 @@ const CustomerList = () => {
   const [deleteConfirm, setDeleteConfirmation] = useState<boolean>(false);
   const [detailViewToggle, setDetailViewToggle] = useState<boolean>(false);
   const [actionId, setActionId] = useState<string>();
-  const handleAdd = () => {
-    setAdd(!add);
-    if (customer && !add) setCustomer(null);
-  };
+  // const handleAdd = () => {
+  //   setAdd(!add);
+  //   if (customer && !add) setCustomer(null);
+  // };
   const columnHelper = createColumnHelper<CustomerAdmin>();
 
   const columns = useMemo<ColumnDef<CustomerAdmin>[]>(

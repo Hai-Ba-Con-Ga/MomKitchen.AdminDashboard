@@ -6,7 +6,6 @@ import {
   PaginationState,
   SortingState
 } from "@tanstack/react-table";
-import { Endpoint } from "aws-sdk";
 
 interface UserGetParams {
   paging?: PaginationState;

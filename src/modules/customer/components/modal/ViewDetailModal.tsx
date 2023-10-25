@@ -18,15 +18,15 @@ import {
   ListItem,
   Typography
 } from "@mui/material";
-import { Box, Stack, useTheme } from "@mui/system";
+import { Stack, useTheme } from "@mui/system";
 import Avatar from "@ui/@extended/Avatar";
 import MainCard from "@ui/MainCard";
 import NumberFormat from "react-number-format";
 import { Link as RouterLink } from "react-router-dom";
 
 import { useMediaQuery } from "@mui/material";
-import useCustomerData from "../../hook/useCustomerData";
 import { toast } from "react-toastify";
+import useCustomerData from "../../hook/useCustomerData";
 type Props = {
   customer?: CustomerAdmin;
   onCancel?: () => void;

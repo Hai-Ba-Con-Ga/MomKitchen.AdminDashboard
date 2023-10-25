@@ -6,6 +6,8 @@ import { generateRandomUser } from "./User";
 
 // Define a function to generate a random customer
 export function generateRandomCustomer(): CustomerAdmin {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment     
+                      // @ts-ignore
   return {
     id: faker.datatype.number().toString(),
     createdDate: faker.date.recent().toISOString(),
@@ -22,7 +24,7 @@ export function generateRandomCustomer(): CustomerAdmin {
     favouriteKitchens: [],
     feedbacks: [],
     orders: [],
-    order_quantity: faker.datatype.number({ min: 1, max: 10 }), // Adjust the range as needed
+    orderQuantity: faker.datatype.number({ min: 1, max: 10 }), // Adjust the range as needed
     spentMoney: faker.datatype.float({ min: 50, max: 1000, precision: 0.01 }), // Adjust the range as needed
     email: "",
     avatarUrl:"",

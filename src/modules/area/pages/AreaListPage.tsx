@@ -1,15 +1,13 @@
-import { mockAreaAdmin } from '@/data/@mk/mock/Area';
 import { AreaAdmin } from '@/types/@mk/entity/area';
+import { Dialog } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import MainCard from '@ui/MainCard';
 import QuickTable from '@ui/common/table/QuickTable';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import ViewAreaDetail from '../component/ViewAreaDetail';
 import useAreaData from '../hooks/useAreaData';
 import useAreaTable from '../hooks/useAreaTable';
-import { useNavigate } from 'react-router-dom';
-import HereMap from '@ui/common/map/HereMap';
-import { Box, Dialog } from '@mui/material';
-import ViewAreaDetail from '../component/ViewAreaDetail';
 
 
 
@@ -26,7 +24,7 @@ const AreaListPage = () => {
     });
     const [viewDetailToggle, setViewDetailToggle] = useState<boolean>(false); 
     const {columnsDef} = useAreaTable({
-        handleEditClick: ()=>console.log("TODO: implement"),
+        handleEditClick: ()=>console.log("TODO: implement",viewDetailToggle),
         handleViewClick: (area)=>{
           setViewDetail({isShown: true,detailArea: area})
           setViewDetailToggle(true)

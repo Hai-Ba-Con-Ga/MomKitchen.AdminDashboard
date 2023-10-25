@@ -1,5 +1,5 @@
 import { mockRole } from "@/data/@mk/mock/Role";
-import { User } from "@/types/@mk/entity/user";
+import { CustomerAdmin } from "@/types/@mk/entity/customer";
 import { DeleteFilled } from "@ant-design/icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -13,15 +13,14 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
+import dayjs from "dayjs";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import useCustomerForm, {
   ManipulateCustomerForm,
 } from "../hook/useCustomerForm";
 import CustomerManipulateForm from "./form/CustomerManipulateForm";
-import { toast } from "react-toastify";
-import dayjs from "dayjs";
-import { CustomerAdmin } from "@/types/@mk/entity/customer";
 
 interface AddCustomerModalProps {
   isOpen?: boolean;
@@ -117,6 +116,8 @@ AddCustomerModalProps) => {
   // });
   const methods = useForm<ManipulateCustomerForm>({
     mode: "all",
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment     
+                      // @ts-ignore
     resolver: yupResolver(CustomerSchema),
     defaultValues: defaultValue,
   });

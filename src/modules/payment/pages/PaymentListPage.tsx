@@ -22,6 +22,7 @@ const PaymentListPage = () => {
     <MainCard content={false}>
     
     <QuickTable<OrderPaymentAdmin>
+      totalRows={mockOrderPayments.length}
       columns={columnsDef}
       data={data}
       onPaginationChange={(pagination) => {

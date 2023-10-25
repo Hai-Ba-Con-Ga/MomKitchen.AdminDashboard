@@ -1,18 +1,16 @@
 import useAwsS3 from "@/base/hooks/useAwsS3";
-import { Customer, CustomerAdmin } from "@/types/@mk/entity/customer";
+import useUserData from "@/modules/order/hook/useUserData";
+import { CustomerAdmin } from "@/types/@mk/entity/customer";
+import { User } from "@/types/@mk/entity/user";
 import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
 import * as Yup from "yup";
 import useCustomerData from "./useCustomerData";
-import { isNull } from "node_modules/cypress/types/lodash";
-import useUserData from "@/modules/order/hook/useUserData";
-import { Dayjs } from "dayjs";
-import { User } from "@/types/@mk/entity/user";
 
 export interface ManipulateCustomerForm {
   fullname?: string;
   email?: string;
   phone?: string;
-  birthday?: any,//string | Dayjs;
+  birthday?: unknown,//string | Dayjs;
   password?: string;
   confirmPassword?: string;
   role?: string;
@@ -84,10 +82,10 @@ const useCustomerForm = () => {
       avatar,
       fullname: fullName,
       email,
-      password,
+      // password,
       phone,
       birthday,
-      role,
+      // role,
       status,
     } = formValues;
     let objectPath = null;
@@ -124,7 +122,7 @@ const useCustomerForm = () => {
       phone,
       birthday,
       // role,
-      status,
+      // status,
     } = formValues;
     let objectPath = null;
     if (avatar) {
