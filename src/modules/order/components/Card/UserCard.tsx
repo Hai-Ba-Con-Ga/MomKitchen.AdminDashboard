@@ -8,12 +8,22 @@ import MainCard from "@ui/MainCard";
 type KitchenCardProps = {
   data: KitchenAdmin;
   onClick: (data: KitchenAdmin) => void;
+  selected?: boolean;
+
 };
 
 export const KitchenCard = (props: KitchenCardProps) => {
-  const { data, onClick } = props;
+  const theme = useTheme();
+
+  const { data, onClick,selected } = props;
   return (
-    <MainCard onClick={() => onClick(data)}>
+    <MainCard sx={{
+      cursor: "pointer",
+      ...(selected ? {backgroundColor: theme.palette.primary.lighter}: {})
+    }}
+    hoverStyle={{
+      backgroundColor: theme.palette.primary.lighter,
+    }} onClick={() => onClick(data)}>
       <Stack gap={1}>
         <Typography variant="h5">{data?.name}</Typography>
         <Stack direction="row" gap={1}>

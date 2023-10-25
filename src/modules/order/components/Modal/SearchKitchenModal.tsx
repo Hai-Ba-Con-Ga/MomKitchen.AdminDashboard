@@ -1,6 +1,6 @@
+import useKitchenData from "@/modules/kitchen/hook/useKitchenData";
 import { KitchenAdmin } from "@/types/@mk/entity/kitchen";
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
@@ -8,12 +8,13 @@ import {
   DialogTitle,
   Divider,
   Grid,
-  InputLabel,
   Stack,
   TextField
 } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useUserData from "../../hook/useUserData";
+import { KitchenCard } from "../Card/UserCard";
+import { toast } from "react-toastify";
 type Props = {
   open: boolean;
   onClose: () => void;
@@ -21,7 +22,7 @@ type Props = {
 };
 
 const SearchKitchenModal = (props: Props) => {
-  const { open, onClose } = props;
+  const { open, onClose,onSelectKitchen } = props;
   const {setPagination,setRoleName, refetchData} = useUserData();
   useEffect(()=>{
     setPagination({
@@ -31,32 +32,45 @@ const SearchKitchenModal = (props: Props) => {
     setRoleName("Admin");
     refetchData();
   },[refetchData,setRoleName,setPagination])
+  const [selectCustomer, setSelectCustomer] = useState<any>();
+
+  const {kitchenData, setKeyword,keyword} = useKitchenData()
   return (
     <Dialog
       open={open}
       onClose={() => onClose()}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description">
-      <Box component={"div"}>
         <DialogTitle>{"Select Kitchen"}</DialogTitle>
         <Divider />
-        <DialogContent sx={{ p: 2.5 }}>
-          <Stack spacing={1.25}>
-            <InputLabel htmlFor="customer-email">Email</InputLabel>
+        <DialogContent sx={{ p: 2.5 , width: "35rem"}}>
+        <Stack spacing={1.25}>
             <TextField
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
               fullWidth
               id="customer-email"
-              placeholder="Customer Email"
+              placeholder="Search"
             />
           </Stack>
-          <Stack>
+          <Stack mt={2}  gap={2}>
+            {kitchenData?.map((kitchen) => (
+              <KitchenCard
+              selected = {selectCustomer?.id === kitchen.id}
+                data={kitchen }
+                onClick={(selectCustomer) => {
+                  setSelectCustomer(selectCustomer);
+                }}
+                key={kitchen.id}
+              />
+            ))}
           </Stack>
         </DialogContent>
         <Divider />
         <DialogActions sx={{ p: 2.5 }}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
-              <Stack direction="row" spacing={2} alignItems="center">
+              <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
                 <Button
                   color="error"
                   onClick={() => {
@@ -67,6 +81,13 @@ const SearchKitchenModal = (props: Props) => {
                 <Button
                   sx={{
                     boxShadow: "none",
+                  }} 
+                  onClick={()=>{
+                    if(selectCustomer){
+                      onSelectKitchen(selectCustomer)
+                    }else {
+                      toast.error("You must choose one kitchen")
+                    }
                   }}
                   type="submit"
                   variant="shadow">
@@ -76,7 +97,6 @@ const SearchKitchenModal = (props: Props) => {
             </Grid>
           </Grid>
         </DialogActions>
-      </Box>
     </Dialog>
   );
 };

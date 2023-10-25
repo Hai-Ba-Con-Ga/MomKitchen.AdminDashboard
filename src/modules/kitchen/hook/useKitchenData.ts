@@ -124,7 +124,7 @@ const [pagination, setPagination] = useState<PaginationState>({
     });
     return response.data;
    }
-   const {data: kitchenMeal, isLoading: isLoadingKitchenMeal} = useQuery(["KitchenMeals",id, kitchenMealPagination],getKitchenMealsFunction,{ enabled: false})
+   const {data: kitchenMeal, isLoading: isLoadingKitchenMeal} = useQuery(["KitchenMeals",id, kitchenMealPagination],getKitchenMealsFunction,{ enabled: true})
 
    const getOwnerDetailFunction = async () => {
     const response =  await UserApi.getUserDetail(ownerId);
@@ -137,6 +137,7 @@ const [pagination, setPagination] = useState<PaginationState>({
     isLoadingDetail
   },
   setIdGetDish,
+  keyword,
   kitchenDish, kitchenMeal, kitchenTray,
   setKitchenDishPagination, setKitchenMealPagination, setKitchenTrayPagination,
   isLoadingKitchenDish, isLoadingKitchenMeal, isLoadingKitchenTray,

@@ -43,7 +43,7 @@ const KitchenProfileDish = () => {
           direction="horizontal"
           onSlideChange={() => console.log("slide change")}
           onSwiper={(swiper) => console.log(swiper)}>
-            <SwiperSlide>
+            <SwiperSlide key={"123123"}>
             <AddSkeletonCard
               onClick={() => {
                 setAddToggle(true);
@@ -54,7 +54,7 @@ const KitchenProfileDish = () => {
             />
           </SwiperSlide>
           {kitchenDish?.data?.map((dish, i) => (
-            <SwiperSlide>
+            <SwiperSlide key={dish?.id}>
               <DishCard dish={dish} key={i} onEdit={handleEditDish} onDelete={handleDeleteDish} />
             </SwiperSlide>
           ))}
