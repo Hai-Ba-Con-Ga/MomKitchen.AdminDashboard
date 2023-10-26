@@ -168,28 +168,28 @@ export const admin: NavItemType = {
     //   //   },
     //   // ],
     // },
-    {
-      id: "payment",
-      title: <FormattedMessage id="Payment" />,
-      type: "item",
-      icon: icons.Payment,
-      url: "/payment/list",
-      // children: [
-      //   {
-      //     id: "payment-list",
-      //     title: <FormattedMessage id="list" />,
-      //     type: "item",
-      //     icon: icons.TableOutlined,
-      //     url: "/payment/list",
-      //   },
-      //   {
-      //     id: "payment-analytics",
-      //     title: <FormattedMessage id="analytics" />,
-      //     type: "item",
-      //     url: "/payment-type/analytic",
-      //     icon: icons.AreaChartOutlined,
-      //   },
-      // ],
-    },
+    // {
+    //   id: "payment",
+    //   title: <FormattedMessage id="Payment" />,
+    //   type: "item",
+    //   icon: icons.Payment,
+    //   url: "/payment/list",
+    //   // children: [
+    //   //   {
+    //   //     id: "payment-list",
+    //   //     title: <FormattedMessage id="list" />,
+    //   //     type: "item",
+    //   //     icon: icons.TableOutlined,
+    //   //     url: "/payment/list",
+    //   //   },
+    //   //   {
+    //   //     id: "payment-analytics",
+    //   //     title: <FormattedMessage id="analytics" />,
+    //   //     type: "item",
+    //   //     url: "/payment-type/analytic",
+    //   //     icon: icons.AreaChartOutlined,
+    //   //   },
+    //   // ],
+    // },
   ],
 };

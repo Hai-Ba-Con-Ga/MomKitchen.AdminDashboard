@@ -120,7 +120,6 @@ const useOrderTable = (props: Props) => {
               </Stack>
             );
           },
-          size: 350,
           meta : {align: "left"}
         }),
         columnHelper.accessor("totalQuantity", {

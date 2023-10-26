@@ -1,17 +1,20 @@
 import { Add, Edit } from "@mui/icons-material";
-import {
-  FormControl,
-  ListItem,
-  MenuItem,
-  Stack
-} from "@mui/material";
+import { FormControl, ListItem, MenuItem, Stack } from "@mui/material";
 import MainCard from "@ui/MainCard";
 import { ReactNode, useEffect, useState } from "react";
 
 import { CustomerAdmin } from "@/types/@mk/entity/customer";
 import { KitchenAdmin } from "@/types/@mk/entity/kitchen";
 import { OrderStatus } from "@/types/@mk/enum/orderStatus";
-import { Button, FormHelperText, InputLabel, ListItemText, OutlinedInput, Select, Typography } from "@mui/material";
+import {
+  Button,
+  FormHelperText,
+  InputLabel,
+  ListItemText,
+  OutlinedInput,
+  Select,
+  Typography,
+} from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { isEmpty } from "lodash";
 import { Controller, useForm } from "react-hook-form";
@@ -37,6 +40,8 @@ const OrderCreatePage = () => {
   const [kitchen, setKitchen] = useState<KitchenAdmin>(null);
   const [meal, setMeal] = useState<Meal>(null);
   const [quantity, setQuantity] = useState<number>(0);
+  const [surcharge, setSurcharge] = useState<number>(0);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
   const [openModalSelect, setOpenModalSelect] = useState<{
     isOpen: boolean;
     type: "customer" | "kitchen";
@@ -71,17 +76,22 @@ const OrderCreatePage = () => {
     setKitchen(kitchen);
     handleCloseModal();
   };
-  const {setId,kitchenMeal } =useKitchenData()
-  useEffect(()=>{
-    if(kitchen?.id){
-      setId(kitchen.id)
+  const { setId, kitchenMeal } = useKitchenData();
+
+  useEffect(() => {
+    if (kitchen?.id) {
+      setId(kitchen.id);
     }
-  },[kitchen, setId])
-  useEffect(()=>{
+  }, [kitchen, setId]);
+  useEffect(() => {
     console.log(meal);
-    
-  },[meal])
-  
+  }, [meal]);
+useEffect(()=>{
+  setSurcharge(meal?.price * 0.05)
+},[quantity, meal?.price])
+  useEffect(()=>{
+    setTotalPrice(Math.floor(quantity * (meal?.price ?? 0) * 1.1)+surcharge)
+  },[surcharge,meal?.price,quantity])
   return (
     <MainCard>
       <Stack direction="row" gap={3}>
@@ -135,7 +145,7 @@ const OrderCreatePage = () => {
           <InputLabel htmlFor="customer-name">Order Date</InputLabel>
           <FormControl>
             <Controller
-              name={"birthday"}
+              name={"orderDate"}
               control={control}
               render={({
                 field: { onChange, value },
@@ -167,7 +177,7 @@ const OrderCreatePage = () => {
             />
           </FormControl>
         </Stack>
-        <Stack spacing={1.25} flexGrow={1}>
+        {/* <Stack spacing={1.25} flexGrow={1}>
           <InputLabel htmlFor="customer-name">Complete Date</InputLabel>
           <FormControl>
             <Controller
@@ -202,9 +212,9 @@ const OrderCreatePage = () => {
               )}
             />
           </FormControl>
-        </Stack>
+        </Stack> */}
       </Stack>
-      
+
       <Stack direction={"row"} mt={3} alignItems={"flex-end"} gap={3}>
         <MainCard sx={{ flexGrow: 1 }}>
           <Stack gap={0.5}>
@@ -246,14 +256,13 @@ const OrderCreatePage = () => {
                   variant="subtitle2"
                   fontSize={fontSizeCommon}
                   color="GrayText">
-                    {customer?.phone}
+                  {customer?.phone}
                 </Typography>
                 <Typography
                   variant="subtitle2"
                   fontSize={fontSizeCommon}
                   color="GrayText">
-                                      {customer?.email}
-
+                  {customer?.email}
                 </Typography>
               </>
             )}
@@ -277,28 +286,28 @@ const OrderCreatePage = () => {
                 </Button>
               )}
             </Stack>
-           { !isEmpty(kitchen) &&
-            <>
-            <Typography
-              variant="subtitle2"
-              fontSize={fontSizeCommon}
-              color="GrayText">
-              Belle J. Richter
-            </Typography>
-            <Typography
-              variant="subtitle2"
-              fontSize={fontSizeCommon}
-              color="GrayText">
-              1300 Mine RoadQuemado, NM 87829
-            </Typography>
-            <Typography
-              variant="subtitle2"
-              fontSize={fontSizeCommon}
-              color="GrayText">
-              305-829-7809
-            </Typography>
-                </>
-            }
+            {!isEmpty(kitchen) && (
+              <>
+                <Typography
+                  variant="subtitle2"
+                  fontSize={fontSizeCommon}
+                  color="GrayText">
+                  Belle J. Richter
+                </Typography>
+                <Typography
+                  variant="subtitle2"
+                  fontSize={fontSizeCommon}
+                  color="GrayText">
+                  1300 Mine RoadQuemado, NM 87829
+                </Typography>
+                <Typography
+                  variant="subtitle2"
+                  fontSize={fontSizeCommon}
+                  color="GrayText">
+                  305-829-7809
+                </Typography>
+              </>
+            )}
             {/* <Typography
               variant="subtitle2"
               fontSize={fontSizeCommon}
@@ -310,121 +319,118 @@ const OrderCreatePage = () => {
       </Stack>
 
       <Stack spacing={1.25} mt={3} flexGrow={1}>
-          <InputLabel htmlFor="customer-name">Meal</InputLabel>
-          <FormControl fullWidth>
-            <Select
-             
-              id="column-hiding"
-              displayEmpty
-              {...register("mealId")}
-              error={!!errors?.mealId}
-              input={
-                <OutlinedInput
-                  id="select-column-hiding"
-                  placeholder="Sort by"
-                />
+        <InputLabel htmlFor="customer-name">Meal</InputLabel>
+        <FormControl fullWidth>
+          <Select
+            id="column-hiding"
+            displayEmpty
+            {...register("mealId")}
+            error={!!errors?.mealId}
+            input={
+              <OutlinedInput id="select-column-hiding" placeholder="Sort by" />
+            }
+            renderValue={(selected) => {
+              setMeal(
+                kitchenMeal?.data?.filter((kit) => kit.id == selected)?.[0]
+              );
+              if (!selected) {
+                return <Typography variant="subtitle2">Select Meal</Typography>;
               }
-              renderValue={(selected) => {
-                setMeal(kitchenMeal?.data?.filter((kit)=>kit.id ==  selected)?.[0])
-                if (!selected) {
-                  return (
-                    <Typography variant="subtitle2">Select Meal</Typography>
-                  );
-                }
 
-                return (
-                  <Typography variant="subtitle2">
-                    {kitchenMeal?.data?.filter((kit)=>kit.id == selected )?.[0]?.name}
-                  </Typography>
-                );
-              }}>
-              {kitchenMeal?.data?.map((column) => (
-                  <MenuItem key={column.id} value={column.id}>
-                    <ListItemText primary={column.name} />
-                  </MenuItem>
-                ))}
-            </Select>
-            {/* {!!errors?.status && (
+              return (
+                <Typography variant="subtitle2">
+                  {
+                    kitchenMeal?.data?.filter((kit) => kit.id == selected)?.[0]
+                      ?.name
+                  }
+                </Typography>
+              );
+            }}>
+            {kitchenMeal?.data?.map((column) => (
+              <MenuItem key={column.id} value={column.id}>
+                <ListItemText primary={column.name} />
+              </MenuItem>
+            ))}
+          </Select>
+          {/* {!!errors?.status && (
               <FormHelperText
                 error
                 id="standard-weight-helper-text-email-login">
                 {errors.status?.message as string}
               </FormHelperText>
             )} */}
-          </FormControl>
-        </Stack>
+        </FormControl>
+      </Stack>
       <MainCard
         sx={{ mt: 3 }}
-        title={
-          <Typography variant="h4">Meal Information</Typography>
-        }>
-
-<List sx={{ py: 0 }}>
-                  <ListItem divider={true}>
-                    <Box >
-                    </Box>
-                    <Grid container spacing={3}>
-                      <Grid item xs={12} md={6}>
-                        <Stack spacing={0.5}>
-                          <Typography color="secondary">Meal Name</Typography>
-                          <Typography>{meal?.name}</Typography>
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <Stack spacing={0.5}>
-                          <Typography color="secondary">Serve Quantity</Typography>
-                          <Typography>
-                            {meal?.serviceQuantity}
-                          </Typography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                  <ListItem divider={true}>
-                    <Grid container spacing={3}>
-                      <Grid item xs={12} md={6}>
-                        <Stack spacing={0.5}>
-                          <Typography color="secondary">Serve from</Typography>
-                          <Typography>{meal?.serviceFrom}</Typography>
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <Stack spacing={0.5}>
-                          <Typography color="secondary">Serve from</Typography>
-                          <Typography>
-                          <Typography>{meal?.serviceTo}</Typography>
-                          </Typography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                  <ListItem divider={true}>
-                    <Grid container spacing={3}>
-                      <Grid item xs={12} md={6}>
-                        <Stack spacing={0.5}>
-                          <Typography color="secondary">Quantity</Typography>
-                          <TextField
-                fullWidth
-                id="customer-name"
-                type="number"
-                placeholder="Quantity"
-                {...register("quantity",{onChange:(e)=>{setQuantity(Number.parseInt(e.target.value))}})}
-                error={!!errors.fullname}
-                helperText={errors.fullname?.message as string}
-              />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <Stack spacing={0.5}>
-                          <Typography color="secondary"> Unit price</Typography>
-                          <Typography>
-                          <Typography fontWeight={600}>{meal?.price}đ</Typography>
-                          </Typography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                 {/* <ListItem>
+        title={<Typography variant="h4">Meal Information</Typography>}>
+        <List sx={{ py: 0 }}>
+          <ListItem divider={true}>
+            <Box></Box>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Stack spacing={0.5}>
+                  <Typography color="secondary">Meal Name</Typography>
+                  <Typography>{meal?.name}</Typography>
+                </Stack>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Stack spacing={0.5}>
+                  <Typography color="secondary">Serve Quantity</Typography>
+                  <Typography>{meal?.serviceQuantity}</Typography>
+                </Stack>
+              </Grid>
+            </Grid>
+          </ListItem>
+          <ListItem divider={true}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Stack spacing={0.5}>
+                  <Typography color="secondary">Serve from</Typography>
+                  <Typography>{meal?.serviceFrom}</Typography>
+                </Stack>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Stack spacing={0.5}>
+                  <Typography color="secondary">Serve from</Typography>
+                  <Typography>
+                    <Typography>{meal?.serviceTo}</Typography>
+                  </Typography>
+                </Stack>
+              </Grid>
+            </Grid>
+          </ListItem>
+          <ListItem divider={true}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Stack spacing={0.5}>
+                  <Typography color="secondary">Quantity</Typography>
+                  <TextField
+                    fullWidth
+                    id="customer-name"
+                    type="number"
+                    placeholder="Quantity"
+                    {...register("quantity", {
+                      onChange: (e) => {
+                        setQuantity(Number.parseInt(e.target.value));
+                      },
+                    })}
+                    error={!!errors.fullname}
+                    helperText={errors.fullname?.message as string}
+                  />
+                </Stack>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Stack spacing={0.5}>
+                  <Typography color="secondary"> Unit price</Typography>
+                  <Typography>
+                    <Typography fontWeight={600}>{meal?.price}đ</Typography>
+                  </Typography>
+                </Stack>
+              </Grid>
+            </Grid>
+          </ListItem>
+          {/* <ListItem>
                     <Stack spacing={0.5}>
                       <Typography color="secondary">Tray</Typography>
                        <Typography>{data?.meal?.tray?.name}</Typography>
@@ -435,8 +441,26 @@ const OrderCreatePage = () => {
                       </Stack>
                     </Stack>
                   </ListItem> */}
-                </List>
-        </MainCard>
+          {/* <ListItem>
+                    <Stack spacing={0.5}>
+                      <Typography color="secondary">Surcharge</Typography>
+                      <TextField
+                    fullWidth
+                    id="customer-name"
+                    type="number"
+                    placeholder="Surcharge"
+                    {...register("surcharge", {
+                      onChange: (e) => {
+                        setSurcharge(Number.parseInt(e.target.value));
+                      },
+                    })}
+                    error={!!errors.fullname}
+                    helperText={errors.fullname?.message as string}
+                  />
+                    </Stack>
+                  </ListItem> */}
+        </List>
+      </MainCard>
       <Stack alignItems={"flex-end"} mt={3}>
         <Stack width="40%" gap={0.75}>
           <Stack direction="row" justifyContent="space-between">
@@ -446,7 +470,9 @@ const OrderCreatePage = () => {
               color="GrayText">
               Sub Total:
             </Typography>
-            <Typography fontSize={fontSizeCommon}>{quantity* (meal?.price??0)}đ</Typography>
+            <Typography fontSize={fontSizeCommon}>
+              {quantity * (meal?.price ?? 0)}đ
+            </Typography>
           </Stack>
           {/* <Stack direction="row" justifyContent="space-between">
             <Typography
@@ -464,21 +490,38 @@ const OrderCreatePage = () => {
               color="GrayText">
               Tax(VAT 10%):
             </Typography>
-            <Typography fontSize={fontSizeCommon}>{quantity* (meal?.price??0)*0.1}đ</Typography>
+            <Typography fontSize={fontSizeCommon}>
+              {quantity * (meal?.price ?? 0) * 0.1}đ
+            </Typography>
+          </Stack>
+          <Stack direction="row" justifyContent="space-between">
+            <Typography
+              fontSize={fontSizeCommon}
+              variant="subtitle2"
+              color="GrayText">
+              Surcharge:
+            </Typography>
+            <Typography fontSize={fontSizeCommon}>
+              {surcharge}đ
+            </Typography>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
             <Typography fontSize={fontSizeCommon} variant="subtitle1">
               Grand Total:
             </Typography>
             <Typography fontSize={fontSizeCommon} variant="subtitle1">
-            {Math.floor(quantity* (meal?.price??0)*1.1)}đ
+              {totalPrice}đ
             </Typography>
           </Stack>
         </Stack>
       </Stack>
       <Stack mt={6} justifyContent="flex-end" direction="row" gap={2}>
-        <Button color="error" onClick={()=>nav(-1)}>Cancel</Button>
-        <Button variant="contained" type="submit">Save</Button>
+        <Button color="error" onClick={() => nav(-1)}>
+          Cancel
+        </Button>
+        <Button variant="contained" type="submit">
+          Save
+        </Button>
       </Stack>
       {openModalSelect.isOpen && (
         <>
