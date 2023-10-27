@@ -36,20 +36,21 @@ import { Box, styled } from "@mui/system";
 import { useMemo } from "react";
 import NumberFormat from "react-number-format";
 import OrderDishCard from "./OrderDishCard";
+import { OrderStatus } from "@/types/@mk/enum/orderStatus";
 
 // ==============================|| CUSTOMER - VIEW ||============================== //
 const CustomChip = styled(Chip)`
                   position: "absolute";
                   right: 10;
                   top: 10;
-                  fontSize: "0.675rem";
+                  font-size: "0.675rem";
 `
 const OrderViewInline = ({ data }: { data: OrderAdmin }) => {
   const theme = useTheme();
   const matchDownMD = useMediaQuery(theme.breakpoints.down("md"));
   const statusComponent = useMemo(()=>{
     switch (data.status) {
-      case 100:
+      case OrderStatus.UNPAID:
         return (
           <CustomChip
             color="error"
@@ -58,7 +59,7 @@ const OrderViewInline = ({ data }: { data: OrderAdmin }) => {
             variant="filled"
           />
         );
-      case 101:
+      case OrderStatus.PAID:
         return (
           <CustomChip
             color="warning"
@@ -67,9 +68,7 @@ const OrderViewInline = ({ data }: { data: OrderAdmin }) => {
             variant="filled"
           />
         );
-      case 102:
-      case 103:
-      case 104:
+      case OrderStatus.COMPLETE:
         return (
           <CustomChip
             color="success"
@@ -78,7 +77,7 @@ const OrderViewInline = ({ data }: { data: OrderAdmin }) => {
             variant="filled"
           />
         );
-      case 105: 
+      case OrderStatus.CANCEL: 
       return (
         <CustomChip
           color="error"
@@ -87,11 +86,20 @@ const OrderViewInline = ({ data }: { data: OrderAdmin }) => {
           variant="filled"
         />
       );
+      case OrderStatus.PENDING: 
+      return (
+        <CustomChip
+          color="warning"
+          label="PENDING"
+          size="small"
+          variant="filled"
+        />
+      );
       default:
         return (
           <CustomChip
-            color="primary"
-            label="Single"
+            color="warning"
+            label="PENDING"
             size="small"
             variant="filled"
           />

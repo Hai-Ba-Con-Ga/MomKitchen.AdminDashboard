@@ -12,7 +12,9 @@ interface TablePaginationProps {
   
  const TablePagination = ({ gotoPage, totalItems, setPageSize, pageSize, pageIndex }: TablePaginationProps) => {
     const [open, setOpen] = useState(false);
-  
+    console.log(totalItems);
+    
+    console.log("Total page",Math.ceil(totalItems / pageSize))
     const handleClose = () => {
       setOpen(false);
     };

@@ -5,4 +5,5 @@ export interface BaseEntity {
     createdBy?: string | null;
     updatedBy?: string | null;
     isDeleted?: boolean;
+    no?: number;
 }

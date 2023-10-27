@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useMemo, useState } from "react";
+import { MouseEvent, useCallback, useEffect, useMemo, useState } from "react";
 
 // material-ui
 import {
@@ -24,7 +24,6 @@ import MainCard from "@/base/components/MainCard";
 import { IndeterminateCheckbox } from "@/base/components/third-party/ReactTable";
 
 // assets
-import { mockCustomers } from "@/data/@mk/mock/Customer";
 import { CustomerAdmin } from "@/types/@mk/entity/customer";
 import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
 import {
@@ -33,13 +32,15 @@ import {
   EditTwoTone,
   EyeTwoTone,
 } from "@ant-design/icons";
-import { BlockOutlined } from "@mui/icons-material";
+import { BlockOutlined, Refresh } from "@mui/icons-material";
 import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { Box } from "@mui/system";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import QuickTable from "@ui/common/table/QuickTable";
 import NumberFormat from "react-number-format";
 import AddCustomerModal from "../../components/AddCustomerModal";
+import ViewCustomerDetailModal from "../../components/modal/ViewDetailModal";
+import useCustomerData from "../../hook/useCustomerData";
 
 // ==============================|| REACT TABLE ||============================== //
 
@@ -48,26 +49,38 @@ import AddCustomerModal from "../../components/AddCustomerModal";
 const CustomerList = () => {
   const theme = useTheme();
 
-  const data = useMemo(
-    () =>
-      // makeData(20)
-      mockCustomers,
-    []
-  );
-
+  // const data = useMemo(
+  //   () =>
+  //     // makeData(20)
+  //     mockCustomers,
+  //   []
+  // );
+  const {
+    customerData: data,
+    setPagination,
+    refreshCustomerData,
+    setSortState,
+    deleteCustomer: {mutateAsync : mutateDelete},
+    totalRows
+  } = useCustomerData();
+  useEffect(()=>{
+    refreshCustomerData()
+  },[refreshCustomerData])
   const [customer, setCustomer] = useState(null);
   const [add, setAdd] = useState<boolean>(false);
   const [deleteConfirm, setDeleteConfirmation] = useState<boolean>(false);
-  const handleAdd = () => {
-    setAdd(!add);
-    if (customer && !add) setCustomer(null);
-  };
-
+  const [detailViewToggle, setDetailViewToggle] = useState<boolean>(false);
+  const [actionId, setActionId] = useState<string>();
+  // const handleAdd = () => {
+  //   setAdd(!add);
+  //   if (customer && !add) setCustomer(null);
+  // };
   const columnHelper = createColumnHelper<CustomerAdmin>();
 
   const columns = useMemo<ColumnDef<CustomerAdmin>[]>(
     () => {
       const cols: ColumnDef<CustomerAdmin>[] = [
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         columnHelper.accessor<any, any>("selection", {
           header: ({
             table: {
@@ -85,94 +98,130 @@ const CustomerList = () => {
             />
           ),
           cell: ({ row }) => (
+            <Box display={"flex"} justifyContent="center">
             <IndeterminateCheckbox
               indeterminate={false}
               checked={row.getIsSelected()}
-            />
+              />
+              </Box>
           ),
           enableSorting: false,
         }),
         columnHelper.accessor("id", {
-          header: "#",
+          header: () => {
+            return "#";
+          },
+          cell: ({ row }) => (
+            <Typography  sx={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              }} textAlign={"center"}>
+              CUS-{row?.original?.no}
+            </Typography>
+          ),
         }),
         columnHelper.accessor("user.fullName", {
-          header: "Customer Name",
+          header: "Customer",
           cell: ({ row }) => {
             return (
               <Stack direction="row" spacing={1.5} alignItems="center">
                 <Avatar
                   alt="Avatar 1"
                   size="sm"
-                  src={row.original.user.avatarUrl}
+                  src={row.original?.avatarUrl}
                 />
                 <Stack spacing={0}>
                   <Typography variant="subtitle1">
-                    {row.original.user.fullName}
+                    {row.original?.fullName}
                   </Typography>
                   <Typography variant="caption" color="textSecondary">
-                    {row.original.user.email}
+                    {row.original?.email}
                   </Typography>
                 </Stack>
               </Stack>
             );
           },
+          meta: {
+            align : "left"
+          }
         }),
         // columnHelper.accessor("user.avatarUrl", {
         //   header: "Avatar",
         //   enableSorting: false,
         //   enableHiding: true,
         // }),
-        columnHelper.accessor("user.email", {
+        columnHelper.accessor("email", {
           header: "Email",
+          meta: {
+            align : "left"
+          }
         }),
-        columnHelper.accessor("user.phone", {
+        columnHelper.accessor("phone", {
           header: "Contact",
           cell: ({ renderValue }) => (
             <NumberFormat
+              style={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
               displayType="text"
               format="+1 (###) ###-####"
               mask="_"
               defaultValue={renderValue()}
             />
           ),
+          meta: {
+            align : "left"
+          }
         }),
-        columnHelper.accessor("order_quantity", {
+        columnHelper.accessor("orderQuantity", {
           header: "Order",
+          cell: ({ renderValue }) => (
+            <Typography textAlign={"right"}>{renderValue() ?? 0}</Typography>
+          ),
+          meta: {
+            align : "right"
+          }
         }),
         columnHelper.accessor("spentMoney", {
           header: "Spent",
           cell: ({ renderValue }) => (
             <NumberFormat
-              value={renderValue()}
+              style={{ textAlign: "right", width: "100%", display: "block" }}
+              value={renderValue() ?? 0}
               displayType="text"
               thousandSeparator
-              prefix="$"
+              suffix="đ"
             />
           ),
+          meta: {
+            align : "right"
+          }
         }),
         columnHelper.accessor("status", {
           header: "Status",
           cell: ({ row }) => {
-            switch (row.original.status) {
-              case CustomerStatus.INACTIVE:
-                return (
+            return (
+              <Box display={"flex"} justifyContent={"flex-start"} alignItems={"center"}>
+                {row.original.status == CustomerStatus.INACTIVE ? (
                   <Chip
                     color="error"
                     label="Inactive"
                     size="small"
                     variant="filled"
                   />
-                );
-              case CustomerStatus.ACTIVE:
-                return (
+                ) : (
                   <Chip
                     color="success"
                     label="Active"
                     size="small"
                     variant="filled"
                   />
-                );
-            }
+                )}
+              </Box >
+            );
           },
         }),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -202,7 +251,9 @@ const CustomerList = () => {
                     color="secondary"
                     onClick={(e: MouseEvent) => {
                       e.stopPropagation();
-                      row.toggleExpanded();
+                      // row.toggleExpanded();
+                      setCustomer(row.original);
+                      setDetailViewToggle(true);
                     }}>
                     {collapseIcon}
                   </IconButton>
@@ -212,8 +263,8 @@ const CustomerList = () => {
                     color="primary"
                     onClick={(e: MouseEvent) => {
                       e.stopPropagation();
-                      setCustomer(null);
-                      handleAdd();
+                      setCustomer(row.original);
+                      setAdd(true)
                     }}>
                     <EditTwoTone
                       rev={{}}
@@ -225,6 +276,7 @@ const CustomerList = () => {
                   <IconButton
                     color="error"
                     onClick={(e: MouseEvent) => {
+                      setActionId(row.original?.id)
                       setDeleteConfirmation(true);
                       e.stopPropagation();
                     }}>
@@ -258,9 +310,11 @@ const CustomerList = () => {
           "user.avatarUrl": true,
         }}
         columns={columns}
-        data={data}
+        data={data?.data}
         renderRowSubComponent={renderRowSubComponent}
+        totalRows={totalRows}
         onPaginationChange={(pagination) => {
+          setPagination(pagination)
           console.log(pagination);
         }}
         onRowSelectedChange={(rows) => console.log(rows)}
@@ -271,8 +325,19 @@ const CustomerList = () => {
           },
           buttonContentLangKey: "Add customer",
         }}
+        actionComponents={
+          <>
+           <IconButton
+              aria-label="close"
+              onClick={() => refreshCustomerData()}
+              color={"secondary"}
+              sx={{}}>
+              <Refresh />
+            </IconButton>
+          </>
+        }
         onSearchKeywordChange={(q) => console.log(q)}
-        onSortByChange={(sort) => console.log(sort)}
+        onSortByChange={(sort) => setSortState(sort)}
         filter={{
           isShow: true,
           isExpandFilterMenu: true,
@@ -285,10 +350,27 @@ const CustomerList = () => {
       <Dialog
         maxWidth="sm"
         fullWidth
-        onClose={handleAdd}
-        open={add}
+        onClose={()=>{setDetailViewToggle(false); setAdd(false); setCustomer(null)}}
+        open={add || detailViewToggle}
         sx={{ "& .MuiDialog-paper": { p: 0 } }}>
-        {add && <AddCustomerModal customer={customer} onCancel={handleAdd} />}
+        {add && <AddCustomerModal customer={customer} onManipulateCallback={()=>{
+          setAdd(false); setCustomer(null);refreshCustomerData();
+        }} onCancel={()=>{
+          setAdd(false); setCustomer(null);
+        }} />}
+        {detailViewToggle && (
+          <ViewCustomerDetailModal
+          updateCallback={()=> {
+            refreshCustomerData();
+            setDetailViewToggle(false)
+            setCustomer(null);
+          }}
+            customer={customer}
+            onCancel={() => {
+              setCustomer(null);
+              setDetailViewToggle(false)}}
+          />
+        )}
       </Dialog>
 
       {deleteConfirm && (
@@ -336,7 +418,9 @@ const CustomerList = () => {
               <Button
                 color="error"
                 variant="contained"
-                onClick={() => setDeleteConfirmation(false)}>
+                onClick={async () => {
+                  await mutateDelete(actionId);
+                  setDeleteConfirmation(false)}}>
                 Delete
               </Button>
             </DialogActions>

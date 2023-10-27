@@ -32,7 +32,7 @@ const [pagination, setPagination] = useState<PaginationState>({
   };
    // Define your initial query key, including dependencies like pagination, sorting, and keyword 
    // TODO: use debounce technique to prevent many calls at a short time
-   const queryKey = ['orders', pagination, sortState, keyword];
+   const queryKey = ['feedbacks', pagination, sortState, keyword];
 
    // Fetch order data using React Query's useQuery hook
    const { data: kitchenData,

@@ -22,6 +22,7 @@ type Props = {
 const AddKitchenModal = (props: Props) => {
   const { kitchen, onCancel } = props;
   const isCreating = !kitchen;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const methods = useForm<any>({
     mode: "all",
     resolver: yupResolver(null),

@@ -12,7 +12,7 @@ const useCustomerData = () => {
   });
   const [sortState, setSortState] = useState<SortingState>([]);
   const [keyword, setKeyword] = useState<string>();
-
+const [totalRows, setTotalRows] = useState<number> (0);
   // Define the fetchCustomerDataFunction that fetches orders using the OrderApi
   const fetchCustomerDataFunction = async () => {
     try {
@@ -21,6 +21,11 @@ const useCustomerData = () => {
         sort: sortState, // Pass the sort state
         keyword, // Pass the keyword
       });
+      if(response?.data?.totalCount >= 0) {
+        console.log("setTotalCount" ,response?.data?.totalCount  );
+        
+        setTotalRows(response?.data?.totalCount);
+      }
       // Return the data from the response
       return response?.data;
     } catch (e) {
@@ -30,11 +35,12 @@ const useCustomerData = () => {
   };
   // Define your initial query key, including dependencies like pagination, sorting, and keyword
   // TODO: use debounce technique to prevent many calls at a short time
-  const queryKey = ["orders", pagination, sortState, keyword];
+  const queryKey = ["customers", pagination, sortState, keyword];
 
   // Fetch order data using React Query's useQuery hook
   const {
     data: customerData,
+    refetch: refreshCustomerData
     //  isLoading, error
   } = useQuery(queryKey, fetchCustomerDataFunction, {
     onError: (err) => console.log("error at hook", err),
@@ -62,7 +68,7 @@ const useCustomerData = () => {
     // You can specify onSuccess and onError callbacks here
   });
   // Define the deleteCustomerFunction to delete an order using the OrderApi
-  const deleteCustomerFunction = async (id: number) => {
+  const deleteCustomerFunction = async (id: string) => {
     const response = await CustomerApi.deleteCustomer(id);
     // You can handle the success scenario here if needed
     return response?.data; // Return any data indicating the success of deletion
@@ -70,15 +76,26 @@ const useCustomerData = () => {
   const deleteCustomer = useMutation(deleteCustomerFunction, {
     // You can specify onSuccess and onError callbacks here
   });
+  
+  const statusUpdateFunction = async(customer: CustomerAdmin) => {
+    const response = await CustomerApi.updateStatusCustomer(customer.id, customer.status)
+    return response?.data
+  }
+  const statusUpdate =  useMutation(statusUpdateFunction, {
+
+  })
 
   return {
     customerData,
     setSortState,
     setKeyword,
     setPagination,
+    refreshCustomerData,
     updateCustomer,
     deleteCustomer,
     createCustomer,
+    totalRows,
+    statusUpdate
   };
 };
 

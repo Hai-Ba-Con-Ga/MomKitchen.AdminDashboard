@@ -46,6 +46,8 @@ const AxiosInterceptor: React.FC<PropsWithChildren<{ key?: string }>> = ({
       if (response.data?.data?.accessToken) {
         setToken(response.data.data);
       }
+      console.log("RES IN INTERCEPTOR", response.data);
+      
       return response;
     };
 

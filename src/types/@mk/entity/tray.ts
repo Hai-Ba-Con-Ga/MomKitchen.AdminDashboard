@@ -9,7 +9,8 @@ export interface Tray extends BaseEntity {
     imgUrl: string;
     price: number;
     kitchenId: string;
-    kitchen: Kitchen;
-    dishies: Dish[];
-    meals: Meal[];
+    kitchen?: Kitchen;
+    dishies?: Dish[];
+    dishes?: Dish[];
+    meals?: Meal[];
 }

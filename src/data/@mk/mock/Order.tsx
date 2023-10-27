@@ -2,6 +2,7 @@ import { Order, OrderAdmin } from "@/types/@mk/entity/order";
 import { faker } from "@faker-js/faker";
 import { generateRandomCustomer } from "./Customer";
 import { generateRandomMeal } from "./Meal";
+import { OrderStatus } from "@/types/@mk/enum/orderStatus";
 
   
   // Define a function to generate a random order
@@ -18,7 +19,7 @@ import { generateRandomMeal } from "./Meal";
       totalPrice: faker.datatype.number({ min: 10, max: 200, precision: 0.01 }),
       totalQuantity: faker.datatype.number({ min: 1, max: 10 }),
       surcharge: faker.datatype.number({ min: 1, max: 20, precision: 0.01 }),
-      status: faker.number.int({min:0,max: 1}),
+      status: OrderStatus.COMPLETE,
       customerId: customer.id
       ,
       customer: customer, // This will be populated when linking with a Customer entity
@@ -42,7 +43,7 @@ import { generateRandomMeal } from "./Meal";
       totalPrice: faker.datatype.number({ min: 10, max: 200, precision: 0.01 }),
       totalQuantity: faker.datatype.number({ min: 1, max: 10 }),
       surcharge: faker.datatype.number({ min: 1, max: 20, precision: 0.01 }),
-      status: faker.number.int({min:100,max: 105}),
+      status: OrderStatus.COMPLETE,
       customerId: customer.id
       ,
       customer: customer, // This will be populated when linking with a Customer entity

@@ -14,6 +14,7 @@ import TablePagination from "./TablePagination";
 
 interface Props<T> {
   data: T[];
+  totalRows: number;
   renderRowSubComponent?: (row: Row<T>) => ReactElement;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: ColumnDef<T, any>[];
@@ -49,6 +50,7 @@ interface Props<T> {
 function QuickTable<T>(props: Props<T>) {
   const {
     data,
+    totalRows = 0,
     columns,
     renderRowSubComponent,
     onPaginationChange,
@@ -134,7 +136,7 @@ function QuickTable<T>(props: Props<T>) {
         gotoPage={goToPage}
         pageIndex={pagination.pageIndex}
         pageSize={pagination.pageSize}
-        totalItems={200}
+        totalItems={totalRows}
         setPageSize={changePageSize}
       />
     </ScrollX>

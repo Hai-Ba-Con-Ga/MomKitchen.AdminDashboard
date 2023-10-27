@@ -1,6 +1,7 @@
 import axiosClient from "@/base/service/axiosClient";
 import { ResponseObject } from "@/base/service/response";
 import { Customer, CustomerAdmin } from "@/types/@mk/entity/customer";
+// import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
 
 import {
   PaginationState,
@@ -15,13 +16,17 @@ interface CustomerGetParams {
 }
 const CustomerApi = {
   getCustomers: (params: CustomerGetParams) => {
-    const endpoint = "/customers";
+    const endpoint = "/customer";
     return axiosClient.get<ResponseObject<CustomerAdmin[]>>(endpoint, {
-      params: { ...params },
+      params: { 
+        PageNumber: params.paging.pageIndex + 1 ?? 1,
+        PageSize: params.paging?.pageSize ?? 10
+
+       },
     });
   },
-  getCustomerDetail: (id: number) => {
-    const endpoint = "/customer";
+  getCustomerDetail: (id: string) => {
+    const endpoint = "/customer/"+id;
     return axiosClient.get<ResponseObject<CustomerAdmin>>(endpoint, {
         params: {
             id,
@@ -31,17 +36,26 @@ const CustomerApi = {
 createCustomer: (customer : Customer) => {
       const endpoint = "/customer";
       //TODO specify return type
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return axiosClient.post<ResponseObject<any>>(endpoint, customer)
   },
   updateCustomer: (customer: CustomerAdmin) => {
     const endpoint = "/customer";
     return axiosClient.put(endpoint, customer);
   },
-  deleteCustomer: (id: number) => {
-    const endpoint = "/customer";
+  deleteCustomer: (id: string) => {
+    const endpoint = "/customer/"+id;
     return axiosClient.delete(endpoint, {
       params: { id },
     });
   },
+  updateStatusCustomer :  async (customerId: string, status : string) => {
+
+    const endpoint = "/customer/"+customerId;
+    const result  = await axiosClient.put(endpoint, {
+      status: status == "ACTIVE" ? "INACTIVE" : "ACTIVE"
+    });
+    return result;
+  }
 };
 export default CustomerApi;

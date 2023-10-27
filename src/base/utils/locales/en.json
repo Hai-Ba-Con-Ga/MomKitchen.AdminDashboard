@@ -131,6 +131,10 @@
   "kitchen" : "Kitchen",
   "shipment": "Shipment",
   "order": "Order",
-  "admin" : "Admin"
+  "admin" : "Admin",
+  "Payment" : "Payment",
+  "payment" : "Payment",
+  "Area" : "Area",
+  "area" : "Area"
   
 }

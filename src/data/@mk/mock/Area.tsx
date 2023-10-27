@@ -1,23 +1,22 @@
 import { faker } from "@faker-js/faker";
-import { generateRandomLocation } from "./Location";
 import { Area, AreaAdmin } from "@/types/@mk/entity/area";
 
 export function generateRandomArea(): Area {
-    const northLocation = generateRandomLocation();
-    const southLocation = generateRandomLocation();
-    const eastLocation = generateRandomLocation();
-    const westLocation = generateRandomLocation();
+    // const northLocation = generateRandomLocation();
+    // const southLocation = generateRandomLocation();
+    // const eastLocation = generateRandomLocation();
+    // const westLocation = generateRandomLocation();
   
     return {
       name: faker.address.county(),
-      northId: northLocation.id,
-      north: northLocation,
-      southId: southLocation.id,
-      south: southLocation,
-      eastId: eastLocation.id,
-      east: eastLocation,
-      westId: westLocation.id,
-      west: westLocation,
+      // northId: northLocation.id,
+      // north: northLocation,
+      // southId: southLocation.id,
+      // south: southLocation,
+      // eastId: eastLocation.id,
+      // east: eastLocation,
+      // westId: westLocation.id,
+      // west: westLocation,
       kitchens: [], // You can populate this array with Kitchen objects
       id: faker.number.int().toString(),
       createdDate: faker.date.recent().toISOString(),
@@ -28,21 +27,21 @@ export function generateRandomArea(): Area {
     };
   }
   export function generateRandomAreaAdmin(): AreaAdmin {
-    const northLocation = generateRandomLocation();
-    const southLocation = generateRandomLocation();
-    const eastLocation = generateRandomLocation();
-    const westLocation = generateRandomLocation();
+    // const northLocation = generateRandomLocation();
+    // const southLocation = generateRandomLocation();
+    // const eastLocation = generateRandomLocation();
+    // const westLocation = generateRandomLocation();
   
     return {
       name: faker.address.county(),
-      northId: northLocation.id,
-      north: northLocation,
-      southId: southLocation.id,
-      south: southLocation,
-      eastId: eastLocation.id,
-      east: eastLocation,
-      westId: westLocation.id,
-      west: westLocation,
+      // northId: northLocation.id,
+      // north: northLocation,
+      // southId: southLocation.id,
+      // south: southLocation,
+      // eastId: eastLocation.id,
+      // east: eastLocation,
+      // westId: westLocation.id,
+      // west: westLocation,
       kitchens: [], // You can populate this array with Kitchen objects
       id: faker.number.int().toString(),
       createdDate: faker.date.recent().toISOString(),
@@ -50,7 +49,7 @@ export function generateRandomArea(): Area {
       createdBy: null,
       updatedBy: 'admin',
       isDeleted: false,
-      noOfKitchen: faker.number.int({min:0, max:20})
+      noOfKitchens: faker.number.int({min:0, max:20})
     };
   }
   export const mockAreas = Array.from({ length: 20 }, () => generateRandomArea());

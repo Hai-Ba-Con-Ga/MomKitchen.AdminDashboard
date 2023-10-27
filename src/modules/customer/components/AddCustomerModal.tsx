@@ -1,5 +1,5 @@
 import { mockRole } from "@/data/@mk/mock/Role";
-import { User } from "@/types/@mk/entity/user";
+import { CustomerAdmin } from "@/types/@mk/entity/customer";
 import { DeleteFilled } from "@ant-design/icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -13,8 +13,10 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
+import dayjs from "dayjs";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import useCustomerForm, {
   ManipulateCustomerForm,
 } from "../hook/useCustomerForm";
@@ -24,29 +26,31 @@ interface AddCustomerModalProps {
   isOpen?: boolean;
   // onCancel: (event: unknown, reason: "backdropClick" | "escapeKeyDown") => void;
   onCancel: () => void;
-  customer: User;
+  customer: CustomerAdmin;
+  onManipulateCallback?: ()=>void
 }
 
 const AddCustomerModal = ({
   customer,
   onCancel,
+  onManipulateCallback
 }: // isOpen,
 AddCustomerModalProps) => {
   const isCreating = !customer;
   const defaultValue: ManipulateCustomerForm = !isCreating
     ? {
         autoPassword: true,
-        birthday: customer?.birthday,
+        birthday: dayjs(customer?.birthday),
         email: customer?.email,
         phone: customer?.phone,
         fullname: customer?.fullName,
-        status: customer?.customer.status,
-        role: customer?.roleId,
+        status: customer?.status,
+        // role: customer?.roleId,
       }
     : { autoPassword: true };
-  console.log(defaultValue);
+  console.log(customer);
 
-  const { CustomerSchema, createCustomerHandler } = useCustomerForm();
+  const { CustomerSchema, createCustomerHandler, updateCustomerHandler } = useCustomerForm();
   const deleteHandler = () => {
     // dispatch(deleteCustomer(customer?.id)); - delete
     // dispatch(
@@ -112,10 +116,10 @@ AddCustomerModalProps) => {
   // });
   const methods = useForm<ManipulateCustomerForm>({
     mode: "all",
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment     
+                      // @ts-ignore
     resolver: yupResolver(CustomerSchema),
-    defaultValues: {
-      autoPassword: true,
-    },
+    defaultValues: defaultValue,
   });
 
   const roles = mockRole; // TODO: load from be
@@ -129,16 +133,32 @@ AddCustomerModalProps) => {
         <Box
           component={"form"}
           onSubmit={methods.handleSubmit(async (data) => {
-            console.log("Add customer data => ", data);
-            const res = await createCustomerHandler(data);
-            console.log(res);
+            if(isCreating){
+
+              const res = await createCustomerHandler(data);
+              if(res?.statusCode == "OK") {
+                toast.success("Add customer successfully");
+                onManipulateCallback()
+              }else {
+                toast.error(res?.message?? "There is some error try again later")
+              }
+              console.log(res);
+            }else {
+              const res = await updateCustomerHandler(data, customer);
+              if(res?.statusCode == "OK") {
+                toast.success("update customer successfully");
+                onManipulateCallback()
+              }else {
+                toast.error(res?.message?? "There is some error try again later")
+              }
+            }
           })}>
           <DialogTitle>
             {customer ? "Edit Customer" : "New Customer"}
           </DialogTitle>
           <Divider />
           <DialogContent sx={{ p: 2.5 }}>
-            <CustomerManipulateForm roles={roles} isCreating={isCreating} />
+            <CustomerManipulateForm roles={roles} customer={customer} isCreating={isCreating} />
           </DialogContent>
           <Divider />
           <DialogActions sx={{ p: 2.5 }}>

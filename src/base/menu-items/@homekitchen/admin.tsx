@@ -11,7 +11,7 @@ import {
   SnippetsOutlined,
   ShopOutlined,
 } from "@ant-design/icons";
-
+import { Map, Payment } from "@mui/icons-material";
 // type
 import { NavItemType } from "@/types/menu";
 
@@ -24,6 +24,8 @@ const icons = {
   ForkOutlined,
   SnippetsOutlined,
   ShopOutlined,
+  Map,
+  Payment
 };
 
 // ==============================|| MENU ITEMS - APPLICATIONS ||============================== //
@@ -55,6 +57,7 @@ export const admin: NavItemType = {
       type: "item",
       icon: icons.SnippetsOutlined,
       url: "/order/list",
+      breadcrumbs: true,
 
       // children: [
       //   {
@@ -78,7 +81,7 @@ export const admin: NavItemType = {
       title: <FormattedMessage id="customer" />,
       type: "item",
       icon: icons.CustomerServiceOutlined,
-      url: "/customer/list"
+      url: "/customer/list",
       // children: [
       //   {
       //     id: "customer-list",
@@ -100,7 +103,7 @@ export const admin: NavItemType = {
       id: "kitchen",
       title: <FormattedMessage id="kitchen" />,
       type: "item",
-      icon: icons.ForkOutlined,
+      icon: icons.ShopOutlined,
       url: "/kitchen/list"
       // children: [
       //   {
@@ -123,7 +126,7 @@ export const admin: NavItemType = {
       id: "area",
       title: <FormattedMessage id="Area" />,
       type: "item",
-      icon: icons.ShopOutlined,
+      icon: icons.Map,
       url: "/area/list"
       // children: [
       //   {
@@ -165,28 +168,28 @@ export const admin: NavItemType = {
     //   //   },
     //   // ],
     // },
-    {
-      id: "payment",
-      title: <FormattedMessage id="Payment" />,
-      type: "item",
-      icon: icons.ShopOutlined,
-      url: "/payment/list",
-      // children: [
-      //   {
-      //     id: "payment-list",
-      //     title: <FormattedMessage id="list" />,
-      //     type: "item",
-      //     icon: icons.TableOutlined,
-      //     url: "/payment/list",
-      //   },
-      //   {
-      //     id: "payment-analytics",
-      //     title: <FormattedMessage id="analytics" />,
-      //     type: "item",
-      //     url: "/payment-type/analytic",
-      //     icon: icons.AreaChartOutlined,
-      //   },
-      // ],
-    },
+    // {
+    //   id: "payment",
+    //   title: <FormattedMessage id="Payment" />,
+    //   type: "item",
+    //   icon: icons.Payment,
+    //   url: "/payment/list",
+    //   // children: [
+    //   //   {
+    //   //     id: "payment-list",
+    //   //     title: <FormattedMessage id="list" />,
+    //   //     type: "item",
+    //   //     icon: icons.TableOutlined,
+    //   //     url: "/payment/list",
+    //   //   },
+    //   //   {
+    //   //     id: "payment-analytics",
+    //   //     title: <FormattedMessage id="analytics" />,
+    //   //     type: "item",
+    //   //     url: "/payment-type/analytic",
+    //   //     icon: icons.AreaChartOutlined,
+    //   //   },
+    //   // ],
+    // },
   ],
 };

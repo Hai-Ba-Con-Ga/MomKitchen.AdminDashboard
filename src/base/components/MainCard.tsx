@@ -26,6 +26,7 @@ const headerSX = {
 
 export interface MainCardProps extends KeyedObject {
   border?: boolean;
+  borderStyle?: string;
   boxShadow?: boolean;
   children: ReactNode | string;
   subheader?: ReactNode | string;
@@ -40,12 +41,14 @@ export interface MainCardProps extends KeyedObject {
   elevation?: number;
   title?: ReactNode | string;
   modal?: boolean;
+  hoverStyle?: CSSProperties;
 }
 
 const MainCard = forwardRef(
   (
     {
       border = true,
+      borderStyle = "1px solid",
       boxShadow,
       children,
       subheader,
@@ -59,6 +62,7 @@ const MainCard = forwardRef(
       sx = {},
       title,
       modal = false,
+      hoverStyle={},
       ...others
     }: MainCardProps,
     ref: Ref<HTMLDivElement>
@@ -73,18 +77,20 @@ const MainCard = forwardRef(
         {...others}
         sx={{
           position: "relative",
-          border: border ? "1px solid" : "none",
           borderRadius: 1,
-          borderColor:
-            theme.palette.mode === "dark"
-              ? theme.palette.divider
-              : theme.palette.grey.A800,
+          
           boxShadow:
-            boxShadow && (!border || theme.palette.mode === "dark")
-              ? shadow || theme.customShadows.z1
-              : "inherit",
+          boxShadow && (!border || theme.palette.mode === "dark")
+          ? shadow || theme.customShadows.z1
+          : "inherit",
+          border: border ? borderStyle : "none",
+          borderColor:
+          theme.palette.mode === "dark"
+          ? theme.palette.divider
+          : theme.palette.grey.A800,
           ":hover": {
             boxShadow: boxShadow ? shadow || theme.customShadows.z1 : "inherit",
+            ...hoverStyle
           },
           ...(modal && {
             position: "absolute",
@@ -98,6 +104,7 @@ const MainCard = forwardRef(
               maxHeight: `calc(100vh - 200px)`,
             },
           }),
+          
           ...sx,
         }}>
         {/* card header and action */}

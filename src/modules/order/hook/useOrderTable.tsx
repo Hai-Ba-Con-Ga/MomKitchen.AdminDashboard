@@ -1,28 +1,28 @@
 import { OrderAdmin } from "@/types/@mk/entity/order";
-import {
-  CloseOutlined,
-  DeleteTwoTone,
-  EditTwoTone,
-  EyeTwoTone,
-} from "@ant-design/icons";
-import { Chip, IconButton, Tooltip, Typography } from "@mui/material";
+import { OrderStatus } from "@/types/@mk/enum/orderStatus";
+import { CloseOutlined, EyeTwoTone } from "@ant-design/icons";
+import { Delete } from "@mui/icons-material";
+import { Box, Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import { Stack, useTheme } from "@mui/system";
 import { Row, createColumnHelper } from "@tanstack/react-table";
 import Avatar from "@ui/@extended/Avatar";
 import { IndeterminateCheckbox } from "@ui/third-party/ReactTable";
 import { MouseEvent, useCallback, useMemo } from "react";
 import NumberFormat from "react-number-format";
+import { useNavigate } from "react-router-dom";
 import OrderViewInline from "../components/OrderViewInline";
 
 type Props = {
   handleEditClick: (order: OrderAdmin) => void;
+  handleDelete: (id: string) => void;
 };
 
 const useOrderTable = (props: Props) => {
-  const { handleEditClick } = props;
+  const { handleDelete } = props;
   const theme = useTheme();
   const columnHelper = createColumnHelper<OrderAdmin>();
   // const [orderDetail, setOrderDetail] = useState(null);
+  const nav = useNavigate();
   const columns = useMemo(
     () => {
       const cols = [
@@ -34,13 +34,15 @@ const useOrderTable = (props: Props) => {
               getToggleAllRowsSelectedHandler,
             },
           }) => (
-            <IndeterminateCheckbox
-              {...{
-                checked: getIsAllRowsSelected(),
-                indeterminate: getIsSomeRowsSelected(),
-                onChange: getToggleAllRowsSelectedHandler(),
-              }}
-            />
+            <Box>
+              <IndeterminateCheckbox
+                {...{
+                  checked: getIsAllRowsSelected(),
+                  indeterminate: getIsSomeRowsSelected(),
+                  onChange: getToggleAllRowsSelectedHandler(),
+                }}
+              />
+            </Box>
           ),
           cell: ({ row }) => (
             <IndeterminateCheckbox
@@ -49,9 +51,27 @@ const useOrderTable = (props: Props) => {
             />
           ),
           enableSorting: false,
+          size: 50,
+          meta: {
+            align: "left",
+          },
         }),
         columnHelper.accessor("id", {
           header: "#",
+          cell: ({ row }) => {
+            return (
+              <Typography
+                variant="subtitle2"
+                textAlign={"center"}
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}>
+                OD-{row.original?.no ? row.original?.no : row.original?.id}
+              </Typography>
+            );
+          },
         }),
         columnHelper.accessor("customer", {
           header: "Customer",
@@ -74,21 +94,22 @@ const useOrderTable = (props: Props) => {
               </Stack>
             );
           },
+          meta: { align: "left" },
         }),
         columnHelper.accessor("meal", {
-          header: "Tray",
+          header: "Meal",
           enableSorting: false,
           cell: ({ row }) => {
             return (
               <Stack direction="row" spacing={1.5} alignItems="center">
-                <Avatar
+                {/* <Avatar
                   alt="Meal"
                   size="sm"
                   src={row.original.meal?.tray?.imgUrl}
-                />
+                /> */}
                 <Stack spacing={0}>
                   <Typography variant="subtitle1">
-                    {row.original.meal?.tray?.name.toUpperCase()}
+                    {row.original.meal?.name.toUpperCase()}
                   </Typography>
                   {/* <Typography variant="caption" color="textSecondary">
                     {row.original.customer?.user?.email}
@@ -97,13 +118,14 @@ const useOrderTable = (props: Props) => {
               </Stack>
             );
           },
+          meta: { align: "left" },
         }),
-        columnHelper.accessor("totalQuantity", {
-          header: "Total Quantity",
+        columnHelper.accessor("meal.kitchen.name", {
+          header: "Kitchen name",
           cell: ({ renderValue }) => (
             <Typography
               fontWeight="500"
-              textAlign={"center"}
+              textAlign={"right"}
               variant="subtitle1">
               {renderValue()}
             </Typography>
@@ -113,28 +135,74 @@ const useOrderTable = (props: Props) => {
           header: "totalPrice ",
           cell: ({ renderValue }) => (
             <NumberFormat
+              style={{
+                display: "block",
+                width: "100%",
+                textAlign: "right",
+              }}
               displayType="text"
-              prefix="₫"
+              suffix="₫"
               defaultValue={renderValue()}
             />
           ),
+          meta: { align: "right" },
         }),
-        columnHelper.accessor("surcharge", {
-          header: "Surcharge",
-          cell: ({ renderValue }) => (
-            <NumberFormat
-              displayType="text"
-              prefix="₫"
-              defaultValue={renderValue()}
-            />
-          ),
+        // columnHelper.accessor("surcharge", {
+        //   header: "Surcharge",
+        //   cell: ({ renderValue }) => (
+        //     <NumberFormat
+        //       style={{
+        //         display: "block",
+        //         width: "100%",
+        //         textAlign: "right",
+        //       }}
+        //       displayType="text"
+        //       prefix="₫"
+        //       defaultValue={renderValue()}
+        //     />
+        //   ),
+        //   meta : {align: "right"}
+
+        // }),
+        columnHelper.accessor("createdDate", {
+          header: "Order Time",
+          cell: ({ renderValue }) => {
+            const parsedDate = new Date(renderValue());
+            const hours = parsedDate.getUTCHours();
+            const minutes = parsedDate.getUTCMinutes();
+
+            // Pad single-digit values with leading zeros
+            const day = parsedDate.getUTCDate();
+            const month = parsedDate.getUTCMonth() + 1; // Months are 0-indexed, so add 1.
+            const year = parsedDate.getUTCFullYear();
+
+            // Pad single-digit values with leading zeros
+            const formattedDay = day < 10 ? `0${day}` : day;
+            const formattedMonth = month < 10 ? `0${month}` : month;
+            const formattedYear = year;
+            const formattedHours = hours < 10 ? `0${hours}` : hours;
+            const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+            const formattedDateTime = `${formattedDay}-${formattedMonth}-${formattedYear} ${formattedHours}:${formattedMinutes}`;
+            return (
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}>
+                {formattedDateTime}
+              </Typography>
+            );
+          },
+          meta: { align: "left" },
         }),
         columnHelper.accessor("status", {
           header: "Status",
           cell: ({ renderValue }) => {
-            // TODO: order status migrate
             switch (renderValue()) {
-              case 100:
+              case OrderStatus.UNPAID:
                 return (
                   <Chip
                     color="error"
@@ -143,7 +211,7 @@ const useOrderTable = (props: Props) => {
                     variant="filled"
                   />
                 );
-              case 101:
+              case OrderStatus.PAID:
                 return (
                   <Chip
                     color="warning"
@@ -152,9 +220,8 @@ const useOrderTable = (props: Props) => {
                     variant="filled"
                   />
                 );
-              case 102:
-              case 103:
-              case 104:
+
+              case OrderStatus.COMPLETE:
                 return (
                   <Chip
                     color="success"
@@ -163,7 +230,7 @@ const useOrderTable = (props: Props) => {
                     variant="filled"
                   />
                 );
-              case 105:
+              case OrderStatus.CANCEL:
                 return (
                   <Chip
                     color="error"
@@ -172,19 +239,31 @@ const useOrderTable = (props: Props) => {
                     variant="filled"
                   />
                 );
+              case OrderStatus.PENDING:
+                return (
+                  <Chip
+                    color="warning"
+                    label="CANCEL"
+                    size="small"
+                    variant="filled"
+                  />
+                );
               default:
                 return (
                   <Chip
-                    color="primary"
-                    label="Single"
+                    color="warning"
+                    label="CANCEL"
                     size="small"
                     variant="filled"
                   />
                 );
             }
           },
+          meta: {
+            align: "left",
+          },
         }),
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         columnHelper.accessor<any, any>("action", {
           header: "Actions",
           enableSorting: false,
@@ -211,12 +290,13 @@ const useOrderTable = (props: Props) => {
                     color="secondary"
                     onClick={(e: MouseEvent) => {
                       e.stopPropagation();
-                      row.toggleExpanded();
+                      nav(`/order/${row.original?.id}`);
+                      // row.toggleExpanded();
                     }}>
                     {collapseIcon}
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Edit">
+                {/* <Tooltip title="Edit">
                   <IconButton
                     color="primary"
                     onClick={(e: MouseEvent) => {
@@ -225,14 +305,15 @@ const useOrderTable = (props: Props) => {
                     }}>
                     <EditTwoTone rev={{}} color={theme.palette.primary.main} />
                   </IconButton>
-                </Tooltip>
+                </Tooltip> */}
                 <Tooltip title="Delete">
                   <IconButton
                     color="error"
                     onClick={(e: MouseEvent) => {
+                      handleDelete(row.original?.id);
                       e.stopPropagation();
                     }}>
-                    <DeleteTwoTone rev={{}} color={theme.palette.error.main} />
+                    <Delete color={theme.palette.error.main} />
                   </IconButton>
                 </Tooltip>
               </Stack>

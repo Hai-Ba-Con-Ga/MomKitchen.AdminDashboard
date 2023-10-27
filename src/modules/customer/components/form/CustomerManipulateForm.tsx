@@ -1,4 +1,4 @@
-import { Customer } from "@/types/@mk/entity/customer";
+import { CustomerAdmin } from "@/types/@mk/entity/customer";
 import { Role } from "@/types/@mk/entity/role";
 import { CustomerStatus } from "@/types/@mk/enum/customerStatus";
 import { CameraOutlined } from "@ant-design/icons";
@@ -25,14 +25,15 @@ import { ChangeEvent, ReactNode, useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { ManipulateCustomerForm } from "../../hook/useCustomerForm";
 type Props = {
-  customer?: Customer;
+  customer?: CustomerAdmin;
   isCreating?: boolean;
   roles: Role[];
+  layout?: "split" | "stack"
 };
 // const roles = []; // TODO: load from be
 
 const CustomerManipulateForm = (props: Props) => {
-  const { isCreating = true, roles } = props;
+  const { isCreating = true, layout = "split", customer } = props;
   const theme = useTheme();
   const {
     control,
@@ -45,7 +46,7 @@ const CustomerManipulateForm = (props: Props) => {
     undefined
   );
 
-  const [avatar, setAvatar] = useState<string | undefined>();
+  const [avatar, setAvatar] = useState<string | undefined>(customer?.avatarUrl??null);
   useEffect(() => {
     if (selectedImage) {
       setAvatar(URL.createObjectURL(selectedImage));
@@ -58,7 +59,7 @@ const CustomerManipulateForm = (props: Props) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={3}>
+     { layout === "split" && <Grid item xs={12} md={3}>
         <Stack direction="row" justifyContent="center" sx={{ mt: 3 }}>
           <FormLabel
             htmlFor="change-avtar"
@@ -115,9 +116,67 @@ const CustomerManipulateForm = (props: Props) => {
             }
           />
         </Stack>
-      </Grid>
-      <Grid item xs={12} md={8}>
+      </Grid>}
+      <Grid item xs={12} md={layout === "split" ? 8 : 12}>
         <Grid container spacing={3}>
+        { layout === "stack" && <Grid item xs={12}>
+        <Stack direction="row" justifyContent="center" sx={{ mt: 3 }}>
+          <FormLabel
+            htmlFor="change-avtar"
+            sx={{
+              position: "relative",
+              borderRadius: "50%",
+              overflow: "hidden",
+              "&:hover .MuiBox-root": { opacity: 1 },
+              cursor: "pointer",
+            }}>
+            <Avatar
+              alt="Avatar 1"
+              src={avatar}
+              sx={{ width: 120, height: 120, border: "1px dashed" }}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                backgroundColor:
+                  theme.palette.mode === "dark"
+                    ? "rgba(255, 255, 255, .75)"
+                    : "rgba(0,0,0,.65)",
+                width: "100%",
+                height: "100%",
+                opacity: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}>
+              <Stack spacing={0.5} alignItems="center">
+                <CameraOutlined
+                  rev={{}}
+                  style={{
+                    color: theme.palette.secondary.lighter,
+                    fontSize: "2rem",
+                  }}
+                />
+                <Typography sx={{ color: "secondary.lighter" }}>
+                  Upload
+                </Typography>
+              </Stack>
+            </Box>
+          </FormLabel>
+          <TextField
+            type="file"
+            id="change-avtar"
+            label="Outlined"
+            variant="outlined"
+            sx={{ display: "none" }}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setSelectedImage(e.target.files?.[0])
+            }
+          />
+        </Stack>
+      </Grid>}
           <Grid item xs={12}>
             <Stack spacing={1.25}>
               <InputLabel htmlFor="customer-name">Full Name</InputLabel>
@@ -217,7 +276,7 @@ const CustomerManipulateForm = (props: Props) => {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid item xs={12}>
+        {isCreating &&  <Grid item xs={12}>
             <Stack spacing={1.25}>
               <InputLabel htmlFor="customer-orderStatus">Status</InputLabel>
               <FormControl fullWidth>
@@ -266,8 +325,8 @@ const CustomerManipulateForm = (props: Props) => {
                 )}
               </FormControl>
             </Stack>
-          </Grid>
-          <Grid item xs={12}>
+          </Grid>}
+          {/* <Grid item xs={12}>
             <Stack spacing={1.25}>
               <InputLabel htmlFor="customer-orderStatus">Role</InputLabel>
               <FormControl fullWidth>
@@ -309,7 +368,7 @@ const CustomerManipulateForm = (props: Props) => {
                 )}
               </FormControl>
             </Stack>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             {/* <Stack
             direction="row"
@@ -349,7 +408,7 @@ const CustomerManipulateForm = (props: Props) => {
                 control={control}
                 render={({
                   field: { onChange, value },
-                  fieldState: { error },
+                  
                 }) => (
                   <FormControlLabel
                     control={

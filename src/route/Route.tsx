@@ -14,6 +14,16 @@ import AreaListPage from "@/modules/area/pages/AreaListPage";
 import FeedbackListPage from "@/modules/feedback/pages/FeedbackListPage";
 import PaymentListPage from "@/modules/payment/pages/PaymentListPage";
 import DashboardPage from "@/modules/dashboard/pages";
+import KitchenCreatePage from "@/modules/kitchen/pages/KitchenCreatePage";
+import OrderCreatePage from "@/modules/order/pages/create/OrderCreatePage";
+import AreaCreatePage from "@/modules/area/pages/AreaCreatePage";
+import KitchenDetailPage from "@/modules/kitchen/pages/KitchenDetailPage";
+import KitchenProfile from "@/modules/kitchen/pages/KitchenProfile";
+// import KitchenProfileMeal from "@/modules/kitchen/pages/KitchenProfileMeal";
+import KitchenProfileTray from "@/modules/kitchen/pages/KitchenProfileTray";
+import KitchenProfileDish from "@/modules/kitchen/pages/KitchenProfileDish";
+import OrderDetailPage from "@/modules/order/pages/detail/OrderDetailPage";
+import KitchenProfileMeal from "@/modules/kitchen/pages/KitchenProfileMeal";
 const routes: RouteObject[] = [
   {
     path: "/",
@@ -62,6 +72,31 @@ const routes: RouteObject[] = [
             path: "analytic",
             element: <h1>kitchen analytic</h1>,
           },
+          {
+            path: "create",
+            element: <KitchenCreatePage/>
+          },{
+            path: ":id",
+            element: <KitchenDetailPage/>,
+            children: [
+              {
+                path:"",
+                element : <KitchenProfile/>
+              },
+              {
+                path: "trays",
+                element : <KitchenProfileTray/>
+              },
+              {
+                path: "dishes",
+                element: <KitchenProfileDish/>
+              },
+              {
+                path: "meals",
+                element: <KitchenProfileMeal/>
+              }
+            ]
+          }
         ],
       },
       {
@@ -80,6 +115,15 @@ const routes: RouteObject[] = [
             path: "analytic",
             element: <h1>order analytic</h1>,
           },
+          {
+            path: "create",
+            element: <OrderCreatePage/>
+          },
+          {
+            path: ":id",
+            element: <OrderDetailPage/>
+          },
+
         ],
       },
       {
@@ -98,6 +142,10 @@ const routes: RouteObject[] = [
             path: "analytic",
             element: <h1>promotion analytic</h1>,
           },
+          {
+            path: "create",
+            element: <AreaCreatePage/>
+          }
         ],
       },
       {
@@ -106,7 +154,7 @@ const routes: RouteObject[] = [
         children: [
           {
             path: "",
-            element: <Navigate to="/feedback/list" replace />,
+            element: <Navigate to="/feedback/list" replace />
           },
           {
             path: "list",
