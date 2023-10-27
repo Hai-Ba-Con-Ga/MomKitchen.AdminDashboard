@@ -1,6 +1,6 @@
 // TODO : fix the types later
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 
 import {
   ArrowDropDownOutlined,
@@ -58,10 +58,10 @@ interface BaseTableV8Props<T> {
   };
 }
 const alignMetaMap = {
-  left : "flex-start",
-  center : "center",
-  right : "flex-end"
-}
+  left: "flex-start",
+  center: "center",
+  right: "flex-end",
+};
 function BaseTableV8<T>(props: BaseTableV8Props<T>) {
   const {
     columns = [],
@@ -175,14 +175,14 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paging]);
 
-  const [, setListItems] = useState<Row<T>[]>(table.getRowModel().rows);
-  useEffect(
-    () => {
-      setListItems(table.getRowModel().rows);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [table.getRowModel().rows, table]
-  ); // update ListItem on data change in Draggable
+  // const [, setListItems] = useState<Row<T>[]>(table.getRowModel().rows);
+  // useEffect(
+  //   () => {
+  //     setListItems(table.getRowModel().rows);
+  //   },
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   [table.getRowModel().rows, table]
+  // ); // update ListItem on data change in Draggable
 
   const tableFooterRender = () => {
     if (footer?.hasFooter) {
@@ -262,9 +262,13 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
                       direction="row"
                       spacing={1}
                       alignItems="center"
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment     
-                      // @ts-ignore
-                      justifyContent={alignMetaMap[header.column.columnDef.meta?.align?? "center"]}
+                      justifyContent={
+                        alignMetaMap[
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-ignore
+                          header.column.columnDef.meta?.align ?? "center"
+                        ]
+                      }
                       // sx={{ display: 'inline-flex' }}
                     >
                       <TableHeadCell>

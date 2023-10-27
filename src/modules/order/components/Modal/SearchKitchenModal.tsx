@@ -32,6 +32,8 @@ const SearchKitchenModal = (props: Props) => {
     setRoleName("Admin");
     refetchData();
   },[refetchData,setRoleName,setPagination])
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectCustomer, setSelectCustomer] = useState<any>();
 
   const {kitchenData, setKeyword,keyword} = useKitchenData()

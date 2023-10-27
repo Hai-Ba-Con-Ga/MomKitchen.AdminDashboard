@@ -1,5 +1,7 @@
 import { KitchenAdmin } from "@/types/@mk/entity/kitchen";
+import { Refresh } from "@mui/icons-material";
 import { DatePicker } from "@mui/x-date-pickers";
+import IconButton from "@ui/@extended/IconButton";
 import MainCard from "@ui/MainCard";
 import DeleteConfirmDialog from "@ui/common/dialogs/DeleteConfirmDialog";
 import QuickTable from "@ui/common/table/QuickTable";
@@ -32,10 +34,9 @@ const KitchenListPage = () => {
     deleteKitchen: { mutateAsync },
     refreshKitchenData,
   } = useKitchenData();
-  useEffect(()=>{
+  useEffect(() => {
     console.log(totalRows);
-    
-  },[totalRows])
+  }, [totalRows]);
   return (
     <MainCard content={false}>
       <QuickTable<KitchenAdmin>
@@ -69,6 +70,13 @@ const KitchenListPage = () => {
                 console.log(typeof val);
               }}
             />
+            <IconButton
+              aria-label="close"
+              onClick={() => refreshKitchenData()}
+              color={"secondary"}
+              sx={{}}>
+              <Refresh />
+            </IconButton>
           </>
         }
       />

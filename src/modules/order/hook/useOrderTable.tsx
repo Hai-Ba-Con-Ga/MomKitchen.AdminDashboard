@@ -1,9 +1,6 @@
 import { OrderAdmin } from "@/types/@mk/entity/order";
-import {
-  CloseOutlined,
-  EditTwoTone,
-  EyeTwoTone
-} from "@ant-design/icons";
+import { OrderStatus } from "@/types/@mk/enum/orderStatus";
+import { CloseOutlined, EyeTwoTone } from "@ant-design/icons";
 import { Delete } from "@mui/icons-material";
 import { Box, Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import { Stack, useTheme } from "@mui/system";
@@ -21,7 +18,7 @@ type Props = {
 };
 
 const useOrderTable = (props: Props) => {
-  const { handleEditClick, handleDelete } = props;
+  const { handleDelete } = props;
   const theme = useTheme();
   const columnHelper = createColumnHelper<OrderAdmin>();
   // const [orderDetail, setOrderDetail] = useState(null);
@@ -37,7 +34,7 @@ const useOrderTable = (props: Props) => {
               getToggleAllRowsSelectedHandler,
             },
           }) => (
-            <Box >
+            <Box>
               <IndeterminateCheckbox
                 {...{
                   checked: getIsAllRowsSelected(),
@@ -56,8 +53,8 @@ const useOrderTable = (props: Props) => {
           enableSorting: false,
           size: 50,
           meta: {
-            align : "left"
-          }
+            align: "left",
+          },
         }),
         columnHelper.accessor("id", {
           header: "#",
@@ -65,6 +62,7 @@ const useOrderTable = (props: Props) => {
             return (
               <Typography
                 variant="subtitle2"
+                textAlign={"center"}
                 sx={{
                   whiteSpace: "nowrap",
                   overflow: "hidden",
@@ -96,7 +94,7 @@ const useOrderTable = (props: Props) => {
               </Stack>
             );
           },
-          meta : {align: "left"}
+          meta: { align: "left" },
         }),
         columnHelper.accessor("meal", {
           header: "Meal",
@@ -120,10 +118,10 @@ const useOrderTable = (props: Props) => {
               </Stack>
             );
           },
-          meta : {align: "left"}
+          meta: { align: "left" },
         }),
-        columnHelper.accessor("totalQuantity", {
-          header: "Total Quantity",
+        columnHelper.accessor("meal.kitchen.name", {
+          header: "Kitchen name",
           cell: ({ renderValue }) => (
             <Typography
               fontWeight="500"
@@ -143,29 +141,29 @@ const useOrderTable = (props: Props) => {
                 textAlign: "right",
               }}
               displayType="text"
-              prefix="₫"
+              suffix="₫"
               defaultValue={renderValue()}
             />
           ),
-          meta : {align: "right"}
+          meta: { align: "right" },
         }),
-        columnHelper.accessor("surcharge", {
-          header: "Surcharge",
-          cell: ({ renderValue }) => (
-            <NumberFormat
-              style={{
-                display: "block",
-                width: "100%",
-                textAlign: "right",
-              }}
-              displayType="text"
-              prefix="₫"
-              defaultValue={renderValue()}
-            />
-          ),
-          meta : {align: "right"}
+        // columnHelper.accessor("surcharge", {
+        //   header: "Surcharge",
+        //   cell: ({ renderValue }) => (
+        //     <NumberFormat
+        //       style={{
+        //         display: "block",
+        //         width: "100%",
+        //         textAlign: "right",
+        //       }}
+        //       displayType="text"
+        //       prefix="₫"
+        //       defaultValue={renderValue()}
+        //     />
+        //   ),
+        //   meta : {align: "right"}
 
-        }),
+        // }),
         columnHelper.accessor("createdDate", {
           header: "Order Time",
           cell: ({ renderValue }) => {
@@ -198,15 +196,13 @@ const useOrderTable = (props: Props) => {
               </Typography>
             );
           },
-          meta : {align: "left"}
-
+          meta: { align: "left" },
         }),
         columnHelper.accessor("status", {
           header: "Status",
           cell: ({ renderValue }) => {
-            // TODO: order status migrate
             switch (renderValue()) {
-              case 0:
+              case OrderStatus.UNPAID:
                 return (
                   <Chip
                     color="error"
@@ -215,7 +211,7 @@ const useOrderTable = (props: Props) => {
                     variant="filled"
                   />
                 );
-              case 101:
+              case OrderStatus.PAID:
                 return (
                   <Chip
                     color="warning"
@@ -224,9 +220,8 @@ const useOrderTable = (props: Props) => {
                     variant="filled"
                   />
                 );
-              case 102:
-              case 103:
-              case 104:
+
+              case OrderStatus.COMPLETE:
                 return (
                   <Chip
                     color="success"
@@ -235,7 +230,7 @@ const useOrderTable = (props: Props) => {
                     variant="filled"
                   />
                 );
-              case 105:
+              case OrderStatus.CANCEL:
                 return (
                   <Chip
                     color="error"
@@ -244,16 +239,28 @@ const useOrderTable = (props: Props) => {
                     variant="filled"
                   />
                 );
+              case OrderStatus.PENDING:
+                return (
+                  <Chip
+                    color="warning"
+                    label="CANCEL"
+                    size="small"
+                    variant="filled"
+                  />
+                );
               default:
                 return (
                   <Chip
-                    color="primary"
-                    label="Single"
+                    color="warning"
+                    label="CANCEL"
                     size="small"
                     variant="filled"
                   />
                 );
             }
+          },
+          meta: {
+            align: "left",
           },
         }),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -289,7 +296,7 @@ const useOrderTable = (props: Props) => {
                     {collapseIcon}
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Edit">
+                {/* <Tooltip title="Edit">
                   <IconButton
                     color="primary"
                     onClick={(e: MouseEvent) => {
@@ -298,7 +305,7 @@ const useOrderTable = (props: Props) => {
                     }}>
                     <EditTwoTone rev={{}} color={theme.palette.primary.main} />
                   </IconButton>
-                </Tooltip>
+                </Tooltip> */}
                 <Tooltip title="Delete">
                   <IconButton
                     color="error"

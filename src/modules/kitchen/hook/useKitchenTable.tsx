@@ -286,10 +286,165 @@ const useKitchenTable = (props: Props) => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [theme]
     );
-  
+    const columnDefArea = useMemo(
+      () => {
+        const cols = [
+          columnHelper.accessor("no", {
+            header: "#",
+            cell: ({row})=>{
+              return  <Typography  color="CaptionText" sx={{
+               whiteSpace: 'nowrap',
+               overflow: 'hidden',
+               textOverflow: 'ellipsis',
+               }}>
+               KIT-{row.original.no}
+             </Typography>
+             },
+             meta: {
+              align: "left"
+             }
+          }),
+          columnHelper.accessor("name", {
+            header: "Kitchen Name",
+            cell: ({row})=>{
+             return  <Typography  color="CaptionText" sx={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              }}>
+              {row.original.name}
+            </Typography>
+            },
+            meta: {
+              align: "left"
+            }
+          }),
+          columnHelper.accessor("address", {
+            header: "Address",
+            enableSorting: false,
+            cell: ({ renderValue }) => (
+              <Typography
+              sx={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                }}
+                fontWeight="500"
+                textAlign={"left"}
+               >
+                {renderValue()}
+              </Typography>
+            ),
+            meta: {
+              align: "left"
+            }
+          }),
+          columnHelper.accessor("area.name", {
+            header: "Area",
+            cell: ({ renderValue }) => (
+              <Typography
+                fontWeight="500"
+                textAlign={"left"}
+                variant="subtitle1">
+                {renderValue()}
+              </Typography>
+            ),
+            meta: {
+              align: "left"
+            }
+          }),
+          columnHelper.accessor("status", {
+            header: "Status",
+            cell: ({ renderValue }) => {
+              // TODO: order status migrate
+              switch (renderValue()) {
+                case KitchenStatus.ACTIVE:
+                  return (
+                    <Chip
+                      color="success"
+                      label="ACTIVE"
+                      size="small"
+                      variant="filled"
+                    />
+                  );
+                case  KitchenStatus.INACTIVE:
+                  return (
+                    <Chip
+                      color="error"
+                      label="INACTIVE"
+                      size="small"
+                      variant="filled"
+                    />
+                  );
+                default:
+                  return (
+                    <Chip
+                      color="error"
+                      label="INACTIVE"
+                      size="small"
+                      variant="filled"
+                    />
+                  );
+              }
+            },
+          }),
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          columnHelper.accessor<any, any>("action", {
+            header: "Actions",
+            enableSorting: false,
+            cell: ({ row }) => {
+              const collapseIcon = row.getIsExpanded() ? (
+                <CloseOutlined
+                  rev={{}}
+                  style={{ color: theme.palette.error.main }}
+                />
+              ) : (
+                <EyeTwoTone
+                  rev={{}}
+                  twoToneColor={theme.palette.secondary.main}
+                />
+              );
+              return (
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="center"
+                  spacing={0}>
+                  <Tooltip title="View">
+                    <IconButton
+                      color="secondary"
+                      onClick={(e: MouseEvent) => {
+                        e.stopPropagation();
+                        // row.toggleExpanded();
+                        nav(`/kitchen/${row.original.id}`)
+                      }}>
+                      {collapseIcon}
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Delete">
+                    <IconButton
+                      color="error"
+                      onClick={(e: MouseEvent) => {
+                        e.stopPropagation();
+                        handleDeleteClick(row.original.id);
+                      }}>
+                      <Delete color={theme.palette.error.main}  />
+                    </IconButton>
+                  </Tooltip>
+                </Stack>
+              );
+            },
+          }),
+        ];
+        return cols;
+      },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [theme]
+    );
   
     return {
       columnsDef: columns,
+      columnDefArea
     };
   
 }

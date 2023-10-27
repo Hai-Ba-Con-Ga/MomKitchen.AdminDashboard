@@ -1,6 +1,6 @@
 import { OrderAdmin } from "@/types/@mk/entity/order";
 import { FilterOps } from "@/types/common/pagination/FilterState";
-import { BlockOutlined } from "@mui/icons-material";
+import { BlockOutlined, Refresh } from "@mui/icons-material";
 import {
   Button,
   Chip,
@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  IconButton,
   Tab,
   Tabs,
   Typography,
@@ -43,32 +44,30 @@ const OrderListPage = () => {
     refreshOrderData,
     deleteOrder: { mutateAsync: deleteOrderFunc },
     // updateOrder,
-    totalRows
+    totalRows,
   } = useOrderData();
-  const { columnsDef, renderRowSubComponent } = useOrderTable({
+  const { columnsDef } = useOrderTable({
     handleEditClick: () => {
       // TODO implement
     },
     handleDelete: async (id) => {
-      setActionId(actionId);
+      setActionId(id);
       setConfirmationToggle(true);
     },
   });
-  useEffect(()=>{
-    refreshOrderData()
-  },[])
+
   useEffect(() => {
-    console.log(orderData);
+    console.log("render");
   }, [orderData]);
 
   const nav = useNavigate();
   const [tabValue, setTabValue] = useState("all");
   const [rangeDate, setRangeDate] = useState<{
-    from: string,
-    to : string
+    from: string;
+    to: string;
   }>({
-    from : null,
-    to: null
+    from: null,
+    to: null,
   });
   useEffect(() => {
     setFilter((prev) => ({
@@ -80,7 +79,7 @@ const OrderListPage = () => {
       },
     }));
   }, [tabValue, setFilter]);
-  useEffect(()=>{
+  useEffect(() => {
     setFilter((prev) => ({
       ...prev,
       from: {
@@ -89,8 +88,8 @@ const OrderListPage = () => {
         value: rangeDate.from,
       },
     }));
-  },[rangeDate.from,setFilter])
-  useEffect(()=>{
+  }, [rangeDate.from, setFilter]);
+  useEffect(() => {
     setFilter((prev) => ({
       ...prev,
       to: {
@@ -99,7 +98,7 @@ const OrderListPage = () => {
         value: rangeDate.to,
       },
     }));
-  },[rangeDate.to,setFilter])
+  }, [rangeDate.to, setFilter]);
   return (
     <MainCard content={false}>
       <Box
@@ -156,13 +155,12 @@ const OrderListPage = () => {
         totalRows={totalRows}
         columns={columnsDef}
         data={orderData}
-        renderRowSubComponent={renderRowSubComponent}
         onPaginationChange={(pagination) => {
           setPagination(pagination);
         }}
         onRowSelectedChange={(rows) => console.log(rows)}
         addButton={{
-          isShown: true,
+          isShown: false,
           addButtonHandler: () => {
             // TODO : add action, nav page -> create/update
             nav("/order/create");
@@ -173,17 +171,23 @@ const OrderListPage = () => {
         onSortByChange={(sort) => setSortState(sort)}
         actionComponents={
           <>
+            <IconButton
+              aria-label="close"
+              onClick={() => refreshOrderData()}
+              color={"secondary"}
+              sx={{}}>
+              <Refresh />
+            </IconButton>
             <DatePicker
               value={rangeDate.from}
               onChange={(val) => {
-                setRangeDate({...rangeDate, from : val.toString()})
-
+                setRangeDate({ ...rangeDate, from: val.toString() });
               }}
             />
             <DatePicker
               value={rangeDate.to}
               onChange={(val) => {
-                setRangeDate({...rangeDate, to : val.toString()})
+                setRangeDate({ ...rangeDate, to: val.toString() });
               }}
             />
           </>

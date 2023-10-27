@@ -11,10 +11,11 @@ const AddSkeletonCard = ({cardContent, onClick}:Props) => {
 
   return (
     <MainCard content={false} sx={{
-        maxWidth: "20rem",
+        width: "20rem",
         opacity: 0.8,
         // aspectRatio : "3/4"
         // maxHeight: "24rem"
+        minHeight: "25rem",
         height: "99%",
         cursor : "pointer",
         borderColor : theme.palette.primary.main,
@@ -28,6 +29,8 @@ const AddSkeletonCard = ({cardContent, onClick}:Props) => {
        onClick={onClick}
     >
       <CardContent sx={{
+        minHeight: "25rem",
+
         height: "100%",
         display:"flex",
         justifyContent:"center",

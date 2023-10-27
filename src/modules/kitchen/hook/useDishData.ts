@@ -15,7 +15,7 @@ const useDishData = () => {
       const [totalRows, setTotalRows] = useState<number>(0);
       const [id, setId] = useState<string>();
       const [ownerId, setOwnerId] = useState<string>();
-       // Define the fetchDishDataFunction that fetches orders using the OrderApi
+   
        const fetchDishDataFunction = async () => {
         try {
           const response = await DishApi.getDishs({
@@ -36,7 +36,7 @@ const useDishData = () => {
        // TODO: use debounce technique to prevent many calls at a short time
        const queryKey = ['dishs', pagination, sortState, keyword];
     
-       // Fetch order data using React Query's useQuery hook
+     
        const { data: DishData,
         refetch : refreshDishData
         //  isLoading, error
@@ -45,29 +45,25 @@ const useDishData = () => {
         
        });
      
-       // Define your mutation functions for creating, updating, and deleting orders
-      //  const createOrder = useMutation(createOrderFunction, {
-      //    // You can specify onSuccess and onError callbacks here
-      //  });
-      // Define the updateDishFunction to update an order using the OrderApi
+    
       const updateDishFunction = async (Dish: Dish) => {
           const response = await DishApi.updateDish(Dish);
-          // You can handle the success scenario here if needed
-          return response?.data; // Return the updated order data
+         
+          return response?.data; 
       };
        const updateDish = useMutation(updateDishFunction, {
          // You can specify onSuccess and onError callbacks here
        });
-      // Define the updateDishFunction to update an order using the OrderApi
+     
       const createDishFunction = async (Dish: Dish) => {
           const response = await DishApi.createDish(Dish);
           // You can handle the success scenario here if needed
-          return response?.data; // Return the updated order data
+          return response?.data; 
       };
        const createDish = useMutation(createDishFunction, {
          // You can specify onSuccess and onError callbacks here
        });
-       // Define the deleteDishFunction to delete an order using the OrderApi
+       
       const deleteDishFunction = async (id: string) => {
           const response = await DishApi.deleteDish(id);
           // You can handle the success scenario here if needed

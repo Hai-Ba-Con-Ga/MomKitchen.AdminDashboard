@@ -1,4 +1,5 @@
 import { Dish } from "@/types/@mk/entity/dish";
+import { imageUrl } from "@/utils/@mk/helper";
 import {
   DeleteTwoTone,
   EditOutlined
@@ -25,7 +26,7 @@ const DishCard = ({dish,onEdit, onDelete }:Props) => {
             aspectRatio: "4/3"
         }}
         component="img"
-        image={dish?.imageUrl ?? "https://source.unsplash.com/random"}
+        image={imageUrl(dish?.imageUrl)}
         alt="green iguana"
       />
       <CardContent sx={{flex:"1 1 auto"}}>

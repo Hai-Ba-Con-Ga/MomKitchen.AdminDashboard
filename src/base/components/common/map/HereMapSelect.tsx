@@ -30,6 +30,7 @@ const HereMapSelect = (props: Props) => {
       },[markerPosition,area])
       useEffect(()=>{
         onPositionChange(markerPosition)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       },[markerPosition])
       useEffect(
           () => {
@@ -75,6 +76,7 @@ const HereMapSelect = (props: Props) => {
             }
           },
           // Dependencies array
+          // eslint-disable-next-line react-hooks/exhaustive-deps
           [apikey]
         );
         function addDraggableMarker(map, behavior){

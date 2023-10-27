@@ -13,7 +13,7 @@ const DeleteConfirmDialog = ({onConfirm, onCancel, deleteConfirmContent, isOpen}
   return (
     <Dialog
           open={isOpen}
-          onClose={(e) => onCancel()}
+          onClose={() => onCancel()}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description">
           <Box
@@ -48,7 +48,7 @@ const DeleteConfirmDialog = ({onConfirm, onCancel, deleteConfirmContent, isOpen}
               <Button
                 color="secondary"
                 variant="outlined"
-                onClick={(e) => onCancel()}>
+                onClick={() => onCancel()}>
                 Cancel
               </Button>
               <Button

@@ -36,6 +36,7 @@ const CustomerApi = {
 createCustomer: (customer : Customer) => {
       const endpoint = "/customer";
       //TODO specify return type
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return axiosClient.post<ResponseObject<any>>(endpoint, customer)
   },
   updateCustomer: (customer: CustomerAdmin) => {

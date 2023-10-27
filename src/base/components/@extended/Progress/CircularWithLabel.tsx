@@ -19,7 +19,7 @@ export default function CircularWithLabel({ value, ...others }: CircularProgress
           justifyContent: 'center'
         }}
       >
-        <Typography variant="caption" component="div" color="text.secondary">{`${Math.round(value!)}%`}</Typography>
+        <Typography variant="caption" component="div" color="text.secondary">{`${Math.round(value)}%`}</Typography>
       </Box>
     </Box>
   );

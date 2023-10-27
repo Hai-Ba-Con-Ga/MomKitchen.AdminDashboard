@@ -408,7 +408,7 @@ const CustomerManipulateForm = (props: Props) => {
                 control={control}
                 render={({
                   field: { onChange, value },
-                  fieldState: { error },
+                  
                 }) => (
                   <FormControlLabel
                     control={

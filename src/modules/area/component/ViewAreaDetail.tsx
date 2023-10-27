@@ -8,13 +8,13 @@ import {
   Typography
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
   
   import useKitchenTable from '@/modules/kitchen/hook/useKitchenTable';
 import { AreaAdmin } from '@/types/@mk/entity/area';
 import { KitchenAdmin } from '@/types/@mk/entity/kitchen';
 // import { useMediaQuery } from "@mui/material";
-import HereMap from '@ui/common/map/HereMap';
+import HereMap, { PolygonArea } from '@ui/common/map/HereMap';
 import QuickTable from '@ui/common/table/QuickTable';
 import useAreaData from '../hooks/useAreaData';
 
@@ -26,7 +26,7 @@ interface Props {
 const ViewAreaDetail = ({onCancel, area}:Props) => {
     // const theme = useTheme();
     // const matchDownMD = useMediaQuery(theme.breakpoints.down("md"));
-    const {columnsDef} = useKitchenTable({
+    const {columnDefArea} = useKitchenTable({
       handleDeleteClick: ()=>{"deleteclick"},
       handleEditClick: ()=>{
         console.log("editclick");
@@ -39,15 +39,22 @@ const ViewAreaDetail = ({onCancel, area}:Props) => {
         setId(area?.id)
       }
     },[area?.id,setId])
+    const kitchenMarker = useMemo(()=>{
+      return areaKitchenData?.map(kitchen => ({lat: kitchen?.location?.lat, lng: kitchen?.location?.lng, meta:{name: kitchen?.name}}))
+    },[areaKitchenData])
+    const areaPolygon = useMemo<PolygonArea>(()=>({
+      name : area?.name,
+      coords : area?.boundaries
+    }),[area])
     return (
         <>
         <DialogTitle><Typography variant='h3' mb={3}>{area?.name}</Typography></DialogTitle>
         <Divider />
         <DialogContent sx={{ p: 2.5 }}>
           <Stack>
-            <HereMap area={area}/>
+            <HereMap polygons={[areaPolygon]} marker={kitchenMarker}/>
             <QuickTable<KitchenAdmin>
-             columns={columnsDef}
+             columns={columnDefArea}
              data={areaKitchenData ?? []}
              totalRows={totalKitchenRows}
              onPaginationChange={(pagination) => {

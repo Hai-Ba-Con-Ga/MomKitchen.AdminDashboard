@@ -1,50 +1,44 @@
-import { Tray } from "@/types/@mk/entity/tray";
+import { Meal } from "@/types/@mk/entity/meal";
 import { imageUrl } from "@/utils/@mk/helper";
 import { DeleteTwoTone, EditOutlined } from "@ant-design/icons";
 import {
-  CardContent,
-  CardMedia,
-  Divider,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-  useTheme,
+    CardContent,
+    CardMedia,
+    Divider,
+    Grid,
+    Stack,
+    ToggleButton,
+    ToggleButtonGroup,
+    Typography,
+    useTheme,
 } from "@mui/material";
 import MainCard from "@ui/MainCard";
+import moment from "moment";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 type Props = {
-  tray?: Tray;
-  onEdit: (dish: Tray) => void;
+  meal: Meal;
+  onEdit?: (dish: Meal) => void;
   onDelete: (id: string) => void;
 };
 
-const TrayCard = ({ tray, onEdit, onDelete }: Props) => {
-  console.log(tray);
-
+const MealCard = ({ meal, onEdit, onDelete }: Props) => {
   const theme = useTheme();
   return (
     <MainCard
       content={false}
       sx={{
         maxWidth: "25rem",
+        width: "100%"
         // aspectRatio : "3/4"
         // maxHeight: "24rem"
       }}>
-      <CardMedia
-        sx={{
-          aspectRatio: "4/3",
-        }}
-        component="img"
-        image={imageUrl(tray?.imgUrl)}
-        alt="green iguana"
-      />
       <CardContent>
         <Typography variant="h5" color="textSecondary" gutterBottom>
-          {tray.name}
+          {meal?.name}
         </Typography>
         {/* <Typography
           variant="body1"
@@ -56,9 +50,9 @@ const TrayCard = ({ tray, onEdit, onDelete }: Props) => {
             //  -webkit-line-clamp: 3,
             //  -webkit-box-orient: vertical
           }}>
-          {tray.description}
+          {meal.description}
         </Typography> */}
-        {/* <Stack direction="row" gap={2}> */}
+
         <Swiper
           spaceBetween={50}
           slidesPerView={2}
@@ -67,7 +61,7 @@ const TrayCard = ({ tray, onEdit, onDelete }: Props) => {
           direction="horizontal"
           onSlideChange={() => console.log("slide change")}
           onSwiper={(swiper) => console.log(swiper)}>
-          {tray?.dishes?.map((dish) => (
+          {meal?.tray?.dishes?.map((dish) => (
             <SwiperSlide
               key={dish?.id}
               style={{
@@ -109,7 +103,56 @@ const TrayCard = ({ tray, onEdit, onDelete }: Props) => {
             </SwiperSlide>
           ))}
         </Swiper>
-        {/* </Stack> */}
+        <Grid container spacing={3}>
+          <Grid
+            item
+            xs={6}
+            lg={3}
+            >
+              <Stack spacing={0.5}>
+                  <Typography color="secondary">Serve from</Typography>
+                  <Typography>
+                      {moment(meal?.serviceFrom).format(
+                        "DD/MM/yyyy HH:mm"
+                      )}</Typography>
+                </Stack>
+            </Grid>
+          <Grid
+            item
+            xs={6}
+            lg={3}
+            >
+              <Stack spacing={0.5}>
+                  <Typography color="secondary">Serve to</Typography>
+                  <Typography>
+                      {moment(meal?.serviceTo).format(
+                        "DD/MM/yyyy HH:mm"
+                      )}</Typography>
+                </Stack>
+            </Grid>
+          <Grid
+            item
+            xs={6}
+            lg={3}
+            >
+              <Stack spacing={0.5}>
+                  <Typography color="secondary">Price</Typography>
+                  <Typography>
+                    {meal?.price}đ</Typography>
+                </Stack>
+            </Grid>
+          <Grid
+            item
+            xs={6}
+            lg={3}
+            >
+              <Stack spacing={0.5}>
+                  <Typography color="secondary">Serve to</Typography>
+                  <Typography>
+                     {meal?.serviceQuantity}</Typography>
+                </Stack>
+            </Grid>
+        </Grid>
       </CardContent>
       <Divider />
       <ToggleButtonGroup
@@ -140,13 +183,13 @@ const TrayCard = ({ tray, onEdit, onDelete }: Props) => {
           },
         }}>
         <ToggleButton value="android" aria-label="android" disableRipple>
-          <EditOutlined rev={{}} onClick={() => onEdit(tray)} />
+          <EditOutlined rev={{}} onClick={() => onEdit(meal)} />
         </ToggleButton>
         <ToggleButton value="ios" aria-label="ios" disableRipple>
           {/* <EllipsisOutlined rev={{}} /> */}
           <DeleteTwoTone
             rev={{}}
-            onClick={() => onDelete(tray.id)}
+            onClick={() => onDelete(meal.id)}
             color={theme.palette.error.A700}
           />
         </ToggleButton>
@@ -155,4 +198,4 @@ const TrayCard = ({ tray, onEdit, onDelete }: Props) => {
   );
 };
 
-export default TrayCard;
+export default MealCard;

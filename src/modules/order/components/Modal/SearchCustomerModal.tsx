@@ -37,7 +37,7 @@ const SearchCustomerModal = (props: Props) => {
     });
     setRoleName("Admin");
     refetchData();
-  }, []);
+  }, [setPagination,setRoleName,refetchData]);
   const handleChangeKeyword = debounce(
     () => refetchData(),
     500
@@ -45,6 +45,7 @@ const SearchCustomerModal = (props: Props) => {
   useEffect(() => {
     handleChangeKeyword();
   }, [keyword, handleChangeKeyword]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectCustomer, setSelectCustomer] = useState<any>();
   return (
     <Dialog

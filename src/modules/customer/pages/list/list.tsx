@@ -32,7 +32,7 @@ import {
   EditTwoTone,
   EyeTwoTone,
 } from "@ant-design/icons";
-import { BlockOutlined } from "@mui/icons-material";
+import { BlockOutlined, Refresh } from "@mui/icons-material";
 import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { Box } from "@mui/system";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
@@ -65,7 +65,7 @@ const CustomerList = () => {
   } = useCustomerData();
   useEffect(()=>{
     refreshCustomerData()
-  },[])
+  },[refreshCustomerData])
   const [customer, setCustomer] = useState(null);
   const [add, setAdd] = useState<boolean>(false);
   const [deleteConfirm, setDeleteConfirmation] = useState<boolean>(false);
@@ -80,6 +80,7 @@ const CustomerList = () => {
   const columns = useMemo<ColumnDef<CustomerAdmin>[]>(
     () => {
       const cols: ColumnDef<CustomerAdmin>[] = [
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         columnHelper.accessor<any, any>("selection", {
           header: ({
             table: {
@@ -324,6 +325,17 @@ const CustomerList = () => {
           },
           buttonContentLangKey: "Add customer",
         }}
+        actionComponents={
+          <>
+           <IconButton
+              aria-label="close"
+              onClick={() => refreshCustomerData()}
+              color={"secondary"}
+              sx={{}}>
+              <Refresh />
+            </IconButton>
+          </>
+        }
         onSearchKeywordChange={(q) => console.log(q)}
         onSortByChange={(sort) => setSortState(sort)}
         filter={{

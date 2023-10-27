@@ -2,14 +2,14 @@ import { AreaAdmin } from "@/types/@mk/entity/area";
 import {
   CloseOutlined,
   DeleteTwoTone,
-  EditTwoTone,
-  EyeTwoTone,
+  EyeTwoTone
 } from "@ant-design/icons";
 import { Box, Tooltip, Typography } from "@mui/material";
 import { Stack, useTheme } from "@mui/system";
 import { createColumnHelper } from "@tanstack/react-table";
 import IconButton from "@ui/@extended/IconButton";
 import { IndeterminateCheckbox } from "@ui/third-party/ReactTable";
+import moment from "moment";
 import { MouseEvent, useMemo } from "react";
 import NumberFormat from "react-number-format";
 
@@ -20,7 +20,7 @@ type Props = {
 };
 
 const useAreaTable = (props: Props) => {
-  const { handleEditClick, handleDeleteClick, handleViewClick } = props;
+  const {  handleDeleteClick, handleViewClick } = props;
   const theme = useTheme();
   const columnHelper = createColumnHelper<AreaAdmin>();
  
@@ -95,6 +95,9 @@ const useAreaTable = (props: Props) => {
         }),
         columnHelper.accessor("createdDate", {
           header: "CreatedDate",
+          cell: ({renderValue})=>{
+            return moment(renderValue()).format("DD/MM/YYYY")
+          },
           meta: {
             align: "left"
           }
@@ -132,7 +135,7 @@ const useAreaTable = (props: Props) => {
                     {collapseIcon}
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Edit">
+                {/* <Tooltip title="Edit">
                   <IconButton
                     color="primary"
                     onClick={(e: MouseEvent) => {
@@ -141,7 +144,7 @@ const useAreaTable = (props: Props) => {
                     }}>
                     <EditTwoTone rev={{}} color={theme.palette.primary.main} />
                   </IconButton>
-                </Tooltip>
+                </Tooltip> */}
                 <Tooltip title="Delete">
                   <IconButton
                     color="error"

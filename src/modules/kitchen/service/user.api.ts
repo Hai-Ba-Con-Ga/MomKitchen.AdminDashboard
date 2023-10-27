@@ -2,36 +2,32 @@ import axiosClient from "@/base/service/axiosClient";
 import { ResponseObject } from "@/base/service/response";
 import { CustomerAdmin } from "@/types/@mk/entity/customer";
 import { User } from "@/types/@mk/entity/user";
-import {
-  PaginationState,
-  SortingState
-} from "@tanstack/react-table";
+import { PaginationState, SortingState } from "@tanstack/react-table";
 
 interface UserGetParams {
   paging?: PaginationState;
   sort?: SortingState;
   keyword?: string;
-  roleName?: "Customer" | "Kitchen" | "Admin"
+  roleName?: "Customer" | "Kitchen" | "Admin";
   // filter :
 }
 
 const UserApi = {
-  getUsers: async (params: UserGetParams):Promise<ResponseObject<User[]>> => {
+  getUsers: async (params: UserGetParams): Promise<ResponseObject<User[]>> => {
     const endpoint = "/user";
-     const response = await axiosClient.get<ResponseObject<User[]>>(endpoint, {
-      params: { 
+    const response = await axiosClient.get<ResponseObject<User[]>>(endpoint, {
+      params: {
         PageNumber: params.paging.pageIndex + 1 ?? 1,
         PageSize: params.paging?.pageSize ?? 10,
         searchKey: params?.keyword ?? "",
-        roleName : params?.roleName ?? null
-       },
+        roleName: params?.roleName ?? null,
+      },
     });
-
 
     return response.data;
   },
   getUserDetail: (id: string) => {
-    const endpoint = "/user/"+id;
+    const endpoint = "/user/" + id;
     return axiosClient.get<ResponseObject<User>>(endpoint, {
       params: {
         id,
@@ -39,7 +35,7 @@ const UserApi = {
     });
   },
   updateUser: (User: User) => {
-    const endpoint = "/user/"+User.id;
+    const endpoint = "/user/" + User.id;
     return axiosClient.put(endpoint, User);
   },
   deleteUser: (id: number) => {
@@ -48,16 +44,27 @@ const UserApi = {
       params: { id },
     });
   },
-  createCustomer : (customer: CustomerAdmin )=> {
+  createCustomer: (customer: CustomerAdmin) => {
     const endpoint = "/user";
-    return axiosClient.post(endpoint,{
-      email : customer?.email,
-      fullName : customer?.email,
-      "avatarUrl": customer?.avatarUrl?? null,
-      "phone": customer?.phone,
-      "roleName": "Customer",
-      "birthday": customer?.birthday
+    return axiosClient.post(endpoint, {
+      email: customer?.email,
+      fullName: customer?.email,
+      avatarUrl: customer?.avatarUrl ?? null,
+      phone: customer?.phone,
+      roleName: "Customer",
+      birthday: customer?.birthday,
     });
-  }
+  },
+  createKitchen: (user: User) => {
+    const endpoint = "/user";
+    return axiosClient.post(endpoint, {
+      email: user?.email,
+      fullName: user?.email,
+      avatarUrl: user?.avatarUrl ?? null,
+      phone: user?.phone,
+      roleName: "Kitchen",
+      birthday: user?.birthday,
+    });
+  },
 };
 export default UserApi;

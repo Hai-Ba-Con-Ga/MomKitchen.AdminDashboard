@@ -1,6 +1,6 @@
 import axiosClient from "@/base/service/axiosClient";
 import { ResponseObject } from "@/base/service/response";
-import { AreaAdmin } from "@/types/@mk/entity/area";
+import { Area, AreaAdmin } from "@/types/@mk/entity/area";
 import { KitchenAdmin } from "@/types/@mk/entity/kitchen";
 import { PaginationState, SortingState } from "@tanstack/react-table";
 
@@ -31,6 +31,10 @@ const AreaApi = {
   updateArea: (area: AreaAdmin) => {
     const endpoint = "/area";
     return axiosClient.put(endpoint, area);
+  },
+  createArea: (area: Area) => {
+    const endpoint = "/area";
+    return axiosClient.post(endpoint, area);
   },
   deleteArea: (id: string) => {
     const endpoint = "/area/"+id;

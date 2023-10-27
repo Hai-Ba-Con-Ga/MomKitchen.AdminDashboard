@@ -43,6 +43,7 @@ const KitchenProfile = () => {
     if (kitchenDetail?.data?.owner?.ownerId) {
       setOwnerId(kitchenDetail?.data?.owner?.ownerId);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [kitchenDetail]);
   useEffect(() => {
     if (id) {
@@ -109,7 +110,7 @@ const KitchenProfile = () => {
                     justifyContent="space-around"
                     alignItems="center">
                     <Stack spacing={0.5} alignItems="center">
-                      {kitchenDetail?.data?.noOfDish ? (
+                      {!isLoadingDetail ? (
                         <Typography variant="h5">
                           {kitchenDetail?.data?.noOfDish}
                         </Typography>
@@ -124,8 +125,7 @@ const KitchenProfile = () => {
                     </Stack>
                     <Divider orientation="vertical" flexItem />
                     <Stack spacing={0.5} alignItems="center">
-                      {kitchenDetail?.data?.noOfTray != null &&
-                      kitchenDetail?.data?.noOfTray >= 0 ? (
+                      {!isLoadingDetail ? (
                         <Typography variant="h5">
                           {kitchenDetail?.data?.noOfTray}
                         </Typography>
@@ -141,8 +141,7 @@ const KitchenProfile = () => {
                     </Stack>
                     <Divider orientation="vertical" flexItem />
                     <Stack spacing={0.5} alignItems="center">
-                      {kitchenDetail?.data?.noOfTray != null &&
-                      kitchenDetail?.data?.noOfTray >= 0 ? (
+                      {!isLoadingDetail ? (
                         <Typography variant="h5">1.5K</Typography>
                       ) : (
                         <Skeleton
@@ -340,9 +339,9 @@ const KitchenProfile = () => {
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
                         <Typography color="secondary">Zip Code</Typography>
-                        
-                      {!isLoadingDetail ? (
-                         <Typography>956 754</Typography>
+
+                        {!isLoadingDetail ? (
+                          <Typography>956 754</Typography>
                         ) : (
                           <Skeleton
                             variant="text"
@@ -358,15 +357,14 @@ const KitchenProfile = () => {
                   <Stack spacing={0.5}>
                     <Typography color="secondary">Address</Typography>
                     {!isLoadingDetail ? (
-                        <Typography>{kitchenDetail?.data?.address}</Typography>
-                        ) : (
-                          <Skeleton
-                            variant="text"
-                            sx={{ fontSize: "1rem" }}
-                            width={"7rem"}
-                          />
-                        )}
-                    
+                      <Typography>{kitchenDetail?.data?.address}</Typography>
+                    ) : (
+                      <Skeleton
+                        variant="text"
+                        sx={{ fontSize: "1rem" }}
+                        width={"7rem"}
+                      />
+                    )}
                   </Stack>
                 </ListItem>
               </List>
