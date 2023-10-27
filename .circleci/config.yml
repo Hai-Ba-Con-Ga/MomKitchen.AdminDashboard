@@ -25,18 +25,37 @@ jobs:
             sonar-scanner \
               -Dsonar.login=$SONAR_TOKEN \
               -Dsonar.host.url=$SONAR_HOST_URL
-
+  lint: 
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run: 
+          name: "Install pnpm"
+          command: "sudo npm install -g pnpm"
+      - run: 
+          name: "Install package"
+          command: "pnpm install"
+      - run:
+          name: "Linting"
+          command: "pnpm lint"
   deploy_preview:
     docker:
       - image: circleci/node:latest
     environment:
-      VERCEL_ORG_ID: team_5R7K2zgtOgiT8mFyEYNcWKOV
-      VERCEL_PROJECT_ID: prj_BNbYirBayj39gSEVODhRlBIgIi3Z
+      VERCEL_ORG_ID: team_IjB68xN2ZGiytfOu1AAYw5SD
+      VERCEL_PROJECT_ID: prj_fS2fHftQY3XXt9txAGPoqdKAdoHg
     steps:
       - checkout
       - run:
           name: Install Vercel CLI
           command: sudo npm install --global vercel@latest
+      - run: 
+          name: "Install pnpm"
+          command: "sudo npm install -g pnpm"
+      - run:
+          name: Install Vercel CLI
+          command: sudo npm install --global pnpm
       - run:
           name: Pull Vercel Environment Information
           command: vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
@@ -51,13 +70,19 @@ jobs:
     docker:
       - image: circleci/node:latest
     environment:
-      VERCEL_ORG_ID: team_5R7K2zgtOgiT8mFyEYNcWKOV
-      VERCEL_PROJECT_ID: prj_BNbYirBayj39gSEVODhRlBIgIi3Z
+      VERCEL_ORG_ID: team_IjB68xN2ZGiytfOu1AAYw5SD
+      VERCEL_PROJECT_ID: prj_fS2fHftQY3XXt9txAGPoqdKAdoHg
     steps:
       - checkout
       - run:
           name: Install Vercel CLI
           command: sudo npm install --global vercel@latest
+      - run: 
+          name: "Install pnpm"
+          command: "sudo npm install -g pnpm"
+      - run:
+          name: Install Vercel CLI
+          command: sudo npm install --global pnpm
       - run:
           name: Pull Vercel Environment Information
           command: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
@@ -73,15 +98,19 @@ workflows:
   build-and-deploy:
     jobs:
       - scan
+      - lint:
+          requires: [scan]
 
       # Deploy to preview environment for feature branches
       - deploy_preview:
+          requires: [lint]
           filters:
             branches:
               ignore: /main/
 
       # Deploy to production for the main branch
       - deploy_production:
+          requires: [lint]
           filters:
             branches:
               only: /main/

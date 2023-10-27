@@ -1,0 +1,16 @@
+
+
+const useAuth = () => {
+  return (
+    {
+        logout: ()=>{
+            // console.log("TODO: impl");
+        },
+        user: {
+          name: ""
+        }
+    }
+  )
+}
+
+export default useAuth

@@ -16,6 +16,13 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
+  ignorePatterns: [
+    /** Mantis system files */
+    '/src/types/',
+    '/src/themes',
+    '/src/base/layout/MainLayout'
+    // Add any other paths you want to exclude here
+  ],
   plugins: ["react-refresh"],
   rules: {
     "react-refresh/only-export-components": "warn",

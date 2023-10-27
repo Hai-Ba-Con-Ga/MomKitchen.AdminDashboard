@@ -1,4 +1,3 @@
-import React from "react";
 import { DropdownList, DropdownListOptions } from "@/base/components/common/layout";
 
 describe("<Box /> testing", () => {

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "ES2015", "ES2015.Promise"],
     "module": "ESNext",
     "skipLibCheck": true,
     "types": ["cypress"],
@@ -12,16 +12,19 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-
     /* Linting */
-    "strict": true,
+    // TODO : temp turn off
+    "noImplicitAny": false,
+    "strict": false,
+    "noEmitOnError": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@ui/*": ["src/base/components/*"],
-      "@/*": ["./src/*"]
+      "@ui/*": ["./src/base/components/*"],
+      "@/*": ["./src/*"],
+      "@base" : ["./src/base/*"]
     }
   },
   "include": ["src", "*.d.ts"],

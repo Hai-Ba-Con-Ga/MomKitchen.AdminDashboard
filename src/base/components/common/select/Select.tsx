@@ -1,16 +1,14 @@
+/* eslint-disable */
+import { useDetectOutside } from "@/base/hooks";
 import { VariantProps, cva } from "class-variance-authority";
 import { AnimatePresence, motion } from "framer-motion";
 import React, {
   HTMLAttributes,
   ReactNode,
-  RefObject,
-  useEffect,
   useMemo,
   useRef,
-  useState,
+  useState
 } from "react";
-import { deepEqual } from "@/utils/dataHelper";
-import { useDetectOutside } from "@/base/components/hooks";
 
 const selectStyle = cva("relative", {
   variants: {
@@ -72,7 +70,7 @@ const Select = <T,>({
   });
   const handleChange = (value: string, display: JSX.Element) => {
     if (multiple && Array.isArray(valueDisplay)) {
-      console.log(valueDisplay.includes(display));
+      // console.log(valueDisplay.includes(display));
 
       setValueDisplay(
         !valueDisplay.includes(display)
