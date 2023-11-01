@@ -180,19 +180,20 @@ const OrderDetailPage = () => {
               variant="subtitle2"
               fontSize={fontSizeCommon}
               color="GrayText">
-              Belle J. Richter
+              {orderDetailData?.meal?.kitchen?.name ??"Belle J. Richter"}
             </Typography>
             <Typography
               variant="subtitle2"
               fontSize={fontSizeCommon}
               color="GrayText">
-              1300 Mine RoadQuemado, NM 87829
+                  {orderDetailData?.meal?.kitchen?.address ??" 1300 Mine RoadQuemado, NM 87829"}
+             
             </Typography>
             <Typography
               variant="subtitle2"
               fontSize={fontSizeCommon}
               color="GrayText">
-              305-829-7809
+               {orderDetailData?.customer?.user?.phone ??" 0912345678"}
             </Typography>
           </Stack>
         </MainCard>

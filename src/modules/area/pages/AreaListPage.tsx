@@ -21,7 +21,7 @@ const AreaListPage = () => {
     isShown: false,
     detailArea: null,
   });
-  const [toggleViewMap, setToggleViewMap] = useState<boolean>(true);
+  const [toggleViewMap, setToggleViewMap] = useState<boolean>(false);
   const [viewDetailToggle, setViewDetailToggle] = useState<boolean>(false);
   const [confirmationToggle, setConfirmationToggle] = useState(false);
   const [actionId, setActionId] = useState<string>();

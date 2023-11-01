@@ -33,6 +33,9 @@ const OrderApi = {
               ).toISOString(),
             }
           : {}),
+        ...(!!params?.filter?.tab?.value  ?? false ? {
+          OrderStatus : params?.filter?.tab?.value
+        }:{})
       },
     });
     return res.data;

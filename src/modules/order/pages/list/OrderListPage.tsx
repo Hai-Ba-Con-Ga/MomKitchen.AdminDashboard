@@ -134,11 +134,20 @@ const OrderListPage = () => {
           <Tab
             label={
               <Stack direction={"row"} gap={1}>
+                <Typography fontWeight={600}>Paid</Typography>
+                <Chip color="primary" label="1" size="small" variant="light" />
+              </Stack>
+            }
+            value="paid"
+          />
+          <Tab
+            label={
+              <Stack direction={"row"} gap={1}>
                 <Typography fontWeight={600}>Cancel</Typography>
                 <Chip color="error" label="1" size="small" variant="light" />
               </Stack>
             }
-            value="cancel"
+            value="canceled"
           />
           <Tab
             label={
@@ -147,7 +156,7 @@ const OrderListPage = () => {
                 <Chip color="success" label="1" size="small" variant="light" />
               </Stack>
             }
-            value="complete"
+            value="completed"
           />
         </Tabs>
       </Box>

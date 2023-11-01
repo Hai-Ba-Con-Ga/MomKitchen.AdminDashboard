@@ -34,6 +34,7 @@ const AreaApi = {
   },
   createArea: (area: Area) => {
     const endpoint = "/area";
+    area?.boundaries.forEach((b,i) =>b.orderNo =i);
     return axiosClient.post(endpoint, area);
   },
   deleteArea: (id: string) => {
