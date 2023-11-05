@@ -11,4 +11,5 @@ export interface Location extends BaseEntity {
     areaAsWest?: Area | null;
     areaAsEast?: Area | null;
     orderNo?:number;
+    no?: number;
 }

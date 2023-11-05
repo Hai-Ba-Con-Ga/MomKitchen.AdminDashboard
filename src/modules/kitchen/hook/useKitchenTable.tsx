@@ -116,9 +116,10 @@ const useKitchenTable = (props: Props) => {
             cell: ({ renderValue }) => (
               <Typography
               sx={{
-                whiteSpace: 'nowrap',
+                // whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
+                width: "250px"
                 }}
                 fontWeight="500"
                 textAlign={"left"}
@@ -146,6 +147,7 @@ const useKitchenTable = (props: Props) => {
           }),
           columnHelper.accessor("noOfDish", {
             header: "No of dishes",
+            enableSorting: false,
             cell: ({ renderValue }) => (
               <NumberFormat
                 style={{
@@ -163,6 +165,7 @@ const useKitchenTable = (props: Props) => {
           }),
           columnHelper.accessor("noOfTray", {
             header: "No of trays",
+            enableSorting: false,
             cell: ({ renderValue }) => (
               <NumberFormat
               style={{
@@ -177,6 +180,7 @@ const useKitchenTable = (props: Props) => {
           }),
           columnHelper.accessor("noOfMeal", {
             header: "No of meals",
+            enableSorting: false,
             cell: ({ renderValue }) => (
               <NumberFormat
               style={{
@@ -191,7 +195,6 @@ const useKitchenTable = (props: Props) => {
           columnHelper.accessor("status", {
             header: "Status",
             cell: ({ renderValue }) => {
-              // TODO: order status migrate
               switch (renderValue()) {
                 case KitchenStatus.ACTIVE:
                   return (
@@ -337,7 +340,7 @@ const useKitchenTable = (props: Props) => {
             ),
             meta: {
               align: "left"
-            }
+            },
           }),
           columnHelper.accessor("area.name", {
             header: "Area",

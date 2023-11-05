@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 // material-ui
 import {
@@ -31,6 +31,10 @@ import MonthlyBarChart from '@ui/common/chart/MonthlyBarChart';
 import ReportAreaChart from '@ui/common/chart/ReportAreaChart';
 import SalesColumnChart from '@ui/common/chart/SalesColumnChart';
 import OrderTable from '@ui/common/chart/OrdersTable';
+import useCustomerData from '@/modules/customer/hook/useCustomerData';
+import useKitchenData from '@/modules/kitchen/hook/useKitchenData';
+import useOrderData from '@/modules/order/hook/useOrderData';
+import NumberFormat from 'react-number-format';
 
 // avatar style
 const avatarSX = {
@@ -68,7 +72,13 @@ const DashboardPage = () => {
   
     const [value, setValue] = useState('today');
     const [slot, setSlot] = useState('week');
-  
+    const [weekSales, setWeeksales] = useState(0);
+    const {totalRows} = useCustomerData();
+    const {totalRows:totalKitchenRows} = useKitchenData();
+    const {totalRows: totalOrderRowsThisYear, orderData : orderDataThisYear} = useOrderData();
+    const totalSales = useMemo(()=>{
+      return orderDataThisYear?.reduce((prev, cur)=> prev+= cur.totalPrice,0)
+    },[totalOrderRowsThisYear])
     return (
       <Grid container rowSpacing={4.5} columnSpacing={2.75}>
         {/* row 1 */}
@@ -76,16 +86,19 @@ const DashboardPage = () => {
           <Typography variant="h5">Dashboard</Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
-          <AnalyticEcommerce title="Total Page Views" count="4,42,236" percentage={59.3} extra="35,000" />
+          <AnalyticEcommerce title="Total Kitchens" count={totalKitchenRows.toString()} percentage={100} extra={totalKitchenRows.toString()} />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
-          <AnalyticEcommerce title="Total Users" count="78,250" percentage={70.5} extra="8,900" />
+          <AnalyticEcommerce title="Total Users" count={totalRows.toString()} percentage={100} extra={totalRows.toString()} />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
-          <AnalyticEcommerce title="Total Order" count="18,800" percentage={27.4} isLoss color="warning" extra="1,943" />
+          <AnalyticEcommerce title="Total Order" count={totalOrderRowsThisYear.toString()} percentage={27.4} isLoss color="warning" extra="1,943" />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
-          <AnalyticEcommerce title="Total Sales" count="$35,078" percentage={27.4} isLoss color="warning" extra="$20,395" />
+          <AnalyticEcommerce title="Total Sales" count={
+                    <NumberFormat value={totalSales} displayType="text" thousandSeparator suffix="đ" />
+            
+            } percentage={27.4} color="primary" extra="$20,395" />
         </Grid>
   
         <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
@@ -136,10 +149,12 @@ const DashboardPage = () => {
                 <Typography variant="h6" color="textSecondary">
                   This Week Statistics
                 </Typography>
-                <Typography variant="h3">$7,650</Typography>
+                <Typography variant="h3">
+                <NumberFormat value={weekSales} displayType="text" thousandSeparator suffix="đ" />
+                </Typography>
               </Stack>
             </Box>
-            <MonthlyBarChart />
+            <MonthlyBarChart onWeeksaleChange={(sale )=>setWeeksales(sale)} />
           </MainCard>
         </Grid>
   

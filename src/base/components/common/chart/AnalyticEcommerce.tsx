@@ -12,7 +12,7 @@ import MainCard from '@ui/MainCard';
 
 interface Props {
   title: string;
-  count: string;
+  count: string  | React.ReactNode;
   percentage?: number;
   isLoss?: boolean;
   color?: ChipProps['color'];

@@ -19,11 +19,17 @@ interface KitchenGetParams {
 const KitchenApi = {
   getKitchens: async (params: KitchenGetParams):Promise<ResponseObject<KitchenAdmin[]>> => {
     const endpoint = "/kitchen";
+    console.log("SortingState => ",params.sort);
+    const sortStateFirst:any = params?.sort?.[0]  ?? {}
+    const id = sortStateFirst?.id == "no" ? "No" : sortStateFirst?.id =="status" ? "Status": sortStateFirst?.id == "name" ? "Name" :
+    sortStateFirst?.id == "area_name" ? "AreaId" :  "";
      const response = await axiosClient.get<ResponseObject<KitchenResponse[]>>(endpoint, {
       params: { 
         PageNumber: params.paging.pageIndex + 1 ?? 1,
-        PageSize: params.paging?.pageSize ?? 10
-
+        PageSize: params.paging?.pageSize ?? 10,
+        ...(id == "No" || id == "Status" || id == "Name"|| id=="AreaId")?{
+          fields: `${id}:${sortStateFirst?.desc ?"desc": "asc"}`
+        }:{},
        },
     });
 

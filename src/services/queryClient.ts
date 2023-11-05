@@ -7,7 +7,7 @@ const queryClientConf: QueryClientConfig = {
       staleTime: 0, // 10 minutes
       cacheTime: 0, // default cacheTime is 5 minutes; doesn't make sense for staleTime to exceed cacheTime
       // retry: 0,
-      refetchOnMount: true,
+      refetchOnMount: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       useErrorBoundary: true,

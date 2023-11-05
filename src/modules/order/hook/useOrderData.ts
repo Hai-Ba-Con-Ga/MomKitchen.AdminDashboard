@@ -70,7 +70,6 @@ const useOrderData = (enable?: boolean) => {
     //  isLoading, error
   } = useQuery(queryKey, fetchOrderDataFunction, {
     onError: (err) => console.log("error at hook", err),
-    enabled: enable,
   });
 
   // Define your mutation functions for creating, updating, and deleting orders

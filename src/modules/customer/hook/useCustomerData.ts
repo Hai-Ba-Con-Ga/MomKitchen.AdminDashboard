@@ -44,6 +44,7 @@ const [totalRows, setTotalRows] = useState<number> (0);
     //  isLoading, error
   } = useQuery(queryKey, fetchCustomerDataFunction, {
     onError: (err) => console.log("error at hook", err),
+    
   });
   const createCustomerFunction = async (customer: Customer) => {
     const response = await CustomerApi.createCustomer(customer);

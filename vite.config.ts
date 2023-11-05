@@ -15,6 +15,9 @@ export default defineConfig({
       shared: ["react", "react-dom"],
     }), */
   ],
+  esbuild:{
+    drop: ['console', 'debugger']
+  },
   build: {
     rollupOptions: {
       output: {

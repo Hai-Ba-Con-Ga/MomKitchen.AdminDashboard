@@ -125,7 +125,7 @@ const useOrderTable = (props: Props) => {
           cell: ({ renderValue }) => (
             <Typography
               fontWeight="500"
-              textAlign={"right"}
+              textAlign={"left"}
               variant="subtitle1">
               {renderValue()}
             </Typography>

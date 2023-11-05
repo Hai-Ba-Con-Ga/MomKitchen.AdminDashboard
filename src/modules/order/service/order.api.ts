@@ -35,7 +35,11 @@ const OrderApi = {
           : {}),
         ...(!!params?.filter?.tab?.value  ?? false ? {
           OrderStatus : params?.filter?.tab?.value
-        }:{})
+        }:{}),
+        ...((!!params?.sort ?? false) && (!!params?.sort?.[0] ?? false) ? {
+          OrderBy: `${params?.sort?.[0]?.id}:${params?.sort?.[0]?.desc? "desc" : "asc"}`,
+
+        } :{})
       },
     });
     return res.data;

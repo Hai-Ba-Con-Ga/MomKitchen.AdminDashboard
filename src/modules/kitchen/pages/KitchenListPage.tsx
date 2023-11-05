@@ -1,6 +1,5 @@
 import { KitchenAdmin } from "@/types/@mk/entity/kitchen";
 import { Refresh } from "@mui/icons-material";
-import { DatePicker } from "@mui/x-date-pickers";
 import IconButton from "@ui/@extended/IconButton";
 import MainCard from "@ui/MainCard";
 import DeleteConfirmDialog from "@ui/common/dialogs/DeleteConfirmDialog";
@@ -58,18 +57,6 @@ const KitchenListPage = () => {
         onSortByChange={(sort) => setSortState(sort)}
         actionComponents={
           <>
-            <DatePicker
-              // value={value}
-              onChange={(val) => {
-                console.log(typeof val);
-              }}
-            />
-            <DatePicker
-              // value={value}
-              onChange={(val) => {
-                console.log(typeof val);
-              }}
-            />
             <IconButton
               aria-label="close"
               onClick={() => refreshKitchenData()}

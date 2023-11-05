@@ -37,7 +37,9 @@ const AreaListPage = () => {
   const { setPagination, setSortState, setKeyword, areaData, totalRows, deleteArea:{mutateAsync : deleteAreaAsync},refreshAreaData } =
     useAreaData();
     const areaPolygons = useMemo<PolygonArea[]>(()=>{
-      return areaData?.map(area => ({name: area?.name, coords: area?.boundaries}));
+      const data =  areaData?.map(area => ({name: area?.name, coords: area?.boundaries.sort((a,b)=>a.no - b.no)}));
+      
+      return data;
     },[areaData])
   const nav = useNavigate();
   return (

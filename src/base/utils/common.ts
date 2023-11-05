@@ -10,3 +10,14 @@ export function calculateAge(birthDate: string): number {
 
   return Math.floor(age);
 }
+export function toPascalCase(input) {
+  // Replace non-alphanumeric characters with spaces
+  const words = input.replace(/[^a-zA-Z0-9]+/g, ' ').split(' ');
+  
+  // Capitalize the first letter of each word and join them
+  const pascalCase = words.map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }).join('');
+
+  return pascalCase;
+}
