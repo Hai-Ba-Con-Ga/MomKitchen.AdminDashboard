@@ -1,6 +1,6 @@
 // TODO : fix the types later
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useMemo } from "react";
 
 import {
   ArrowDropDownOutlined,
@@ -24,7 +24,7 @@ import {
   Table as ReactTableType,
   Row,
   SortDirection,
-  SortingState,
+  // SortingState,
   TableOptions,
   flexRender,
   getCoreRowModel,
@@ -67,12 +67,12 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
     columns = [],
     data = [],
     columnVisibility,
-    paging = {
-      pageTotal: 0,
-      pageCount: 0,
-      pageIndex: 1,
-      pageSize: 10,
-    },
+    // paging = {
+    //   pageTotal: 0,
+    //   pageCount: 0,
+    //   pageIndex: 1,
+    //   pageSize: 10,
+    // },
     isMultiSelection = true,
     rowSelected, //outside
     primaryKey = "id",
@@ -95,30 +95,37 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
   const [rowSelection, setRowSelection] =
     React.useState<any>(initialRowSelection);
   const theme = useTheme();
-  const tableOptions: TableOptions<T> = {
-    data: data || [],
-    columns: columns,
-    state: { rowSelection, columnVisibility },
-    enableMultiRowSelection: isMultiSelection,
-    onRowSelectionChange: setRowSelection,
-    //option
-    getRowId(originalRow, index: number, parent?) {
-      // return row id in select row
-      return parent
-        ? [parent[primaryKey], originalRow[primaryKey]].join(".")
-        : originalRow[primaryKey];
-    },
-    // Pipeline
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    // getPaginationRowModel: getPaginationRowModel(),
-    //
-    manualSorting: true, //server-side sorting
-    debugTable: true,
-  };
+  const tableOptions: TableOptions<T> = useMemo(()=>{
+    return {
+      data: data,
+      columns: columns,
+      state: { rowSelection, columnVisibility },
+      enableMultiRowSelection: isMultiSelection,
+      onRowSelectionChange: setRowSelection,
+      //option
+      getRowId(originalRow, index: number, parent?) {
+        // return row id in select row
+        return parent
+          ? [parent[primaryKey], originalRow[primaryKey]].join(".")
+          : originalRow[primaryKey];
+      },
+      // Pipeline
+      getCoreRowModel: getCoreRowModel(),
+      getFilteredRowModel: getFilteredRowModel(),
+      // getPaginationRowModel: getPaginationRowModel(),
+      //
+      manualSorting: true, //server-side sorting
+      debugTable: true,
+    }
+  },[columnVisibility, columns, 
+    data,
+     isMultiSelection, primaryKey, rowSelection]);
   const table = useReactTable(tableOptions);
   const { getHeaderGroups, getRowModel, getFooterGroups } = table;
-
+  useEffect(()=>{
+    console.log("RENDER TABLE OPS => ", tableOptions);
+    
+  },[tableOptions])
   // callback selected rows
   useEffect(() => {
     //console.log(rowSelection, 'rowSelection');
@@ -151,29 +158,29 @@ function BaseTableV8<T>(props: BaseTableV8Props<T>) {
   }, [rowSelected]);
 
   // initial state - SECONDS PROPS IS STATE
-  useEffect(() => {
-    // sorting state
-    if (paging?.sorts?.length > 0) {
-      const sortingState: SortingState = [];
-      paging.sorts.map((_sort: any) => {
-        if (_sort.field) {
-          sortingState.push({
-            id: _sort.field,
-            desc: _sort?.orderBy === 2 ? true : false,
-          }); //desc = 2
-        }
-      });
-      table.setSorting(sortingState);
-    }
+  // useEffect(() => {
+  //   // sorting state
+  //   if (paging?.sorts?.length > 0) {
+  //     const sortingState: SortingState = [];
+  //     paging.sorts.map((_sort: any) => {
+  //       if (_sort.field) {
+  //         sortingState.push({
+  //           id: _sort.field,
+  //           desc: _sort?.orderBy === 2 ? true : false,
+  //         }); //desc = 2
+  //       }
+  //     });
+  //     table.setSorting(sortingState);
+  //   }
 
-    // paging state
-    // if (paging?.pageSize) {
-    //   table.setPageSize(paging?.pageSize || 10);
-    // } else {
-    //   table.setPageSize(10); //default
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paging]);
+  //   // paging state
+  //   // if (paging?.pageSize) {
+  //   //   table.setPageSize(paging?.pageSize || 10);
+  //   // } else {
+  //   //   table.setPageSize(10); //default
+  //   // }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [paging]);
 
   // const [, setListItems] = useState<Row<T>[]>(table.getRowModel().rows);
   // useEffect(

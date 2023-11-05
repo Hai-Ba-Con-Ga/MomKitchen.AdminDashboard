@@ -82,16 +82,16 @@ function QuickTable<T>(props: Props<T>) {
   //========Expose pagination change
   useEffect(() => {
     onPaginationChange(pagination);
-  }, [pagination, onPaginationChange]);
+  }, [pagination]);
   useEffect(() => {
     onRowSelectedChange(rowSelected);
-  }, [rowSelected, onRowSelectedChange]);
+  }, [rowSelected]);
   useEffect(() => {
     onSortByChange(sortBy);
-  }, [sortBy, onSortByChange]);
+  }, [sortBy]);
   useEffect(() => {
     onSearchKeywordChange(keyword);
-  }, [keyword, onSearchKeywordChange]);
+  }, [keyword]);
   return (
     <ScrollX>
       <ListTableHeader
@@ -118,9 +118,6 @@ function QuickTable<T>(props: Props<T>) {
         columns={columns}
         isMultiSelection={true}
         rowSelected={rowSelected}
-        paging={{
-
-        }}
         primaryKey="id"
         onSortBy={(colName, isDesc) => {
           setSortBy([{id: colName, desc: isDesc}]);

@@ -163,7 +163,7 @@ const OrderListPage = () => {
       <QuickTable<OrderAdmin>
         totalRows={totalRows}
         columns={columnsDef}
-        data={orderData}
+        data={orderData??[]}
         onPaginationChange={(pagination) => {
           setPagination(pagination);
         }}
