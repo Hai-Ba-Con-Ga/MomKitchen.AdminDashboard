@@ -1,6 +1,8 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import eng from "./en/en.json";
+import eng from "./locale/en.json";
+import vi from "./locale/vi.json";
+import ko from "./locale/ko.json";
 // the translations
 // (tip move them in a JSON file and import them,
 // or even better, manage them separated from your code: https://react.i18next.com/guides/multiple-translation-files)
@@ -13,6 +15,12 @@ const resources = {
       "Welcome to React": "Bienvenue à React et react-i18next",
     },
   },
+  vi : {
+    translation: vi
+  },
+  ko : {
+    translation: ko
+  }
 };
 
 i18n

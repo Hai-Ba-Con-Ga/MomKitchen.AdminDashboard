@@ -32,12 +32,12 @@ const HeaderContent = () => {
   return (
     <>
       {!matchesXs && <Search />}
-      {!matchesXs && megaMenu}
+      {/* {!matchesXs && megaMenu} */}
       {!matchesXs && localization}
       {matchesXs && <Box sx={{ width: "100%", ml: 1 }} />}
 
       <Notification />
-      <Message />
+      {/* <Message /> */}
       <Customization />
       {!matchesXs && <Profile />}
       {matchesXs && <MobileSection />}

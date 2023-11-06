@@ -2,11 +2,12 @@
 import config from "@/config";
 // ==============================|| CONFIG - HOOKS  ||============================== //
 import { FontFamily, I18n, PresetColor, ThemeDirection, ThemeMode } from '@/types/config';
+import i18n from "@/utils/lang/i18n";
 
 const useConfig = () => ({
     ...config,
     onChangeContainer: () => {},
-    onChangeLocalization: (lang: I18n) => {console.log(lang)
+    onChangeLocalization: (lang: I18n) => {i18n.changeLanguage(lang)
     },
     onChangeMode: (mode: ThemeMode) => {console.log(mode)},
     onChangePresetColor: (theme: PresetColor) => {console.log(theme)},

@@ -11,6 +11,7 @@ import { MouseEvent, useCallback, useMemo } from "react";
 import NumberFormat from "react-number-format";
 import { useNavigate } from "react-router-dom";
 import OrderViewInline from "../components/OrderViewInline";
+// import { useTranslation } from "react-i18next";
 
 type Props = {
   handleEditClick: (order: OrderAdmin) => void;

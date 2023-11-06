@@ -17,12 +17,16 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { RecoilRoot } from "recoil";
 import "./index.css";
 import queryClient from "./services/queryClient.ts";
+import { FirebaseProvider } from "./base/store/context/FirebaseContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
+
     <QueryClientProvider client={queryClient}>
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <RecoilRoot>
+    <FirebaseProvider>
+      <>
       <App />
           <ToastContainer 
           bodyStyle={{ zIndex: 1500 }}
@@ -31,11 +35,14 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           pauseOnHover={false}
           containerId="toast-container"
           toastClassName={"toast-main"}
-
+          
           /> 
+          </>
+    </FirebaseProvider>
       </RecoilRoot>
       </LocalizationProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
+
   </React.StrictMode>
 );

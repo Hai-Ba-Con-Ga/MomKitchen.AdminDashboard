@@ -1,14 +1,13 @@
 // material-ui
+import useAuth from '@/base/hooks/useAuth';
 import { Button, Stack, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-// project import
-// import useAuth from 'hooks/useAuth';
 
 // assets
-import Facebook from 'assets/images/icons/facebook.svg';
-import Google from 'assets/images/icons/google.svg';
-import Twitter from 'assets/images/icons/twitter.svg';
+import Facebook from '@/assets/images/icons/facebook.svg';
+import Google from '@/assets/images/icons/google.svg';
+import Twitter from '@/assets/images/icons/twitter.svg';
 
 // ==============================|| FIREBASE - SOCIAL BUTTON ||============================== //
 
@@ -16,8 +15,7 @@ const FirebaseSocial = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+
   const { firebaseFacebookSignIn, firebaseGoogleSignIn, firebaseTwitterSignIn } = useAuth();
   const googleHandler = async () => {
     try {

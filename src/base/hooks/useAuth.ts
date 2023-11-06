@@ -1,16 +1,13 @@
+import { useContext } from "react";
+import FirebaseContext from "../store/context/FirebaseContext";
 
 
 const useAuth = () => {
-  return (
-    {
-        logout: ()=>{
-            // console.log("TODO: impl");
-        },
-        user: {
-          name: ""
-        }
-    }
-  )
+  const context = useContext(FirebaseContext);
+
+  if (!context) throw new Error('context must be use inside provider');
+
+  return context;
 }
 
 export default useAuth

@@ -1,6 +1,8 @@
 // types
 // import { DefaultConfigProps } from '@/types/config';
 
+import i18n from "./utils/lang/i18n";
+
 export const drawerWidth = 260;
 
 export const twitterColor = "#1DA1F2";
@@ -37,7 +39,7 @@ export const AUTH0_API = {
 const config = {
   defaultPath: "/sample-page",
   fontFamily: `'Public Sans', sans-serif`,
-  i18n: "en",
+  i18n: i18n.language,
   miniDrawer: false,
   container: false,
   mode: "light",

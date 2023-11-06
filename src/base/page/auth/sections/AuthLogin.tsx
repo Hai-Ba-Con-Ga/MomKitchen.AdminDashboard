@@ -30,6 +30,7 @@ import {
 // assets
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import AnimateButton from '@ui/@extended/AnimateButton';
+import FirebaseSocial from './FirebaseSocial';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -168,7 +169,7 @@ const AuthLogin = () => {
                 </Divider>
               </Grid>
               <Grid item xs={12}>
-                {/* <FirebaseSocial /> */}
+                <FirebaseSocial />
               </Grid>
             </Grid>
           </form>

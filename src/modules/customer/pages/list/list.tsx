@@ -310,7 +310,7 @@ const CustomerList = () => {
           "user.avatarUrl": true,
         }}
         columns={columns}
-        data={data?.data}
+        data={data?.data??[]}
         renderRowSubComponent={renderRowSubComponent}
         totalRows={totalRows}
         onPaginationChange={(pagination) => {

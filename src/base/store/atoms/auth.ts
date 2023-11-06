@@ -1,9 +1,10 @@
-// import { atom } from 'recoil';
+import { atom } from 'recoil';
 
-// import { getDefaultAuth } from '@base/utils/vora';
-// import { AuthProps } from '@base/types/auth';
-
-// export const authAtom = atom<AuthProps>({
-//   key: 'authAtom',
-//   default: getDefaultAuth()
-// });
+export const authState = atom({
+  key: 'authState',
+  default: {
+    isLoggedIn: false,
+    isInitialized: false,
+    user: null,
+  },
+});

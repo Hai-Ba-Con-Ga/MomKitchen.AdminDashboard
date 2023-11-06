@@ -12,6 +12,7 @@ import useConfig from '@/base/hooks/useConfig';
 // assets
 import { TranslationOutlined } from '@ant-design/icons';
 import { I18n } from '@/types/config';
+import i18n from '@/utils/lang/i18n';
 
 // ==============================|| HEADER CONTENT - LOCALIZATION ||============================== //
 
@@ -19,7 +20,7 @@ const Localization = () => {
   const theme = useTheme();
   const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { i18n, onChangeLocalization } = useConfig();
+  const {  onChangeLocalization } = useConfig();
 
   const anchorRef = useRef<any>(null);
   const [open, setOpen] = useState(false);
@@ -91,7 +92,7 @@ const Localization = () => {
                     }
                   }}
                 >
-                  <ListItemButton selected={i18n === 'en'} onClick={() => handleListItemClick('en')}>
+                  <ListItemButton selected={i18n.language === 'en'} onClick={() => handleListItemClick('en')}>
                     <ListItemText
                       primary={
                         <Grid container>
@@ -103,7 +104,7 @@ const Localization = () => {
                       }
                     />
                   </ListItemButton>
-                  <ListItemButton selected={i18n === 'fr'} onClick={() => handleListItemClick('fr')}>
+                  <ListItemButton selected={i18n.language === 'fr'} onClick={() => handleListItemClick('fr')}>
                     <ListItemText
                       primary={
                         <Grid container>
@@ -115,25 +116,37 @@ const Localization = () => {
                       }
                     />
                   </ListItemButton>
-                  <ListItemButton selected={i18n === 'ro'} onClick={() => handleListItemClick('ro')}>
+                  <ListItemButton selected={i18n.language === 'ko'} onClick={() => handleListItemClick('ko')}>
                     <ListItemText
                       primary={
                         <Grid container>
-                          <Typography color="textPrimary">Română</Typography>
+                          <Typography color="textPrimary">한국어</Typography>
                           <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
-                            (Romanian)
+                            (Korean)
                           </Typography>
                         </Grid>
                       }
                     />
                   </ListItemButton>
-                  <ListItemButton selected={i18n === 'zh'} onClick={() => handleListItemClick('zh')}>
+                  <ListItemButton selected={i18n.language === 'zh'} onClick={() => handleListItemClick('zh')}>
                     <ListItemText
                       primary={
                         <Grid container>
                           <Typography color="textPrimary">中国人</Typography>
                           <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
                             (Chinese)
+                          </Typography>
+                        </Grid>
+                      }
+                    />
+                  </ListItemButton>
+                  <ListItemButton selected={i18n.language === 'vi'} onClick={() => handleListItemClick('vi')}>
+                    <ListItemText
+                      primary={
+                        <Grid container>
+                          <Typography color="textPrimary">Tiếng Việt</Typography>
+                          <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
+                            (Vietnamese)
                           </Typography>
                         </Grid>
                       }

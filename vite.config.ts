@@ -35,6 +35,8 @@ export default defineConfig({
               return "vendor_here";
             } else if (id.includes("@aws-sdk")) {
               return "vendor_aws_sdk";
+            }else if (id.includes("firebase")) {
+              return "vendor_firebase";
             }
 
             return "vendor"; // all other package goes here

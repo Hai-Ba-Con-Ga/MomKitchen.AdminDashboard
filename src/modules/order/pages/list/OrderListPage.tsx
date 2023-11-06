@@ -19,10 +19,13 @@ import { DatePicker } from "@mui/x-date-pickers";
 import Snackbar from "@ui/@extended/Snackbar";
 import MainCard from "@ui/MainCard";
 import QuickTable from "@ui/common/table/QuickTable";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useOrderData from "../../hook/useOrderData";
 import useOrderTable from "../../hook/useOrderTable";
+import { RowSelection } from "@tanstack/react-table";
+import OrderActionMenu from "../../components/Menu/OrderActionMenu";
+import { useTranslation } from "react-i18next";
 
 const OrderListPage = () => {
   // const data = useMemo(
@@ -35,6 +38,8 @@ const OrderListPage = () => {
   // );
   const [confirmationToggle, setConfirmationToggle] = useState(false);
   const [actionId, setActionId] = useState<string>();
+  const [selectionRows, setSelectionRows] = useState<string[]>();
+  const {t} = useTranslation();
   const {
     setSortState,
     setFilter,
@@ -99,6 +104,30 @@ const OrderListPage = () => {
       },
     }));
   }, [rangeDate.to, setFilter]);
+  const ActionBars = useMemo(()=> <>
+  {selectionRows?.length>0 && 
+  <OrderActionMenu selectionRows={selectionRows} />
+  }
+  <IconButton
+    aria-label="close"
+    onClick={() => refreshOrderData()}
+    color={"secondary"}
+    sx={{}}>
+    <Refresh />
+  </IconButton>
+  <DatePicker
+    value={rangeDate.from}
+    onChange={(val) => {
+      setRangeDate({ ...rangeDate, from: val.toString() });
+    }}
+  />
+  <DatePicker
+    value={rangeDate.to}
+    onChange={(val) => {
+      setRangeDate({ ...rangeDate, to: val.toString() });
+    }}
+  />
+</>,[selectionRows])
   return (
     <MainCard content={false}>
       <Box
@@ -116,7 +145,7 @@ const OrderListPage = () => {
           <Tab
             label={
               <Stack direction={"row"} gap={1}>
-                <Typography fontWeight={600}>All</Typography>
+                <Typography fontWeight={600}>{t("all")}</Typography>
                 <Chip color="primary" label="1" size="small" variant="light" />
               </Stack>
             }
@@ -125,7 +154,7 @@ const OrderListPage = () => {
           <Tab
             label={
               <Stack direction={"row"} gap={1}>
-                <Typography fontWeight={600}>Unpaid</Typography>
+                <Typography fontWeight={600}>{t("unpaid")}</Typography>
                 <Chip color="warning" label="1" size="small" variant="light" />
               </Stack>
             }
@@ -134,7 +163,7 @@ const OrderListPage = () => {
           <Tab
             label={
               <Stack direction={"row"} gap={1}>
-                <Typography fontWeight={600}>Paid</Typography>
+                <Typography fontWeight={600}>{t("paid")}</Typography>
                 <Chip color="primary" label="1" size="small" variant="light" />
               </Stack>
             }
@@ -143,7 +172,7 @@ const OrderListPage = () => {
           <Tab
             label={
               <Stack direction={"row"} gap={1}>
-                <Typography fontWeight={600}>Cancel</Typography>
+                <Typography fontWeight={600}>{t("cancel")}</Typography>
                 <Chip color="error" label="1" size="small" variant="light" />
               </Stack>
             }
@@ -152,7 +181,7 @@ const OrderListPage = () => {
           <Tab
             label={
               <Stack direction={"row"} gap={1}>
-                <Typography fontWeight={600}>Complete</Typography>
+                <Typography fontWeight={600}>{t("complete")}</Typography>
                 <Chip color="success" label="1" size="small" variant="light" />
               </Stack>
             }
@@ -167,7 +196,7 @@ const OrderListPage = () => {
         onPaginationChange={(pagination) => {
           setPagination(pagination);
         }}
-        onRowSelectedChange={(rows) => console.log(rows)}
+        onRowSelectedChange={(rows) => setSelectionRows(rows)}
         addButton={{
           isShown: false,
           addButtonHandler: () => {
@@ -179,27 +208,7 @@ const OrderListPage = () => {
         onSearchKeywordChange={(q) => setKeyword(q)}
         onSortByChange={(sort) => setSortState(sort)}
         actionComponents={
-          <>
-            <IconButton
-              aria-label="close"
-              onClick={() => refreshOrderData()}
-              color={"secondary"}
-              sx={{}}>
-              <Refresh />
-            </IconButton>
-            <DatePicker
-              value={rangeDate.from}
-              onChange={(val) => {
-                setRangeDate({ ...rangeDate, from: val.toString() });
-              }}
-            />
-            <DatePicker
-              value={rangeDate.to}
-              onChange={(val) => {
-                setRangeDate({ ...rangeDate, to: val.toString() });
-              }}
-            />
-          </>
+          ActionBars
         }
       />
       <Snackbar />
