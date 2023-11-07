@@ -4,7 +4,6 @@ import { FacebookAuthProvider, GoogleAuthProvider, TwitterAuthProvider, createUs
 import React, { createContext, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { authState } from '../atoms/auth';
-import { useNavigate } from 'react-router-dom';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDiyMFnM1CM6C4XUhLgHrtjloOjyk0ECz4",
