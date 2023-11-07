@@ -28,8 +28,9 @@ const KitchenApi = {
         PageNumber: params.paging.pageIndex + 1 ?? 1,
         PageSize: params.paging?.pageSize ?? 10,
         ...(id == "No" || id == "Status" || id == "Name"|| id=="AreaId")?{
-          fields: `${id}:${sortStateFirst?.desc ?"desc": "asc"}`
+          OrderBy: `${id}:${sortStateFirst?.desc ?"desc": "asc"}`
         }:{},
+        KeySearch : params?.keyword ??""
        },
     });
 

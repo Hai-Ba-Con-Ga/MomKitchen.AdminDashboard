@@ -1,9 +1,9 @@
-import React, { createContext, useEffect, useReducer } from 'react';
-import { RecoilRoot, useRecoilState } from 'recoil';
-import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, TwitterAuthProvider, FacebookAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, signInWithPopup } from 'firebase/auth';
-import { authState } from '../atoms/auth';
 import { FirebaseContextType } from '@/types/auth';
+import { initializeApp } from 'firebase/app';
+import { FacebookAuthProvider, GoogleAuthProvider, TwitterAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import React, { createContext, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { authState } from '../atoms/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDiyMFnM1CM6C4XUhLgHrtjloOjyk0ECz4",

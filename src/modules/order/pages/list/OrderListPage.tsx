@@ -1,6 +1,6 @@
 import { OrderAdmin } from "@/types/@mk/entity/order";
 import { FilterOps } from "@/types/common/pagination/FilterState";
-import { BlockOutlined, Refresh } from "@mui/icons-material";
+import { BlockOutlined, GetApp, Refresh } from "@mui/icons-material";
 import {
   Button,
   Chip,
@@ -20,12 +20,11 @@ import Snackbar from "@ui/@extended/Snackbar";
 import MainCard from "@ui/MainCard";
 import QuickTable from "@ui/common/table/QuickTable";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import OrderActionMenu from "../../components/Menu/OrderActionMenu";
 import useOrderData from "../../hook/useOrderData";
 import useOrderTable from "../../hook/useOrderTable";
-import { RowSelection } from "@tanstack/react-table";
-import OrderActionMenu from "../../components/Menu/OrderActionMenu";
-import { useTranslation } from "react-i18next";
 
 const OrderListPage = () => {
   // const data = useMemo(
@@ -60,10 +59,6 @@ const OrderListPage = () => {
       setConfirmationToggle(true);
     },
   });
-
-  useEffect(() => {
-    console.log("render");
-  }, [orderData]);
 
   const nav = useNavigate();
   const [tabValue, setTabValue] = useState("all");
@@ -106,7 +101,7 @@ const OrderListPage = () => {
   }, [rangeDate.to, setFilter]);
   const ActionBars = useMemo(()=> <>
   {selectionRows?.length>0 && 
-  <OrderActionMenu selectionRows={selectionRows} />
+  <OrderActionMenu listData={orderData??[]} selectionRows={selectionRows} />
   }
   <IconButton
     aria-label="close"
@@ -127,7 +122,15 @@ const OrderListPage = () => {
       setRangeDate({ ...rangeDate, to: val.toString() });
     }}
   />
-</>,[selectionRows])
+  <Button
+            variant="shadow"
+            startIcon={<GetApp />}
+            onClick={()=>{
+              //TODO batch export kafka
+            }}>
+            {t("export_order")}
+          </Button>
+</>,[selectionRows, orderData])
   return (
     <MainCard content={false}>
       <Box
@@ -200,10 +203,9 @@ const OrderListPage = () => {
         addButton={{
           isShown: false,
           addButtonHandler: () => {
-            // TODO : add action, nav page -> create/update
             nav("/order/create");
           },
-          buttonContentLangKey: "Add order",
+          buttonContentLangKey: "Export list orders",
         }}
         onSearchKeywordChange={(q) => setKeyword(q)}
         onSortByChange={(sort) => setSortState(sort)}

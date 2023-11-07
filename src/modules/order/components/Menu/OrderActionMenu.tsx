@@ -1,19 +1,42 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import { OrderAdmin } from '@/types/@mk/entity/order';
+import { GetApp } from '@mui/icons-material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Button from '@mui/material/Button';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import EditIcon from '@mui/icons-material/Edit';
-import Divider from '@mui/material/Divider';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { alpha, styled } from '@mui/material/styles';
+import * as React from 'react';
+import { CSVLink } from "react-csv";
 type Props = {
-    selectionRows:string[]
+    selectionRows:string[];
+    listData?: OrderAdmin[];
 }
 
-const OrderActionMenu = ({selectionRows}: Props) => {
+const headerRow = [
+  "Order ID",
+  "Order No",
+  "Total Quantity",
+  "Total Price",
+  "Surcharge",
+  "Customer Id",
+  "Customer Name",
+  "Customer Email",
+  "Customer Phone",
+  "Meal Name",
+  "Tray Name",
+  "Service From",
+  "Service To",
+  "Kitchen Id",
+  "Kitchen Name",
+  "Order Date"
+];
+// const csvData = [
+//   ["firstname", "lastname", "email"],
+//   ["Ahmed", "Tomi", "ah@smthing.co.com"],
+//   ["Raed", "Labes", "rl@smthing.co.com"],
+//   ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+// ];
+const OrderActionMenu = ({selectionRows, listData}: Props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -22,7 +45,12 @@ const OrderActionMenu = ({selectionRows}: Props) => {
     const handleClose = () => {
       setAnchorEl(null);
     };
-  
+    const csvData = React.useMemo(()=>{
+      if(listData){
+        const filterData = listData?.filter(order => selectionRows.includes(order.id));
+        return [headerRow,...filterData.map(order => [order?.id, order?.no,order?.totalQuantity,order?.totalQuantity, order?.surcharge, order?.customerId, order?.customer?.user?.fullName, order?.customer?.user?.email, order?.customer?.user?.phone, order?.meal?.name,order?.meal?.tray?.name, order?.meal?.serviceFrom, order?.meal?.serviceTo, order?.meal?.kitchenId, order?.meal?.kitchen?.name, order?.createdDate   ])]
+      }
+    },[selectionRows,listData])
     return (
       <div>
         <Button
@@ -47,10 +75,11 @@ const OrderActionMenu = ({selectionRows}: Props) => {
           onClose={handleClose}
         >
           <MenuItem onClick={handleClose} disableRipple>
-            <EditIcon />
-            Edit
+            <GetApp />
+            
+            <CSVLink data={csvData}>Export CSV</CSVLink>
           </MenuItem>
-          <MenuItem onClick={handleClose} disableRipple>
+          {/* <MenuItem onClick={handleClose} disableRipple>
             <FileCopyIcon />
             Duplicate
           </MenuItem>
@@ -62,7 +91,7 @@ const OrderActionMenu = ({selectionRows}: Props) => {
           <MenuItem onClick={handleClose} disableRipple>
             <MoreHorizIcon />
             More
-          </MenuItem>
+          </MenuItem> */}
         </StyledMenu>
       </div>
     );

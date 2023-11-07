@@ -41,6 +41,7 @@ import NumberFormat from "react-number-format";
 import AddCustomerModal from "../../components/AddCustomerModal";
 import ViewCustomerDetailModal from "../../components/modal/ViewDetailModal";
 import useCustomerData from "../../hook/useCustomerData";
+import CustomerActionMenu from "../../components/menu/CustomerActionMenu";
 
 // ==============================|| REACT TABLE ||============================== //
 
@@ -71,6 +72,7 @@ const CustomerList = () => {
   const [deleteConfirm, setDeleteConfirmation] = useState<boolean>(false);
   const [detailViewToggle, setDetailViewToggle] = useState<boolean>(false);
   const [actionId, setActionId] = useState<string>();
+  const [selectionRows, setSelectionRows] = useState<string[]>();
   // const handleAdd = () => {
   //   setAdd(!add);
   //   if (customer && !add) setCustomer(null);
@@ -314,10 +316,9 @@ const CustomerList = () => {
         renderRowSubComponent={renderRowSubComponent}
         totalRows={totalRows}
         onPaginationChange={(pagination) => {
-          setPagination(pagination)
-          console.log(pagination);
+          setPagination(pagination);
         }}
-        onRowSelectedChange={(rows) => console.log(rows)}
+        onRowSelectedChange={(rows) => setSelectionRows(rows)}
         addButton={{
           isShown: true,
           addButtonHandler: () => {
@@ -327,6 +328,9 @@ const CustomerList = () => {
         }}
         actionComponents={
           <>
+          {selectionRows?.length>0 && 
+  <CustomerActionMenu listData={data?.data??[]} selectionRows={selectionRows} />
+  }
            <IconButton
               aria-label="close"
               onClick={() => refreshCustomerData()}

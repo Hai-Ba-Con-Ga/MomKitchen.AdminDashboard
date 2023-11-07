@@ -4,8 +4,9 @@ import IconButton from "@ui/@extended/IconButton";
 import MainCard from "@ui/MainCard";
 import DeleteConfirmDialog from "@ui/common/dialogs/DeleteConfirmDialog";
 import QuickTable from "@ui/common/table/QuickTable";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import KitchenActionMenu from "../components/menu/KitchenActionMenu";
 import useKitchenData from "../hook/useKitchenData";
 import useKitchenTable from "../hook/useKitchenTable";
 
@@ -15,6 +16,7 @@ const KitchenListPage = () => {
   // },[])
   // const [addToggle, setAddToggle] = useState<boolean>(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [selectionRows, setSelectionRows] = useState<string[]>();
   const [deleteId, setDeleteId] = useState<string>();
   const { columnsDef } = useKitchenTable({
     handleEditClick: () => console.log("TODO: implement"),
@@ -33,9 +35,21 @@ const KitchenListPage = () => {
     deleteKitchen: { mutateAsync },
     refreshKitchenData,
   } = useKitchenData();
-  useEffect(() => {
-    console.log(totalRows);
-  }, [totalRows]);
+ 
+  const ActionBars = useMemo(()=>  <>
+  <IconButton
+    aria-label="close"
+    onClick={() => refreshKitchenData()}
+    color={"secondary"}
+    sx={{}}>
+    <Refresh />
+  </IconButton>
+  {selectionRows?.length>0 && 
+  <KitchenActionMenu listData={data??[]} selectionRows={selectionRows} />
+  }
+</>
+,[selectionRows, data])
+
   return (
     <MainCard content={false}>
       <QuickTable<KitchenAdmin>
@@ -45,7 +59,7 @@ const KitchenListPage = () => {
         onPaginationChange={(pagination) => {
           setPagination(pagination);
         }}
-        onRowSelectedChange={(rows) => console.log(rows)}
+        onRowSelectedChange={(rows) => setSelectionRows(rows)}
         addButton={{
           isShown: true,
           addButtonHandler: () => {
@@ -56,15 +70,7 @@ const KitchenListPage = () => {
         onSearchKeywordChange={(q) => setKeyword(q)}
         onSortByChange={(sort) => setSortState(sort)}
         actionComponents={
-          <>
-            <IconButton
-              aria-label="close"
-              onClick={() => refreshKitchenData()}
-              color={"secondary"}
-              sx={{}}>
-              <Refresh />
-            </IconButton>
-          </>
+          ActionBars
         }
       />
       {

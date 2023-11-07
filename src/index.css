@@ -87,3 +87,11 @@ ul {
 }
 /* 
 .swiper-wrapper { display: flex; } .swiper-slide {  display: table; } */
+.tox.tox-tinymce {
+  padding: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-radius: 5px;
+}
+.tox-toolbar {
+  background-color: #eff2f7 !important;
+}

@@ -1,19 +1,17 @@
 import { useMemo } from "react";
 
 // material-ui
-import { Theme } from "@mui/material/styles";
 import { Box, useMediaQuery } from "@mui/material";
+import { Theme } from "@mui/material/styles";
 
 // project import
 // import useConfig from 'hooks/useConfig';
-import Search from "./Search";
-import Message from "./Message";
-import Profile from "./Profile";
-import Localization from "./Localization";
-import Notification from "./Notification";
 import Customization from "./Customization";
+import Localization from "./Localization";
 import MobileSection from "./MobileSection";
-import MegaMenuSection from "./MegaMenuSection";
+import Notification from "./Notification";
+import Profile from "./Profile";
+import Search from "./Search";
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
@@ -27,7 +25,7 @@ const HeaderContent = () => {
   // const localization = useMemo(() => <Localization />, [i18n]);
   const localization = useMemo(() => <Localization />, []);
 
-  const megaMenu = useMemo(() => <MegaMenuSection />, []);
+  // const megaMenu = useMemo(() => <MegaMenuSection />, []);
 
   return (
     <>

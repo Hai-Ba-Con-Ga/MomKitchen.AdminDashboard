@@ -1,7 +1,6 @@
 import { OrderAdmin } from "@/types/@mk/entity/order";
 import { OrderStatus } from "@/types/@mk/enum/orderStatus";
 import { CloseOutlined, EyeTwoTone } from "@ant-design/icons";
-import { Delete } from "@mui/icons-material";
 import { Box, Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import { Stack, useTheme } from "@mui/system";
 import { Row, createColumnHelper } from "@tanstack/react-table";
@@ -19,7 +18,7 @@ type Props = {
 };
 
 const useOrderTable = (props: Props) => {
-  const { handleDelete } = props;
+  // const { handleDelete } = props;
   const theme = useTheme();
   const columnHelper = createColumnHelper<OrderAdmin>();
   // const [orderDetail, setOrderDetail] = useState(null);
@@ -73,6 +72,7 @@ const useOrderTable = (props: Props) => {
               </Typography>
             );
           },
+          
         }),
         columnHelper.accessor("customer", {
           header: "Customer",
@@ -109,7 +109,7 @@ const useOrderTable = (props: Props) => {
                   src={row.original.meal?.tray?.imgUrl}
                 /> */}
                 <Stack spacing={0}>
-                  <Typography variant="subtitle1">
+                  <Typography variant="subtitle2">
                     {row.original.meal?.name.toUpperCase()}
                   </Typography>
                   {/* <Typography variant="caption" color="textSecondary">
@@ -125,7 +125,7 @@ const useOrderTable = (props: Props) => {
           header: "Kitchen name",
           cell: ({ renderValue }) => (
             <Typography
-              fontWeight="500"
+              fontWeight="600"
               textAlign={"left"}
               variant="subtitle1">
               {renderValue()}
@@ -143,6 +143,7 @@ const useOrderTable = (props: Props) => {
               }}
               displayType="text"
               suffix="₫"
+              thousandSeparator
               defaultValue={renderValue()}
             />
           ),
@@ -307,7 +308,7 @@ const useOrderTable = (props: Props) => {
                     <EditTwoTone rev={{}} color={theme.palette.primary.main} />
                   </IconButton>
                 </Tooltip> */}
-                <Tooltip title="Delete">
+                {/* <Tooltip title="Delete">
                   <IconButton
                     color="error"
                     onClick={(e: MouseEvent) => {
@@ -316,7 +317,7 @@ const useOrderTable = (props: Props) => {
                     }}>
                     <Delete color={theme.palette.error.main} />
                   </IconButton>
-                </Tooltip>
+                </Tooltip> */}
               </Stack>
             );
           },

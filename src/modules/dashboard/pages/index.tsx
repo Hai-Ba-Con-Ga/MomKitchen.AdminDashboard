@@ -1,84 +1,72 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 // material-ui
 import {
-  Avatar,
-  AvatarGroup,
   Box,
   Button,
   Grid,
-  List,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemSecondaryAction,
-  ListItemText,
-  MenuItem,
   Stack,
-  TextField,
   Typography
 } from '@mui/material';
-import AnalyticEcommerce from '@ui/common/chart/AnalyticEcommerce';
 import MainCard from '@ui/MainCard';
-import { GiftOutlined, SettingOutlined } from '@ant-design/icons';
+import AnalyticEcommerce from '@ui/common/chart/AnalyticEcommerce';
 
-import avatar1 from '@/assets/images/users/avatar-1.png';
-import avatar2 from '@/assets/images/users/avatar-2.png';
-import avatar3 from '@/assets/images/users/avatar-3.png';
-import avatar4 from '@/assets/images/users/avatar-4.png';
-import { MessageOutlined } from '@mui/icons-material';
-import IncomeAreaChart from '@ui/common/chart/IncomeAreaChart';
-import MonthlyBarChart from '@ui/common/chart/MonthlyBarChart';
-import ReportAreaChart from '@ui/common/chart/ReportAreaChart';
-import SalesColumnChart from '@ui/common/chart/SalesColumnChart';
-import OrderTable from '@ui/common/chart/OrdersTable';
 import useCustomerData from '@/modules/customer/hook/useCustomerData';
 import useKitchenData from '@/modules/kitchen/hook/useKitchenData';
 import useOrderData from '@/modules/order/hook/useOrderData';
+import IncomeAreaChart from '@ui/common/chart/IncomeAreaChart';
+import MonthlyBarChart from '@ui/common/chart/MonthlyBarChart';
+import OrderTable from '@ui/common/chart/OrdersTable';
+import PieChartArea from '@ui/common/chart/PieChartArea';
 import NumberFormat from 'react-number-format';
 
 // avatar style
-const avatarSX = {
-    width: 36,
-    height: 36,
-    fontSize: '1rem'
-  };
+// const avatarSX = {
+//     width: 36,
+//     height: 36,
+//     fontSize: '1rem'
+//   };
   
-  // action style
-  const actionSX = {
-    mt: 0.75,
-    ml: 1,
-    top: 'auto',
-    right: 'auto',
-    alignSelf: 'flex-start',
-    transform: 'none'
-  };
+//   // action style
+//   const actionSX = {
+//     mt: 0.75,
+//     ml: 1,
+//     top: 'auto',
+//     right: 'auto',
+//     alignSelf: 'flex-start',
+//     transform: 'none'
+//   };
   
-  // sales report status
-  const status = [
-    {
-      value: 'today',
-      label: 'Today'
-    },
-    {
-      value: 'month',
-      label: 'This Month'
-    },
-    {
-      value: 'year',
-      label: 'This Year'
-    }
-  ];
+//   // sales report status
+//   const status = [
+//     {
+//       value: 'today',
+//       label: 'Today'
+//     },
+//     {
+//       value: 'month',
+//       label: 'This Month'
+//     },
+//     {
+//       value: 'year',
+//       label: 'This Year'
+//     }
+//   ];
 const DashboardPage = () => {
   
-    const [value, setValue] = useState('today');
+    // const [value, setValue] = useState('today');
     const [slot, setSlot] = useState('week');
     const [weekSales, setWeeksales] = useState(0);
     const {totalRows} = useCustomerData();
     const {totalRows:totalKitchenRows} = useKitchenData();
-    const {totalRows: totalOrderRowsThisYear, orderData : orderDataThisYear} = useOrderData();
+    const { orderTotalRows, orderData : orderDataThisYear, setPagination} = useOrderData();
     const totalSales = useMemo(()=>{
       return orderDataThisYear?.reduce((prev, cur)=> prev+= cur.totalPrice,0)
-    },[totalOrderRowsThisYear])
+    },[orderDataThisYear])
+    console.log("totalOrderRowsThisYear => ",orderDataThisYear);
+    useEffect(()=>{
+      setPagination({pageIndex: 0,pageSize: 100 })
+    },[])
     return (
       <Grid container rowSpacing={4.5} columnSpacing={2.75}>
         {/* row 1 */}
@@ -92,7 +80,7 @@ const DashboardPage = () => {
           <AnalyticEcommerce title="Total Users" count={totalRows.toString()} percentage={100} extra={totalRows.toString()} />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
-          <AnalyticEcommerce title="Total Order" count={totalOrderRowsThisYear.toString()} percentage={27.4} isLoss color="warning" extra="1,943" />
+          <AnalyticEcommerce title="Total Order" count={orderTotalRows.toString()} percentage={27.4} isLoss color="warning" extra="1,943" />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <AnalyticEcommerce title="Total Sales" count={
@@ -107,7 +95,7 @@ const DashboardPage = () => {
         <Grid item xs={12} md={7} lg={8}>
           <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
-              <Typography variant="h5">Unique Visitor</Typography>
+              <Typography variant="h5">New comming Kitchen/Customer</Typography>
             </Grid>
             <Grid item>
               <Stack direction="row" alignItems="center" spacing={0}>
@@ -173,31 +161,17 @@ const DashboardPage = () => {
         <Grid item xs={12} md={5} lg={4}>
           <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
-              <Typography variant="h5">Analytics Report</Typography>
+              <Typography variant="h5">Kitchen By Area</Typography>
             </Grid>
             <Grid item />
           </Grid>
           <MainCard sx={{ mt: 2 }} content={false}>
-            <List sx={{ p: 0, '& .MuiListItemButton-root': { py: 2 } }}>
-              <ListItemButton divider>
-                <ListItemText primary="Company Finance Growth" />
-                <Typography variant="h5">+45.14%</Typography>
-              </ListItemButton>
-              <ListItemButton divider>
-                <ListItemText primary="Company Expenses Ratio" />
-                <Typography variant="h5">0.58%</Typography>
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemText primary="Business Risk Cases" />
-                <Typography variant="h5">Low</Typography>
-              </ListItemButton>
-            </List>
-            <ReportAreaChart />
+            <PieChartArea/>
           </MainCard>
         </Grid>
   
         {/* row 4 */}
-        <Grid item xs={12} md={7} lg={8}>
+        {/* <Grid item xs={12} md={7} lg={8}>
           <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
               <Typography variant="h5">Sales Report</Typography>
@@ -339,7 +313,7 @@ const DashboardPage = () => {
               </Button>
             </Stack>
           </MainCard>
-        </Grid>
+        </Grid> */}
       </Grid>
     );
   

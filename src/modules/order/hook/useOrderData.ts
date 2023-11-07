@@ -27,9 +27,7 @@ const useOrderData = (enable?: boolean) => {
         filter, // Pass the keyword
       });
       // Return the data from the response
-      if (response?.totalCount >= 0) {
-        setTotalRows(response?.totalCount ?? 0);
-      }
+        setTotalRows(()=>response?.totalCount ?? 0);
       // if(response?.data){
       //   const rawOrders = response.data
       //   const orders = await Promise.all(rawOrders?.map((order)=>OrderApi.getOrderDetail(order?.id)))
@@ -106,6 +104,7 @@ const useOrderData = (enable?: boolean) => {
     orderDetailData,
     setFilter,
     totalRows,
+    orderTotalRows:totalRows,
     refreshOrderData,
   };
 };

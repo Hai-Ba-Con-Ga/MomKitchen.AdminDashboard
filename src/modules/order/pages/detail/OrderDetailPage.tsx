@@ -301,7 +301,7 @@ const OrderDetailPage = () => {
               Tax:
             </Typography>
             <Typography fontSize={fontSizeCommon}>
-              {orderDetailData?.totalPrice * 0.1}₫
+              {Math.round(orderDetailData?.totalPrice * 0.1)}₫
             </Typography>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
@@ -314,7 +314,7 @@ const OrderDetailPage = () => {
           </Stack>
         </Stack>
       </Stack>
-      <Stack
+      {/* <Stack
         mt={4}
         sx={{
           "@media print": {
@@ -328,7 +328,7 @@ const OrderDetailPage = () => {
           libero commodi molestias quidem, corporis labore odit magnam
           necessitatibus repellendus consequatur exercitationem!
         </Typography>
-      </Stack>
+      </Stack> */}
       <Stack
         sx={{
           "@media print": {
@@ -342,7 +342,7 @@ const OrderDetailPage = () => {
         <Button variant="contained" onClick={handlePrint}>
           Download
         </Button>
-        <Button>Go To Payment Information</Button>
+        {/* <Button>Go To Payment Information</Button> */}
       </Stack>
     </MainCard>
   );
