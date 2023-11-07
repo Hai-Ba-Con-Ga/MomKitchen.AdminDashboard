@@ -24,6 +24,7 @@ import KitchenProfileTray from "@/modules/kitchen/pages/KitchenProfileTray";
 import KitchenProfileDish from "@/modules/kitchen/pages/KitchenProfileDish";
 import OrderDetailPage from "@/modules/order/pages/detail/OrderDetailPage";
 import KitchenProfileMeal from "@/modules/kitchen/pages/KitchenProfileMeal";
+import KitchenEditPage from "@/modules/kitchen/pages/KitchenEditPage";
 const routes: RouteObject[] = [
   {
     path: "/",
@@ -94,6 +95,9 @@ const routes: RouteObject[] = [
               {
                 path: "meals",
                 element: <KitchenProfileMeal/>
+              },{
+                path:"edit",
+                element: <KitchenEditPage/>
               }
             ]
           }

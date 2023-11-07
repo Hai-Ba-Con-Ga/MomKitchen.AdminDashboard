@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
  * Fix regeneratorRuntime is not defined
  */
 import "regenerator-runtime";
-// import "./utils/errorTracking/sentry";
+import "./utils/errorTracking/sentry";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { QueryClientProvider } from "react-query";
@@ -21,7 +21,6 @@ import { FirebaseProvider } from "./base/store/context/FirebaseContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-
     <QueryClientProvider client={queryClient}>
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <RecoilRoot>

@@ -8,6 +8,7 @@ import { KitchenStatus } from "@/types/@mk/enum/kitchenStatus";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useKitchenData from "./useKitchenData";
+import axios from "axios";
 
 export interface KitchenForm extends ManipulateCustomerForm {
   name?: string;
@@ -16,11 +17,14 @@ export interface KitchenForm extends ManipulateCustomerForm {
   userId?: string;
   user: User;
   isCreateUser?: boolean;
+  address?: string;
 }
 
 const useKitchenForm = () => {
   const nav = useNavigate();
-  const { createKitchenFunction } = useKitchenData();
+  const { createKitchenFunction, updateKitchen:{
+    mutateAsync: updateKitchenFunc
+  } } = useKitchenData();
   const { putObject } = useAwsS3();
   const {
     createKitchenOwner: { mutateAsync: createKitchenOwnerAsync },
@@ -69,7 +73,21 @@ const useKitchenForm = () => {
       nav("/kitchen");
     }
   };
-  return { createKitchenHandler };
+  const updateKitchenHandler = async (formValues: KitchenForm,id: string) => {
+    const { position, name } = formValues;
+    const addressEndpoint = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${position?.lat}%2C${position?.lng}&lang=en-US&apiKey=7h1jyg35V5JfNIgPA8m1XEN39K9giRbtrfNj8nJ5kd4`
+    const address = (await axios.get(addressEndpoint)).data;
+    let addressString = "Unknown";
+    if(address){
+      addressString = address?.items?.[0]?.title??"Unknown"
+    }
+    const result=  await updateKitchenFunc({name, location:position, address:addressString, id})
+    if(result){
+      toast.success("Update kitchen successfully ");
+      nav("/kitchen");
+    }
+  }
+  return { createKitchenHandler, updateKitchenHandler };
 };
 
 export default useKitchenForm;

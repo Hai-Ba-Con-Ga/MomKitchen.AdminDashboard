@@ -14,13 +14,22 @@ interface CustomerGetParams {
   keyword?: string;
   // filter :
 }
+const customerKeyMap = {
+  no : "No",
+  email :"Email",
+  status : "Status"
+}
 const CustomerApi = {
   getCustomers: (params: CustomerGetParams) => {
     const endpoint = "/customer";
     return axiosClient.get<ResponseObject<CustomerAdmin[]>>(endpoint, {
       params: { 
         PageNumber: params.paging.pageIndex + 1 ?? 1,
-        PageSize: params.paging?.pageSize ?? 10
+        PageSize: params.paging?.pageSize ?? 10,
+        KeySearch : params?.keyword??"",
+        ...((!!params?.sort ?? false) && (!!params?.sort?.[0] ?? false) ? {
+          OrderBy: `${customerKeyMap[params?.sort?.[0]?.id??"no"]??"No"}:${params?.sort?.[0]?.desc? "desc" : "asc"}`,
+        } :{})
 
        },
     });

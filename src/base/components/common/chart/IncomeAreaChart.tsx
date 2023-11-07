@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material/styles';
 // third-party
 import ReactApexChart, { Props as ChartProps } from 'react-apexcharts';
 import useConfig from '@/base/hooks/useConfig';
+import useAnalytics from './useAnalytics';
 
 // project import
 // import useConfig from 'hooks/useConfig';
@@ -45,6 +46,9 @@ const IncomeAreaChart = ({ slot }: Props) => {
   const line = theme.palette.divider;
 
   const [options, setOptions] = useState<ChartProps>(areaChartOptions);
+  const {cusAnaWeek, kitchenAnaWeek} = useAnalytics(slot as ("month"| "week"));
+  console.log("cusAnaWeek=>", cusAnaWeek);
+  console.log("kitchenAnaWeek=>", kitchenAnaWeek);
 
   useEffect(() => {
     setOptions((prevState) => ({
@@ -105,19 +109,31 @@ const IncomeAreaChart = ({ slot }: Props) => {
       data: [0, 43, 14, 56, 24, 105, 68]
     }
   ]);
-
-  useEffect(() => {
+  useEffect(()=>{
     setSeries([
-      {
-        name: 'Kitchen',
-        data: slot === 'month' ? [76, 85, 101, 98, 87, 105, 91, 114, 94, 86, 115, 35] : [31, 40, 28, 51, 42, 109, 100]
-      },
-      {
-        name: 'Customer',
-        data: slot === 'month' ? [110, 60, 150, 35, 60, 36, 26, 45, 65, 52, 53, 41] : [11, 32, 45, 32, 34, 52, 41]
-      }
-    ]);
-  }, [slot]);
+          {
+            name: 'Kitchen',
+            data: kitchenAnaWeek
+          },
+          {
+            name: 'Customer',
+            data: cusAnaWeek
+          }
+        ]);
+  },[cusAnaWeek, kitchenAnaWeek])
+  // useEffect(() => {
+  //   setSeries([
+  //     {
+  //       name: 'Kitchen',
+  //       data: slot === 'month' ? [76, 85, 101, 98, 87, 105, 91, 114, 94, 86, 115, 35] : [31, 40, 28, 51, 42, 109, 100]
+  //     },
+  //     {
+  //       name: 'Customer',
+  //       data: slot === 'month' ? [110, 60, 150, 35, 60, 36, 26, 45, 65, 52, 53, 41] : [11, 32, 45, 32, 34, 52, 41]
+  //     }
+  //   ]);
+  // }, [slot]);
+
 
   return <ReactApexChart options={options} series={series} type="area" height={450} />;
 };

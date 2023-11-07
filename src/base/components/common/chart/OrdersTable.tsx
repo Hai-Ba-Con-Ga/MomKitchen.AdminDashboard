@@ -148,11 +148,11 @@ const OrderStatusRender = ({ status }: Props) => {
       color = 'success';
       title = 'Paid';
       break;
-    case "CANCEL":
+    case "CANCELED":
       color = 'error';
       title = 'Rejected';
       break;
-    case "COMPLETE":
+    case "COMPLETED":
       color = 'primary';
       title = 'Complete';
       break;

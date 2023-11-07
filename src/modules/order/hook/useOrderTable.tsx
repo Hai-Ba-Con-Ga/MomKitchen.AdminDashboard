@@ -56,7 +56,7 @@ const useOrderTable = (props: Props) => {
             align: "left",
           },
         }),
-        columnHelper.accessor("id", {
+        columnHelper.accessor("no", {
           header: "#",
           cell: ({ row }) => {
             return (
@@ -96,6 +96,8 @@ const useOrderTable = (props: Props) => {
             );
           },
           meta: { align: "left" },
+          enableSorting: false,
+
         }),
         columnHelper.accessor("meal", {
           header: "Meal",
@@ -131,6 +133,7 @@ const useOrderTable = (props: Props) => {
               {renderValue()}
             </Typography>
           ),
+          enableSorting: false,
         }),
         columnHelper.accessor("totalPrice", {
           header: "totalPrice ",
@@ -207,7 +210,7 @@ const useOrderTable = (props: Props) => {
               case OrderStatus.UNPAID:
                 return (
                   <Chip
-                    color="error"
+                    color="warning"
                     label="UNPAID"
                     size="small"
                     variant="filled"
@@ -216,7 +219,7 @@ const useOrderTable = (props: Props) => {
               case OrderStatus.PAID:
                 return (
                   <Chip
-                    color="warning"
+                    color="info"
                     label="PAID"
                     size="small"
                     variant="filled"
@@ -244,7 +247,7 @@ const useOrderTable = (props: Props) => {
               case OrderStatus.PENDING:
                 return (
                   <Chip
-                    color="warning"
+                    color="error"
                     label="CANCEL"
                     size="small"
                     variant="filled"
@@ -253,7 +256,7 @@ const useOrderTable = (props: Props) => {
               default:
                 return (
                   <Chip
-                    color="warning"
+                    color="error"
                     label="CANCEL"
                     size="small"
                     variant="filled"

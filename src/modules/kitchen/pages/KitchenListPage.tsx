@@ -18,14 +18,15 @@ const KitchenListPage = () => {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [selectionRows, setSelectionRows] = useState<string[]>();
   const [deleteId, setDeleteId] = useState<string>();
+  const nav = useNavigate();
+
   const { columnsDef } = useKitchenTable({
-    handleEditClick: () => console.log("TODO: implement"),
+    handleEditClick: (kitchen) => nav(`/kitchen/${kitchen?.id}/edit`),
     handleDeleteClick: (id) => {
       setDeleteConfirmation(true);
       setDeleteId(id);
     },
   });
-  const nav = useNavigate();
   const {
     setPagination,
     setSortState,

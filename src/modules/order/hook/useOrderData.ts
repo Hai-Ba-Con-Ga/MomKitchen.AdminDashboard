@@ -1,8 +1,10 @@
 import { OrderAdmin } from "@/types/@mk/entity/order";
 import { FilterState } from "@/types/common/pagination/FilterState";
 import { PaginationState, SortingState } from "@tanstack/react-table";
+import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
+import { toast } from "react-toastify";
 import OrderApi from "../service/order.api";
 
 const useOrderData = (enable?: boolean) => {
@@ -92,7 +94,20 @@ const useOrderData = (enable?: boolean) => {
   const deleteOrder = useMutation(deleteOrderFunction, {
     // You can specify onSuccess and onError callbacks here
   });
-
+  const batchExportFunction = async ()=>{
+    const ApiEndpoint = `http://momkitchen.wyvernpserver.tech/api/v1/order?PageNumber=1&PageSize=50${keyword?"&KeySearch="+keyword:""}${!!filter?.to?.value ?? false? "&ToDate="+ moment(filter?.to?.value as string).add(30, "hours").add(59, "minutes").utc().toISOString() :""}${!!filter?.from?.value ?? false? "&FromDate="+ moment(filter?.from?.value as string).add(7, "hours").utc().toISOString() :""}${!!filter?.tab?.value ?? false? "&OrderStatus="+ filter?.tab?.value :""}`;
+    const EmailSender = "phonglethanh2@gmail.com";
+    await OrderApi.exportOrder({
+      ApiEndpoint,
+      EmailSender
+    })
+    console.log({
+      ApiEndpoint,
+      EmailSender
+    });
+    
+    toast.success("The exporting is being processed! You will receive email after it will have finished")
+  }
   return {
     orderData,
     setSortState,
@@ -106,6 +121,7 @@ const useOrderData = (enable?: boolean) => {
     totalRows,
     orderTotalRows:totalRows,
     refreshOrderData,
+    batchExportFunction
   };
 };
 

@@ -12,12 +12,13 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { Theme } from "@mui/material/styles";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // third-party
 import { AimOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
 import Avatar from "@ui/@extended/Avatar";
 import MainCard from "@ui/MainCard";
+import axios from "axios";
 import NumberFormat from "react-number-format";
 import { useParams } from "react-router-dom";
 import "swiper/css";
@@ -31,6 +32,7 @@ const KitchenProfile = () => {
   const matchDownMD = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down("md")
   );
+  const [fb, setFb] = useState<any[]>([]);
   const { id } = useParams();
   const {
     kitchenDetail,
@@ -48,8 +50,15 @@ const KitchenProfile = () => {
   useEffect(() => {
     if (id) {
       setId(id);
+      fetchFeeback(id).then(data=>setFb(data))
     }
   }, [id, setId]);
+  console.log(fb);
+  
+  const fetchFeeback = async(id: string)=> {
+    const res = await axios.get('https://momkitchen.wyvernpserver.tech/api/feedback/kitchen/'+id)
+    return res.data?.data;
+  }
 
   return (
     <Grid container spacing={3}>
@@ -67,7 +76,7 @@ const KitchenProfile = () => {
                     />
                   </Stack>
                   <Stack spacing={2.5} alignItems="center">
-                    {kitchenDetail?.data?.owner?.ownerAvatarUrl ? (
+                    {!isLoadingDetail ? (
                       <Avatar
                         sx={{
                           width: "10rem",
@@ -86,7 +95,7 @@ const KitchenProfile = () => {
                     )}
 
                     <Stack spacing={0.5} alignItems="center">
-                      {kitchenDetail?.data?.name ? (
+                      {!isLoadingDetail ? (
                         <Typography variant="h5">
                           {kitchenDetail?.data?.name}
                         </Typography>
@@ -168,7 +177,7 @@ const KitchenProfile = () => {
                         <MailOutlined rev={{}} />
                       </ListItemIcon>
                       <ListItemSecondaryAction>
-                        {ownerDetail?.email ? (
+                        {!isLoadingDetail ? (
                           <Typography align="right">
                             {ownerDetail?.email}
                           </Typography>
@@ -186,7 +195,7 @@ const KitchenProfile = () => {
                         <PhoneOutlined rev={{}} />
                       </ListItemIcon>
                       <ListItemSecondaryAction>
-                        {ownerDetail?.phone ? (
+                        {!isLoadingDetail ? (
                           <Typography align="right">
                             {ownerDetail?.phone}
                           </Typography>
@@ -204,7 +213,7 @@ const KitchenProfile = () => {
                         <AimOutlined rev={{}} />
                       </ListItemIcon>
                       <ListItemSecondaryAction>
-                        {kitchenDetail?.data?.area?.name ? (
+                        {!isLoadingDetail  ? (
                           <Typography align="right">
                             {kitchenDetail?.data?.area?.name}
                           </Typography>
@@ -252,7 +261,7 @@ const KitchenProfile = () => {
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
                         <Typography color="secondary">Fullname</Typography>
-                        {ownerDetail?.fullName ? (
+                        {!isLoadingDetail  ? (
                           <Typography>{ownerDetail?.fullName}</Typography>
                         ) : (
                           <Skeleton
@@ -265,9 +274,9 @@ const KitchenProfile = () => {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
-                        <Typography color="secondary">DoB</Typography>
+                        <Typography color="secondary">Area</Typography>
                         {!isLoadingDetail ? (
-                          <Typography>Mr. Deepen Handgun</Typography>
+                          <Typography>{kitchenDetail?.data?.area?.name}</Typography>
                         ) : (
                           <Skeleton
                             variant="text"
@@ -307,7 +316,7 @@ const KitchenProfile = () => {
                         <Typography color="secondary">Country</Typography>
                         {!isLoadingDetail ? (
                           <Typography>
-                            {kitchenDetail?.data?.area?.name}
+                            Viet nam
                           </Typography>
                         ) : (
                           <Skeleton
@@ -386,39 +395,17 @@ const KitchenProfile = () => {
                 direction="horizontal"
                 onSlideChange={() => console.log("slide change")}
                 onSwiper={(swiper) => console.log(swiper)}>
-                <SwiperSlide>
-                  <FeedbackCard
-                    avatarUrl="https://source.unsplash.com/random"
-                    content="Hihi"
-                    customerName="Phong"
-                    rating={3.5}
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <FeedbackCard
-                    avatarUrl="https://source.unsplash.com/random"
-                    content="Hihi"
-                    customerName="Phong"
-                    rating={3.5}
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <FeedbackCard
-                    avatarUrl="https://source.unsplash.com/random"
-                    content="Hihi"
-                    customerName="Phong"
-                    rating={3.5}
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <FeedbackCard
-                    avatarUrl="https://source.unsplash.com/random"
-                    content="Hihi"
-                    customerName="Phong"
-                    rating={3.5}
-                  />
-                </SwiperSlide>
-              </Swiper>
+                
+                 {fb && fb.length>0 ? fb?.map(f => ( <SwiperSlide><FeedbackCard
+                    avatarUrl={f?.owner?.ownerAvatarUrl}
+                    content={f?.content}
+                    customerName={f?.owner?.ownerName}
+                    rating={f?.rating ??0}
+                  /></SwiperSlide>))
+                  : <>This kitchen does not have feebacks yet</>
+                  }
+                  </Swiper>
+                
               {/* <FeedbackCard avatarUrl="https://source.unsplash.com/random" content="Hihi" customerName="Phong" rating={3.5}/> */}
             </List>
           </MainCard>

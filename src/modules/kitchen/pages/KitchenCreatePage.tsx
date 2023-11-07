@@ -22,7 +22,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import useKitchenForm, { KitchenForm } from "../hook/useKitchenForm";
 
-interface AreaOptions extends AreaAdmin {
+export interface AreaOptions extends AreaAdmin {
   label: string;
 }
 

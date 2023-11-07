@@ -1,8 +1,8 @@
-import { Kitchen, KitchenAdmin } from "@/types/@mk/entity/kitchen";
+import { Kitchen } from "@/types/@mk/entity/kitchen";
 import { PaginationState, SortingState } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import KitchenApi from "../service/kitchen.api";
+import KitchenApi, { UpdateKitchenRequest } from "../service/kitchen.api";
 import UserApi from "../service/user.api";
 
 const useKitchenData = () => {
@@ -62,7 +62,7 @@ const useKitchenData = () => {
     }
   );
 
-  const updateKitchenFunction = async (kitchen: KitchenAdmin) => {
+  const updateKitchenFunction = async (kitchen:UpdateKitchenRequest) => {
     const response = await KitchenApi.updateKitchen(kitchen);
 
     return response?.data;

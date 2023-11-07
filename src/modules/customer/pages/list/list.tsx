@@ -62,7 +62,8 @@ const CustomerList = () => {
     refreshCustomerData,
     setSortState,
     deleteCustomer: {mutateAsync : mutateDelete},
-    totalRows
+    totalRows,
+    setKeyword
   } = useCustomerData();
   useEffect(()=>{
     refreshCustomerData()
@@ -109,7 +110,7 @@ const CustomerList = () => {
           ),
           enableSorting: false,
         }),
-        columnHelper.accessor("id", {
+        columnHelper.accessor("no", {
           header: () => {
             return "#";
           },
@@ -146,7 +147,9 @@ const CustomerList = () => {
           },
           meta: {
             align : "left"
-          }
+          },
+          enableSorting: false,
+
         }),
         // columnHelper.accessor("user.avatarUrl", {
         //   header: "Avatar",
@@ -176,7 +179,8 @@ const CustomerList = () => {
           ),
           meta: {
             align : "left"
-          }
+          },
+          enableSorting: false,
         }),
         columnHelper.accessor("orderQuantity", {
           header: "Order",
@@ -185,7 +189,8 @@ const CustomerList = () => {
           ),
           meta: {
             align : "right"
-          }
+          },
+          enableSorting: false,
         }),
         columnHelper.accessor("spentMoney", {
           header: "Spent",
@@ -200,7 +205,9 @@ const CustomerList = () => {
           ),
           meta: {
             align : "right"
-          }
+          },
+          enableSorting: false,
+
         }),
         columnHelper.accessor("status", {
           header: "Status",
@@ -340,7 +347,7 @@ const CustomerList = () => {
             </IconButton>
           </>
         }
-        onSearchKeywordChange={(q) => console.log(q)}
+        onSearchKeywordChange={(q) => setKeyword(q)}
         onSortByChange={(sort) => setSortState(sort)}
         filter={{
           isShow: true,

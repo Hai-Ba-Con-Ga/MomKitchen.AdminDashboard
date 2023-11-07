@@ -73,13 +73,17 @@ const useAreaTable = (props: Props) => {
           },
           meta: {
             align: "left"
-          }
+          },
+          enableSorting:false,
+
         }),
         columnHelper.accessor("name", {
           header: "Area Name",
           meta: {
             align: "left"
-          }
+          },
+          enableSorting:false,
+
         }),
         columnHelper.accessor("noOfKitchens", {
           header: "Number of kitchens",
@@ -91,7 +95,8 @@ const useAreaTable = (props: Props) => {
           ),
           meta: {
             align: "right"
-          }
+          },
+          enableSorting:false,
         }),
         columnHelper.accessor("createdDate", {
           header: "CreatedDate",
@@ -100,7 +105,9 @@ const useAreaTable = (props: Props) => {
           },
           meta: {
             align: "left"
-          }
+          },
+          enableSorting:false,
+
         }),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         columnHelper.accessor<any, any>("action", {

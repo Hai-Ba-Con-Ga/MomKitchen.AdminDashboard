@@ -49,6 +49,7 @@ const OrderListPage = () => {
     deleteOrder: { mutateAsync: deleteOrderFunc },
     // updateOrder,
     totalRows,
+    batchExportFunction
   } = useOrderData();
   const { columnsDef } = useOrderTable({
     handleEditClick: () => {
@@ -126,7 +127,7 @@ const OrderListPage = () => {
             variant="shadow"
             startIcon={<GetApp />}
             onClick={()=>{
-              //TODO batch export kafka
+              batchExportFunction();
             }}>
             {t("export_order")}
           </Button>

@@ -11,6 +11,12 @@ interface OrderGetParams {
   keyword?: string;
   filter?: FilterState;
 }
+const orderKeyMap = {
+  no : "No",
+  totalPrice: "TotalPrice",
+  createdDate: "CreatedDate",
+  status: "Status"
+}
 const OrderApi = {
   getOrders: async (params: OrderGetParams) => {
     const endpoint = "/order";
@@ -23,21 +29,21 @@ const OrderApi = {
         KeySearch: params?.keyword,
         ...(!!params?.filter?.to?.value ?? false
           ? {
-              ToDate: moment(params?.filter?.to?.value as string).toISOString(),
+              ToDate: moment(params?.filter?.to?.value as string).add(30, "hours").add(59, "minutes").toISOString(),
             }
           : {}),
         ...(!!params?.filter?.from?.value ?? false
           ? {
               FromDate: moment(
                 params?.filter?.from?.value as string
-              ).toISOString(),
+              ).add(7, "hours").toISOString(),
             }
           : {}),
         ...(!!params?.filter?.tab?.value  ?? false ? {
           OrderStatus : params?.filter?.tab?.value
         }:{}),
         ...((!!params?.sort ?? false) && (!!params?.sort?.[0] ?? false) ? {
-          OrderBy: `${params?.sort?.[0]?.id}:${params?.sort?.[0]?.desc? "desc" : "asc"}`,
+          OrderBy: `${orderKeyMap[params?.sort?.[0]?.id??"no"]??"CreatedDate"}:${params?.sort?.[0]?.desc? "desc" : "asc"}`,
 
         } :{})
       },
@@ -64,5 +70,17 @@ const OrderApi = {
       params: { id },
     });
   },
+  exportOrder: async ({ApiEndpoint,EmailSender}:{
+    ApiEndpoint: string
+    EmailSender: string
+  })=>{
+    const endpoint = "/order/xlsx";
+    return await axiosClient.get(endpoint, {
+      params : {
+        ApiEndpoint,
+        EmailSender
+      }
+    })
+  }
 };
 export default OrderApi;

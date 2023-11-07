@@ -16,6 +16,15 @@ interface KitchenGetParams {
   keyword?: string;
   // filter :
 }
+export interface UpdateKitchenRequest {
+  "name": string,
+  "location": {
+    "lat": number,
+    "lng": number
+  },
+  address?: string,
+  id?: string
+}
 const KitchenApi = {
   getKitchens: async (params: KitchenGetParams):Promise<ResponseObject<KitchenAdmin[]>> => {
     const endpoint = "/kitchen";
@@ -81,8 +90,8 @@ const KitchenApi = {
       },
     });
   },
-  updateKitchen: (kitchen: KitchenAdmin) => {
-    const endpoint = "/kitchen";
+  updateKitchen: (kitchen: UpdateKitchenRequest) => {
+    const endpoint = "/kitchen/"+kitchen?.id;
     return axiosClient.put(endpoint, kitchen);
   },
   deleteKitchen: (id: string) => {
@@ -125,7 +134,6 @@ const KitchenApi = {
     const endpoint = "/kitchen";
     const addressEndpoint = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${kitchen.location?.lat}%2C${kitchen.location?.lng}&lang=en-US&apiKey=7h1jyg35V5JfNIgPA8m1XEN39K9giRbtrfNj8nJ5kd4`
     const address = (await axios.get(addressEndpoint)).data;
-    console.log("ADDRESS", address);
     let addressString = "Unknown";
     if(address){
       addressString = address?.items?.[0]?.title??"Unknown"

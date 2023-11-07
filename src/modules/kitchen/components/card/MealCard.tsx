@@ -1,19 +1,21 @@
 import { Meal } from "@/types/@mk/entity/meal";
-import { imageUrl } from "@/utils/@mk/helper";
+import { checkDueStatus, imageUrl } from "@/utils/@mk/helper";
 import { DeleteTwoTone, EditOutlined } from "@ant-design/icons";
 import {
-    CardContent,
-    CardMedia,
-    Divider,
-    Grid,
-    Stack,
-    ToggleButton,
-    ToggleButtonGroup,
-    Typography,
-    useTheme,
+  Box, CardContent,
+  CardMedia, Chip, Divider,
+  Grid,
+  Stack,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+  useTheme
 } from "@mui/material";
 import MainCard from "@ui/MainCard";
+import { Image } from "@ui/common/image";
 import moment from "moment";
+import { useMemo } from "react";
+import NumberFormat from "react-number-format";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -27,6 +29,19 @@ type Props = {
 
 const MealCard = ({ meal, onEdit, onDelete }: Props) => {
   const theme = useTheme();
+  const StatusChip = useMemo(()=>{
+    switch (checkDueStatus(meal?.serviceFrom, meal?.serviceTo)) {
+      case 0:
+        return <Chip variant="filled" color="primary" label="During"/>
+       
+    
+      case 1:
+       return <Chip variant="filled" color="error" label="Over Due"/>
+    
+      default:
+       return  <Chip variant="filled" color="info" label="Upcoming"/>
+    }
+  },[meal])
   return (
     <MainCard
       content={false}
@@ -37,21 +52,16 @@ const MealCard = ({ meal, onEdit, onDelete }: Props) => {
         // maxHeight: "24rem"
       }}>
       <CardContent>
-        <Typography variant="h5" color="textSecondary" gutterBottom>
+        <Box display={"flex"} justifyContent={"space-between"} mb={2}>
+          <Typography variant="h5" color="textSecondary" gutterBottom>
           {meal?.name}
         </Typography>
-        {/* <Typography
-          variant="body1"
-          sx={{
-            overflow: "hidden",
-            display: "-webkit-box",
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: "vertical",
-            //  -webkit-line-clamp: 3,
-            //  -webkit-box-orient: vertical
-          }}>
-          {meal.description}
-        </Typography> */}
+        {StatusChip}
+
+        </Box>
+        <Image 
+        url={meal?.tray?.imgUrl}
+        />
 
         <Swiper
           spaceBetween={50}
@@ -137,8 +147,12 @@ const MealCard = ({ meal, onEdit, onDelete }: Props) => {
             >
               <Stack spacing={0.5}>
                   <Typography color="secondary">Price</Typography>
-                  <Typography>
-                    {meal?.price}đ</Typography>
+                  <NumberFormat 
+              displayType="text"
+              suffix="₫"
+              thousandSeparator
+               value={meal?.price}/>
+
                 </Stack>
             </Grid>
           <Grid
@@ -147,7 +161,7 @@ const MealCard = ({ meal, onEdit, onDelete }: Props) => {
             lg={3}
             >
               <Stack spacing={0.5}>
-                  <Typography color="secondary">Serve to</Typography>
+                  <Typography color="secondary">Serve Quantity</Typography>
                   <Typography>
                      {meal?.serviceQuantity}</Typography>
                 </Stack>
