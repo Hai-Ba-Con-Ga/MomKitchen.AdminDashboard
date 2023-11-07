@@ -1,8 +1,7 @@
 import * as Sentry from "@sentry/react";
 
 Sentry.init({
-  dsn: import.meta.env.VITE_SENTRY_DSN,
-  
+  dsn: "https://a7168e5713f74609b399a46881fcbbe7@o4505181028679680.ingest.sentry.io/4505181031432192",  
   integrations: [
     new Sentry.BrowserTracing(),
     new Sentry.Replay(),

@@ -8,18 +8,20 @@ import { useTheme } from '@mui/material/styles';
 import Facebook from '@/assets/images/icons/facebook.svg';
 import Google from '@/assets/images/icons/google.svg';
 import Twitter from '@/assets/images/icons/twitter.svg';
+import { useNavigate } from 'react-router-dom';
 
 // ==============================|| FIREBASE - SOCIAL BUTTON ||============================== //
 
 const FirebaseSocial = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
-
+  const nav = useNavigate()
 
   const { firebaseFacebookSignIn, firebaseGoogleSignIn, firebaseTwitterSignIn } = useAuth();
   const googleHandler = async () => {
     try {
       await firebaseGoogleSignIn();
+      nav("/")
     } catch (err) {
       console.error(err);
     }

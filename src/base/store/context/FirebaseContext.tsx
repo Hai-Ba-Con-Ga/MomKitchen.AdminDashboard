@@ -4,6 +4,7 @@ import { FacebookAuthProvider, GoogleAuthProvider, TwitterAuthProvider, createUs
 import React, { createContext, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { authState } from '../atoms/auth';
+import { useNavigate } from 'react-router-dom';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDiyMFnM1CM6C4XUhLgHrtjloOjyk0ECz4",
@@ -36,6 +37,7 @@ export const FirebaseProvider = ({ children }: { children: React.ReactElement })
   useEffect(() => {
 
     onAuthStateChanged(auth, (user) => {
+      
       if (user) {
         dispatch({
             isLoggedIn: true,
@@ -52,8 +54,7 @@ export const FirebaseProvider = ({ children }: { children: React.ReactElement })
           isLoggedIn: false,
           user: null,
           isInitialized : false
-      });
-      }
+      });      }
     });
   }, [dispatch]);
 
@@ -76,7 +77,9 @@ export const FirebaseProvider = ({ children }: { children: React.ReactElement })
 
   const firebaseRegister = async (email: string, password: string) => createUserWithEmailAndPassword(auth,email, password);
 
-  const logout = () => signOut(auth);
+  const logout = async () => {
+    window.location.href ="/login"
+    await signOut(auth)};
 
   const resetPassword = async (email: string) => {
     await sendPasswordResetEmail(auth,email);
@@ -93,7 +96,8 @@ export const FirebaseProvider = ({ children }: { children: React.ReactElement })
         ...state,
         firebaseRegister,
         firebaseEmailPasswordSignIn,
-        login: () => {console.log("login");
+        login: () => {
+          window.location.href ="/"
         },
         firebaseGoogleSignIn,
         firebaseTwitterSignIn,

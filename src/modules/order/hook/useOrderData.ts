@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { toast } from "react-toastify";
 import OrderApi from "../service/order.api";
+import { useRecoilValue } from "recoil";
+import { authState } from "@/base/store/atoms/auth";
 
 const useOrderData = (enable?: boolean) => {
   // const [orderData, setOrderData] = useState<OrderAdmin>();
@@ -18,7 +20,8 @@ const useOrderData = (enable?: boolean) => {
   const [id, setId] = useState<string>();
   const [totalRows, setTotalRows] = useState<number>(0);
   const [filter, setFilter] = useState<FilterState>({});
-
+  const auth = useRecoilValue(authState); 
+  
   // Define the fetchOrderDataFunction that fetches orders using the OrderApi
   const fetchOrderDataFunction = async () => {
     try {
@@ -96,7 +99,7 @@ const useOrderData = (enable?: boolean) => {
   });
   const batchExportFunction = async ()=>{
     const ApiEndpoint = `http://momkitchen.wyvernpserver.tech/api/v1/order?PageNumber=1&PageSize=50${keyword?"&KeySearch="+keyword:""}${!!filter?.to?.value ?? false? "&ToDate="+ moment(filter?.to?.value as string).add(30, "hours").add(59, "minutes").utc().toISOString() :""}${!!filter?.from?.value ?? false? "&FromDate="+ moment(filter?.from?.value as string).add(7, "hours").utc().toISOString() :""}${!!filter?.tab?.value ?? false? "&OrderStatus="+ filter?.tab?.value :""}`;
-    const EmailSender = "phonglethanh2@gmail.com";
+    const EmailSender = auth?.user?.email ?? "phonglethanh2@gmail.com";
     await OrderApi.exportOrder({
       ApiEndpoint,
       EmailSender
